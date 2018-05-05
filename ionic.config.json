@@ -1,0 +1,8 @@
+{
+  "name": "atservice",
+  "app_id": "25225039",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
