@@ -1,0 +1,34 @@
+page-order {
+    ion-card {
+        background-color: theme-colors('textColors','accent') !important;
+        max-height: 480px !important;
+        border-radius: 4px !important;
+
+        ion-card-header {
+            height: 40px !important;
+            //padding: none !important;
+            font-weight: 600px !important;
+            //border-bottom: 3px solid black;
+        }
+
+        ion-item {
+            background-color: theme-colors('textColors','accent') !important;
+        }
+
+        [item-title] {
+            color: theme-colors('textColors','secondary') !important;
+            padding: none !important;
+            font-size: 18px !important;
+            font-weight: 500 !important;
+        }
+
+        [icon-small] {
+            color: theme-colors('mainColors', 'primary', 'opacity60') !important;
+            font-size: icon-size('icon-small') !important;
+        }
+
+        [button-clear] {
+            color: theme-colors('textColors','secondary') !important;
+        }
+    }
+}

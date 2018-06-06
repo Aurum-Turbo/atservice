@@ -1,0 +1,31 @@
+page-login {
+    ion-col {
+        position: relative;
+
+        ion-item {
+            margin-top: 40px !important;
+        }
+      
+        img {
+          max-width: 100px;
+          max-height: 100px;
+          margin: 35px auto 40px;
+        }
+
+        .text-input,
+        ion-label {
+            color: theme-colors('textColors', 'primary') !important;
+            $label-md-margin-end: auto;
+        }
+
+        .item-inner {
+            border-bottom-color: theme-colors('mainColors', 'secondary') !important;
+            box-shadow: none !important;
+        }
+
+        .error-message {
+            color: red !important;
+            padding-top: 10px !important;
+        }
+    }
+}

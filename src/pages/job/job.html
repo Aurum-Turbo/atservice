@@ -1,0 +1,86 @@
+<!--
+  Generated template for the JobPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>job</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-grid *ngIf="jobList != null">
+    <ion-row justify-content-center>
+      <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+        <ion-list no-scroll>
+          <ion-item-group padding-top class="collapsible" *ngFor="let item of jobList;">
+            <ion-item-divider sticky>        
+              <h2 item-title float-left>{{item.order.servedate}}</h2>
+            </ion-item-divider>
+            <ion-item-sliding style="border-bottom:1px solid black" class="collapsible-header" *ngIf="item.status != 'delete' && item.status != 'cancel'">
+              <ion-item [attr.status]="item.status | lowercase" no-margin no-padding no-lines detail-none (click)="toggleGroup(item)">
+                <ion-icon no-padding no-margin item-left name="arrow-down" *ngIf="!isGroupShown(item)"></ion-icon>
+                <ion-icon no-padding no-margin item-left name="arrow-forward" *ngIf="isGroupShown(item)"></ion-icon>
+                <h2 subitem-title item-left>{{item.order.servetime}}</h2>
+                <h2 subitem-subtitle text-wrap>{{item.order.service.title | uppercase}}</h2>  
+              </ion-item>
+                  
+              <ion-item no-margin no-lines [hidden]="isGroupShown(item) || item.status == 'discard'">
+                <ion-card>
+                  <ion-item>
+                    <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
+                    <h3 item-subtitle text-wrap>{{item.order.note}}</h3>
+                  </ion-item>
+                  
+                  <ion-item no-margin>
+                    <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
+                    <h3 item-subtitle text-wrap>{{item.order.servelocation}}</h3>
+                  </ion-item>
+      
+                  <ion-item no-margin>
+                      <ion-icon item-start icon-small><i class="icon-email-outline"></i></ion-icon>
+                      <h3 item-subtitle text-wrap>{{item.order.email}}</h3>
+                  </ion-item>
+      
+                  <ion-item no-margin>
+                      <ion-icon item-start icon-small><i class="icon-phone"></i></ion-icon>
+                      <h3 item-subtitle text-wrap>{{item.order.phone}}</h3>
+                  </ion-item>
+                  
+                  <ion-grid no-margin no-padding style="border-top:2px solid black">  
+                    <ion-row justify-content-center>
+                      <ion-col></ion-col>
+                      <ion-col>
+                        <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear small block *ngIf="item.status == 'created'" (click)="onClick('ready',item)">
+                          Ready
+                        </button>
+                        <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'ready'" (click)="onClick('proceed',item)">
+                          Proceed
+                        </button>
+                        <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'proceed'" (click)="onClick('complete',item)">
+                          Complete
+                        </button>
+                        <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'complete'" (click)="onClick('discard',item)">
+                          Discard
+                        </button>
+                      </ion-col>
+                      <ion-col></ion-col>
+                    </ion-row> 
+                  </ion-grid>
+                </ion-card>      
+              </ion-item>
+
+              <ion-item-options>
+                <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status == 'complete'">Delete</button>
+                <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status != 'complete'">Cancel</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-item-group>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

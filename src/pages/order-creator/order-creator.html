@@ -1,0 +1,47 @@
+<!--
+  Generated template for the OrderCreatorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>orderCreator</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-grid padding-top>
+        <ion-row justify-content-center>
+          <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+            <ion-row>
+              <ion-input clearInput type="text" placeholder="Please enter the service sid" [(ngModel)]="orderServiceID"></ion-input>
+            </ion-row>
+            <!--ion-row>
+                <ion-input clearInput type="text" placeholder="Please enter the quantity" [(ngModel)]="orderObj.quantity"></ion-input>
+            </ion-row-->
+            <ion-row>
+              <ion-input clearInput type="text" placeholder="Please enter serve date" [(ngModel)]="orderObj.servedate"></ion-input>
+          </ion-row>
+          <ion-row>
+              <ion-input clearInput type="text" placeholder="Please enter serve time" [(ngModel)]="orderObj.servetime"></ion-input>
+          </ion-row>
+          <ion-row>
+              <ion-input clearInput type="text" placeholder="Please enter serve location" [(ngModel)]="orderObj.servelocation"></ion-input>
+          </ion-row>
+          <ion-row>
+              <ion-input clearInput type="text" placeholder="Please enter special note" [(ngModel)]="orderObj.note"></ion-input>
+          </ion-row>
+          <ion-row>
+              <ion-input clearInput type="email" placeholder="Please enter email" [(ngModel)]="orderObj.email"></ion-input>
+          </ion-row>
+          <ion-row>
+              <ion-input clearInput type="phone" placeholder="Please enter phone" [(ngModel)]="orderObj.phone"></ion-input>
+          </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>

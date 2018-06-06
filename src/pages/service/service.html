@@ -1,0 +1,68 @@
+<!--
+  Generated template for the ServicePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>service</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  
+  <ion-grid no-padding *ngIf="serviceList != null">
+    <ion-row>
+      <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 *ngFor="let item of serviceList">
+        <ion-card>
+          <ion-img width="100%" height="300px" src={{item.coverimage}} (click)="onClick('details',item)"></ion-img>
+          <ion-card-header>
+            <h2 item-title float-left>{{item.title}}</h2>
+            <!--h2 image-label float-right>{{item.price}} {{item.currency}}</h2-->
+            <!--span span-small float-right>{{item.rank}}</span-->
+          </ion-card-header>
+          <ion-card-content>
+            <p card-body-text text-wrap>{{item.brief}}</p>
+          </ion-card-content>
+              <ion-grid transparent no-padding no-margin style="border-top:2px solid black">
+                <ion-row no-padding no-margin>
+                  <ion-col>
+                    <button ion-button no-padding no-margin button-clear small block (click)="onClick('edit',item)">
+                      Edit
+                    </button>
+                  </ion-col>
+                  <ion-col>
+                    <button ion-button no-padding no-margin button-clear small block *ngIf="item.status == 'created'" (click)="onClick('submit',item)">
+                      Submit
+                    </button>
+                    <button ion-button no-padding no-margin button-clear small block *ngIf="item.status == 'activated'" (click)="onClick('suspend', item)">
+                      Suspend
+                    </button>
+                    <button ion-button no-padding no-margin button-clear small block *ngIf="item.status == 'suspended'" (click)="onClick('resume', item)">
+                      Resume
+                    </button>
+                  </ion-col>
+                  <ion-col>
+                    <button ion-button no-padding no-margin button-clear small block (click)="onClick('discard',item)">
+                      Discard
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid> 
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> 
+</ion-content>
+
+<ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="onClick('new')">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>

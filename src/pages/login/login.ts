@@ -1,0 +1,140 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+import { Validators, FormBuilder, FormGroup} from '@angular/forms';
+
+import { TabsPage } from '../tabs/tabs';
+import { AppSettings } from '../../providers/app-setting';
+import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-login',
+  templateUrl: 'login.html',
+})
+export class LoginPage {
+
+  loginForm: FormGroup;
+  signupForm: FormGroup;
+  loginError: string;
+  isSignUp: boolean = false;
+
+  //form group
+  validation_messages = {
+    'password': [
+        { type: 'required', message: '* Password is required' },
+        { type: 'minlength', message: '* Password must be at least 6 characters long' },
+        { type: 'maxlength', message: '* Password cannot be more than 8 characters long' },
+        { type: 'pattern', message: '* Your password need to have both numbers and letters' }
+      ],
+    'email': [
+        { type: 'required', message: '* Email is required' },
+        { type: 'pattern', message: '* Please give a valid email address' }
+      ]
+    //more messages
+    }
+
+  constructor(
+    public dataService: DataServiceProvider,
+    private authService: AuthServiceProvider,
+    private fb: FormBuilder,
+    public navCtrl: NavController, public navParams: NavParams) {
+      
+    this.loginForm = this.fb.group({
+      email: ['',Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+  
+      password: ['',Validators.compose([
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.minLength(6),
+        Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])]
+    });
+
+    this.signupForm = fb.group({
+      email: ['',Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+  
+      password: ['',Validators.compose([
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.minLength(6),
+        Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])]
+
+    });
+
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
+  }
+
+  onClick(event: String) {
+    if(event == "signup")
+    {
+      //console.log("email: ", this.email, "password: ", this.password);
+      //this.navCtrl.setRoot(TabsPage);
+      this.isSignUp = true;
+    }
+  }
+
+  login() {
+
+    if(this.dataService.isLogin())
+    {
+      this.navCtrl.setRoot(TabsPage);
+    }
+    else
+    {
+      if(AppSettings.IS_FIREBASE_ENABLED)
+      {
+        this.authService.login(this.loginForm.value)
+        .then(response => {
+            this.navCtrl.setRoot(TabsPage);
+            this.dataService.setLogin();
+        })
+        .catch(error => {
+            // handle error by showing alert
+            console.log("login failed");
+        });
+      }
+      else
+      {
+        console.log("need to connect internet");
+      }
+    }
+  }
+
+  signup() {
+    if(AppSettings.IS_FIREBASE_ENABLED)
+      {
+        this.authService.register(this.signupForm.value)
+        .then(response => {
+            this.navCtrl.setRoot(TabsPage);
+        })
+        .catch(error => {
+            // handle error by showing alert
+            console.log("signup failed");
+        });
+      }
+      else
+      {
+        console.log("SIGNUP: need to connect internet");
+      }
+  }
+
+}
