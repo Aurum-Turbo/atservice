@@ -60,6 +60,8 @@ page-editor {
     quill-editor {
         margin-top: 20px !important;
         background-color: theme-colors('textColors','accent') !important;
+        -webkit-user-select: text !important;
+        user-select: text !important;
     }
 
     //quill.snow.css
@@ -451,7 +453,7 @@ page-editor {
         border: none;
         cursor: pointer;
         display: inline-block;
-        float: left;
+        //float: left;
         height: 24px;
         padding: 3px 5px;
         width: 28px;
@@ -666,7 +668,7 @@ page-editor {
       .ql-snow .ql-picker {
         color: #444;
         display: inline-block;
-        float: left;
+        //float: left;
         font-size: 14px;
         font-weight: 500;
         height: 24px;
