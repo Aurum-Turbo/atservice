@@ -33,13 +33,113 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
+/*
 $colors: (
   primary:    #488aff,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
+);*/
+
+// Global Colors
+$colors: (
+  primary:    #424242,
+  secondary:  #fcd736,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  accent:     #202020,
+  dark:       #222222,
+  favorite:   #69BB7B,
+  // Button Twitter
+  twitter:(
+    base: #64B5F6,
+    contrast: #fff
+  ),
+  // Button Facebook
+  facebook:(
+    base: #3949ab,
+    contrast: #fff
+  ),
+  // Button Google
+  google:(
+    base: #bf360c,
+    contrast: #fff
+  ),
+  // Button Pinterest
+  pinterest:(
+    base: #ff3d00,
+    contrast: #fff
+  ),
 );
+
+$palettes: (
+    mainColors: ( // Also used for backgrounds.
+
+        primary:   #424242, // Used for toolbars
+        secondary: #FCD736, // Used for various small elements
+        accent:   #202020 //Used for icon-search-bar, loaders-spinners, checkbox-item, icon, button, span, input-field-icons
+    ),
+
+    textColors: ( // Used for text colors in all screens
+
+        primary: #FCD736, // Used for text colors in: item-title, item-subtitle, header-title, header-subtitle
+        secondary: #202020, // Used for text colors in: buttons, header-title, subitem-title, subitem-subtitle
+        accent:   #D5D5D5, // Used for text colors in: header-title, header-subtitle
+    ),
+    blendModes: ( // Used for blend modes
+
+        primary:  #ffffff,
+        secondary: #424242
+    )
+);
+
+// Global Opacity
+$global-opacity: (
+  'opacity0': 0,
+  'opacity10': 0.1,
+  'opacity20': 0.2,
+  'opacity30': 0.3,
+  'opacity40': 0.4,
+  'opacity50': 0.5,
+  'opacity60': 0.6,
+  'opacity70': 0.7,
+  'opacity80': 0.8,
+  'opacity90': 0.9,
+  'opacity100': 1
+);
+
+// Function to print color
+@function theme-colors($name: 'mainColors', $variant: 'primary', $opacity: 1) {
+  // Get the color spectrum
+  $color-spectrum: map-get($palettes, $name);
+  // Get the color variant
+  $color: map-get($color-spectrum, $variant);
+  // Get the alpha setting
+  $alpha: if(type-of($opacity) == 'number', $opacity, map-get($global-opacity, $opacity));
+  // Set the alpha of the color
+  @if $alpha {
+    $color: rgba($color, $alpha);
+  }
+  @return $color;
+}
+
+//main background color
+$background-color: theme-colors('mainColors', 'accent');
+$toolbar-background: theme-colors('mainColors', 'secondary');
+
+//tool bar color
+$toolbar-md-height: 49px !important;
+$toolbar-ios-height: 49px !important;
+
+ion-header {
+  .toolbar-title {
+      color: theme-colors('textColors', 'secondary') !important;
+      text-transform: uppercase;
+    }
+}
+
+
 
 
 // App iOS Variables
@@ -78,6 +178,12 @@ $colors: (
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 
+// // App Fontelo Style
+//--------------------------------------------------
+@import "fontello";
+
+@import "ionicons";
+
 @import "ionic.ionicons";
 
 
@@ -86,3 +192,158 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../assets/fonts/open-sans.woff2");
+}
+
+@font-face {
+  font-family: "Dancing Script";
+  src: url("../assets/fonts/dancing-script.woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn";
+  src: url("../assets/fonts/vollkorn.woff2");
+}
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("../assets/fonts/pacifico.woff2");
+}
+
+$font-name: 'Open Sans', sans-serif;
+$font-weight-value: 500 !default;
+
+ion-title,
+a,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+p,
+{
+  font-family: $font-name;
+  font-weight: $font-weight-value; 
+}
+
+// Settings Font Size
+$h1-font-size: 26px;
+$h2-font-size: 20px;
+$h3-font-size: 16px;
+$h4-font-size: 14px;
+$h5-font-size: 12px;
+$h6-font-size: 10px;
+$text-font-size: 14px;
+
+
+
+//button setting
+.button {
+  width: 100px !important;
+  height: 40px !important;
+  font-size: $h3-font-size !important;
+  font-weight: 700 !important;
+  border-radius: 2px !important;
+  margin-top: 40px !important;
+  //outline: 0px !important;
+  //border: 0px !important;
+}
+
+[default-button] {
+  background-color: theme-colors('mainColors', 'secondary') !important;
+  color: theme-colors('mainColors', 'accent') !important;
+}
+
+[button-clear] {
+  background-color: transparent !important;
+  color: theme-colors('textColors','primary') !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;  
+  text-align: center !important;
+}
+
+[button-clear-outline] {
+  background-color: theme-colors('textColors', 'secondary') !important;
+  color: theme-colors('textColors', 'primary') !important;
+  border: 1px solid theme-colors('textColors', 'primary') !important;
+}
+
+[no-padding] {
+  padding: 0 !important;
+}
+
+[no-margin]{
+  margin: 0 !important;
+}
+
+[transparent] {
+  background-color: transparent !important;
+  //border: 0px !important;
+  margin: 0px !important;
+  box-shadow: 0px !important;
+}
+
+//Tab Settings
+[tabs-bcg] {
+  background-color: theme-colors('mainColors', 'primary');
+}
+
+[tabs-title] {
+  color: theme-colors('textColors', 'primary');
+  font-size: $h2-font-size !important;
+}
+
+[tabs-subtitle] {
+  color: theme-colors('textColors', 'primary');
+  font-size: $h2-font-size !important;
+}
+
+// Icon Sizes
+$icon-size:(
+  'icon-small': 20px,
+  'icon-medium': 32px,
+  'icon-large': 60px
+);
+@function icon-size($key: 'icon-small') {
+  @return map-get($icon-size, $key);
+}
+
+// Icon Settings
+[icon-small] {
+  color: theme-colors('mainColors', 'primary', 'opacity60') !important;
+  font-size: icon-size('icon-small') !important;
+}
+[icon-medium] {
+  color: theme-colors('mainColors', 'secondary', 'opacity60') !important;
+  font-size: icon-size('icon-medium') !important;
+}
+
+[icon-large] {
+  color: theme-colors('mainColors', 'secondary', 'opacity60') !important;
+  font-size: icon-size('icon-large') !important;
+}
+
+//Fab Button Settings
+[button-ion-fab] {
+  background-color: theme-colors('mainColors', 'secondary') !important;
+  color: theme-colors('mainColors', 'accent') !important;
+  z-index: 9 !important;
+  bottom: 70px;
+  right: 20px;
+  -webkit-transition: all 300ms !important;
+  transition: all 300ms !important;
+
+  ion-icon {
+    margin-top: 2px;
+    display: block;
+  }
+}
+
+
