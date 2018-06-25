@@ -106,6 +106,7 @@ export class LoginPage {
         .then(response => {
             this.navCtrl.setRoot(TabsPage);
             this.dataService.setLogin();
+            this.dataService.load();
         })
         .catch(error => {
             // handle error by showing alert

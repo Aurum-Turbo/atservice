@@ -7,12 +7,12 @@ export const AppSettings = Object.freeze({
       "position": "buttom"
     },
     "FIREBASE_CONFIG":{
-        "apiKey": "AIzaSyAvHU3TnHSYMUfaCHA7sxhAJ53n96vpp6E",
-        "authDomain": "atservice-869db.firebaseapp.com",
-        "databaseURL": "https://atservice-869db.firebaseio.com",
-        "projectId": "atservice-869db",
-        "storageBucket": "atservice-869db.appspot.com",
-        "messagingSenderId": "12584779991"
+        apiKey: "AIzaSyCUkQ_UrN0g4cUFKaN427ltPvaLMJi78ck",
+        authDomain: "atservice-c4918.firebaseapp.com",
+        databaseURL: "https://atservice-c4918.firebaseio.com",
+        projectId: "atservice-c4918",
+        storageBucket: "atservice-c4918.appspot.com",
+        messagingSenderId: "149340274232"
     },
     "MAP_KEY":{
        "apiKey":"AIzaSyCB7jsMv0hjwkVRan7vZZ9hDlI-dQNZRV8"
