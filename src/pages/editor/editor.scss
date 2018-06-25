@@ -60,8 +60,6 @@ page-editor {
     quill-editor {
         margin-top: 20px !important;
         background-color: theme-colors('textColors','accent') !important;
-        -webkit-user-select: text !important;
-        user-select: text !important;
     }
 
     //quill.snow.css
@@ -73,6 +71,12 @@ page-editor {
         height: 420px;
         margin: 0px;
         position: relative;
+        -webkit-user-select: auto !important;
+        -khtml-user-select: auto !important;
+        -moz-user-select: auto !important;
+        -ms-user-select: auto !important;
+        -o-user-select: auto !important;
+        user-select: auto !important;
       }
       .ql-container.ql-disabled .ql-tooltip {
         visibility: hidden;
