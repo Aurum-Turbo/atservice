@@ -1,0 +1,64 @@
+page-home {
+    width: 100%;
+    .product_list{
+        ion-grid{
+            
+            .info_card{
+                color: black;
+                border-radius: 5px;
+                background-color:silver;
+                overflow: hidden;
+                .info_pic{
+                    width: 100%;
+                    display: block;
+                }
+                .intro{
+                    width: 100%;
+                    padding-left: 10px;
+                }
+                .bt_info{
+                    height: 40px;
+                    display: flex;
+                    justify-content: space-between;/* flex子元素两端对齐 */
+                    
+                    .username{
+                        padding-left: 30px;
+                        padding-top:   10px;
+                        display: flex; /* 右下角的点赞图标位置很难调，最后使用flex终于调好了 */
+                        width: 50%;
+                    }
+                    .mk_ar{
+                        right: 10px;
+                        display: flex; 
+                        margin-left: 10px;  
+                    }
+                    button{
+                        right: 0px;
+                        bottom: 40px;
+
+                    }
+                }
+            }
+            /* p{
+                color: white;
+            }
+            .bt_info{ 
+                height:30px;
+                border:1px solid;
+                float:left;
+                .username{
+                width: 40px;
+                float: left;
+                align: bottom;
+                border: 1px solid;
+                }
+                button{
+                    float:right;
+                    // min-width: 50px;
+                    border: 1px solid;
+                }
+            } */
+        }
+    }
+   
+}

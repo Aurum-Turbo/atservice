@@ -1,0 +1,73 @@
+<!--
+  Generated template for the AboutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>about</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="psn_info">
+    <div class="avatar">
+      <img src="assets/imgs/avatar.jpeg"/>
+    </div>
+    <div class="usrname">
+      <button class="u_name_btn" ion-button>username</button>
+    </div>
+    <div class="funs">
+      <ion-icon icon-small *ngFor="let i of [1,2,3,4,5]" ><i class="{{star[i]}}"></i></ion-icon>
+      <span span-small >{{mark}}</span>
+    </div>
+  </div>
+  <div class="pf_dtl">  
+    
+      <ion-list no-lines>
+      <ion-item>
+          <ion-segment [(ngModel)]="tabs">
+              <ion-segment-button value="blance">
+                Balance
+              </ion-segment-button>
+              <ion-segment-button value="job">
+                Job
+              </ion-segment-button>
+              <ion-segment-button value="post">
+                Post
+              </ion-segment-button>
+              <ion-segment-button value="comment">
+                Commnets
+              </ion-segment-button>
+            </ion-segment>
+      </ion-item>
+      <ion-item class=psn_logs>
+            <div [ngSwitch]="tabs">
+                <ion-list *ngSwitchCase="'blance'">
+                  account balance
+                </ion-list>
+        
+                <ion-list *ngSwitchCase="'job'">
+                  job
+                </ion-list>
+                <ion-list *ngSwitchCase="'post'">
+                  post
+                </ion-list>
+                <ion-list *ngSwitchCase="'comment'">
+                  comment
+                </ion-list>
+            </div>
+      </ion-item>
+      </ion-list>
+      </div>
+      <ion-fab #fab bottom right>
+          <button button-ion-fab ion-fab (click)="onClick('new')">
+            <ion-icon name="add"></ion-icon>
+          </button>
+      </ion-fab>
+      
+</ion-content>

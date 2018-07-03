@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { JobPage } from '../job/job';
 import { ServicePage } from '../service/service';
 import { OrderPage } from '../order/order';
+import { AboutPage } from '../about/about';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the TabsPage page.
  *
@@ -18,9 +20,11 @@ import { OrderPage } from '../order/order';
 })
 export class TabsPage {
 
-  tab1Root: any = JobPage;
+  tab1Root: any = HomePage;
   tab2Root: any = ServicePage;
   tab3Root: any = OrderPage;
+  tab4Root: any = AboutPage;
+
   mySelectedIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
