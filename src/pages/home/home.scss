@@ -1,9 +1,14 @@
 page-home {
+  
     width: 100%;
     .product_list{
         ion-grid{
-            
+            padding:0 !important;
+            margin: 0 !important;
             .info_card{
+                padding:0 !important;
+                margin: 0 !important;
+                width: 100%;
                 color: black;
                 border-radius: 5px;
                 background-color:silver;

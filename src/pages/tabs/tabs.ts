@@ -21,9 +21,9 @@ import { HomePage } from '../home/home';
 export class TabsPage {
 
   tab1Root: any = HomePage;
-  tab2Root: any = ServicePage;
-  tab3Root: any = OrderPage;
-  tab4Root: any = AboutPage;
+ /*  tab2Root: any = ServicePage;
+  tab3Root: any = OrderPage; */
+  tab3Root: any = AboutPage;
 
   mySelectedIndex: number;
 

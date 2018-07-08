@@ -18,13 +18,15 @@
     <div class="avatar">
       <img src="assets/imgs/avatar.jpeg"/>
     </div>
-    <div class="usrname">
-      <button class="u_name_btn" ion-button>username</button>
-    </div>
-    <div class="funs">
+    <ion-grid>
+      <ion-row>
+      <button class="u_name_btn" ion-button class="usrname">username</button>
+    </ion-row>
+    <ion-row>
       <ion-icon icon-small *ngFor="let i of [1,2,3,4,5]" ><i class="{{star[i]}}"></i></ion-icon>
       <span span-small >{{mark}}</span>
-    </div>
+    </ion-row>
+    </ion-grid>
   </div>
   <div class="pf_dtl">  
     

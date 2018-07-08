@@ -1,5 +1,5 @@
 page-editor {
-    ion-row {
+    ion-row{
         ion-img {
             position: relative !important;
             //background-color: transparent !important;
@@ -54,13 +54,28 @@ page-editor {
             height: 40px !important;
             //align-items: center !important;
         }
-        
-    }
-
-    quill-editor {
-        margin-top: 20px !important;
-        background-color: theme-colors('textColors','accent') !important;
-    }
+        quill-editor { 
+            width: 100% !important; 
+            margin-top: 20px !important;
+            background-color: theme-colors('textColors','accent') !important;
+          }
+        }
+        .pht_add{
+          button{
+            height:20em;
+            margin-top: 0px !important;
+            color: #fcd736 !important;
+          }
+        }
+        .prvw_btn{ 
+          display: flex !important;
+          button{
+            width:50% !important;
+           
+            margin-top: 0px !important;
+            color: #fcd736;
+          }
+        }
 
     //quill.snow.css
 

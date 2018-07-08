@@ -17,9 +17,9 @@
 <ion-searchbar>search</ion-searchbar>
 <div class="product_list">
   <ion-grid>
-      <ion-row>
-        <ion-col col-12 *ngFor="let item of pdtlist">
-            <ion-card class="info_card">
+      <ion-row *ngFor="let item of pdtlist">
+        <ion-col no-padding col-6 >
+            <ion-card class="info_card" >
                 <img class="info_pic" src="{{item.pic}}"/>
                 <ion-card-content>
                   <ion-card-title>
@@ -53,6 +53,41 @@
                 </div>
             </div> -->
       </ion-col>
+      <ion-col no-padding col-6 >
+        <ion-card class="info_card" >
+            <img class="info_pic" src="{{item.pic}}"/>
+            <ion-card-content>
+              <ion-card-title>
+                Nine Inch Nails Live
+                </ion-card-title>
+                <div class="intro">
+                    <p>put slogan or brief introduction in this area</p>
+                  </div>
+                  <div class="bt_info">
+                      <div class="username">{{item.title}}</div>
+                      <div class="mk_ar">
+                        <button ion-button clear icon-start>
+                            <ion-icon name='heart' is-active="false"></ion-icon>
+                          </button>
+                      </div>                  
+                  </div>
+            </ion-card-content>
+          </ion-card>
+        <!-- <div class="info_card">
+            <img class="info_pic" src="{{item.pic}}"/>
+            <div class="intro">
+              <p>put slogan or brief introduction in this area</p>
+            </div>
+            <div class="bt_info">
+                <div class="username">{{item.title}}</div>
+                <div class="mk_ar">
+                  <button ion-button clear icon-start>
+                      <ion-icon name='heart' is-active="false"></ion-icon>
+                    </button>
+                </div>                  
+            </div>
+        </div> -->
+  </ion-col>
       </ion-row>
   </ion-grid>
 </div>

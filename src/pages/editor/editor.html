@@ -15,12 +15,12 @@
   <ion-grid padding-top>
     <ion-row justify-content-center>
       <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col col-12>
           <ion-img src={{serviceObj.coverimage}}></ion-img>
           </ion-col>
-        </ion-row>
-        <ion-row>
+        </ion-row> -->
+       <!--  <ion-row>
           <ion-label image-label>Cover Image</ion-label>
           <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
           <button ion-button default-button image-button (click)="imageInput.click()"><ion-icon name="folder"></ion-icon></button>
@@ -30,15 +30,24 @@
         </ion-row>
         <ion-row>
             <ion-input clearInput type="text" placeholder="Please enter the Brief" [(ngModel)]="serviceObj.brief"></ion-input>
-        </ion-row>
+        </ion-row> -->
         <!--ion-row>
           <ion-input clearInput type="text" placeholder="Please enter the Price" [(ngModel)]="serviceObj.price"></ion-input>
       </ion-row-->
         <ion-row>
-          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:['bold', 'italic', 'underline', 'strike','blockquote', 'code-block',{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }, 'clean',{ 'color': [] }, { 'background': [] }, { 'header': [1, 2, 3, 4, 5, 6, false] }, 'link', 'image', 'video']}"></quill-editor>
+          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:false}"></quill-editor>
+          <!-- [modules]="{toolbar:['bold', 'italic', 'underline', 'strike','blockquote', 'code-block',{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }, 'clean',{ 'color': [] }, { 'background': [] }, { 'header': [1, 2, 3, 4, 5, 6, false] }, 'link', 'image', 'video']}" -->
         </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
+      <ion-item class="pht_add">
+        <button ion-button (click)="doCamera()" clear><ion-icon name='md-camera'></ion-icon></button>
+        <img *ngIf="base64Image" [src]="base64Image" />     
+      </ion-item>
+      <ion-item class="prvw_btn">
+        <button ion-button (click)="goPreview()">Preview</button>
+        <button ion-button (click)="goPreview()">Submit</button>
+      </ion-item>
 
 </ion-content>

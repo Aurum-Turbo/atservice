@@ -11,6 +11,7 @@ import { JobData } from '../job-data/job-data';
 
 import 'uuid';
 import { AppSettings } from '../app-setting';
+declare var require: any
 
 /*
   Generated class for the DataServiceProvider provider.

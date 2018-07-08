@@ -22,8 +22,7 @@ export class ServicePage {
   serviceList = [];
 
   constructor(
-    public dataService: DataServiceProvider,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public dataService: DataServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

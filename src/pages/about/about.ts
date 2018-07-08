@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EditorPage } from '../editor/editor';
+import { ServiceData } from '../../providers/service-data/service-data';
 /* import { ServiceData } from '../../providers/service-data/service-data';
 import{ ServicePage } from '../service/service'; */
 
@@ -47,5 +49,11 @@ export class AboutPage {
     //this.onEvent("onRates", index, e);
     };
     console.log("star: ", this.star);
+  }
+  onClick(event: string, item: ServiceData) {
+    if(event == "new")
+    {
+      this.navCtrl.push(EditorPage);
+    }
   }
 }

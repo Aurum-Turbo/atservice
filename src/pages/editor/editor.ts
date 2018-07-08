@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { ServiceDetailsPage } from '../service-details/service-details';
 import { ServiceData } from '../../providers/service-data/service-data';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 //import { QuillModule } from 'ngx-quill';
 
@@ -31,9 +34,10 @@ export class EditorPage {
   public brief: any;
   public description: any;
   */
+  public base64Image='';
   constructor(
     public dataService: DataServiceProvider,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, public navParams: NavParams, private camera: Camera) {
 
       if(navParams.data != null)
       {
@@ -61,5 +65,24 @@ export class EditorPage {
     }
     reader.readAsDataURL(event.target.files[0]);
   }
-
+  doCamera(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+     this.base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+     // Handle error
+    });
+  }
+  // 跳转到service页面
+  goPreview(){
+    this.navCtrl.push(ServiceDetailsPage)
+  }
 }
