@@ -14,6 +14,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { HomePage } from '../pages/home/home';
+import { UserPage } from '../pages/user/user';
+import { ProfilePage } from '../pages/profile/profile';
 import { JobPage } from '../pages/job/job';
 import { ServicePage } from '../pages/service/service';
 import { OrderPage } from '../pages/order/order';
@@ -34,6 +37,9 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MyApp,
     LoginPage,
     TabsPage,
+    HomePage,
+    UserPage,
+    ProfilePage,
     JobPage,
     ServicePage,
     OrderPage,
@@ -57,6 +63,9 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MyApp,
     LoginPage,
     TabsPage,
+    HomePage,
+    UserPage,
+    ProfilePage,
     JobPage,
     ServicePage,
     OrderPage,

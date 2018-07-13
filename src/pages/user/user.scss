@@ -1,0 +1,60 @@
+page-user {
+
+    ion-avatar{
+            
+        img{
+            margin: 0 auto;
+            min-width: 60px !important;
+            min-height: 60px !important;
+        }
+    }
+    .username{
+        color: #eee;
+        text-align: center !important;
+        button{
+            margin-top: 20px !important;
+        }
+    }
+    .starrank{
+        margin-top: 10px;
+        text-align: center;
+        color: #fcd736 ;
+        ion-icon{
+            color: #fcd736 !important;
+        }
+    }
+    .sgn_btn{
+        text-align: center;
+    }
+   
+    .wal_sld{
+        h1{
+            color: #fcd736;
+            margin-top: 20px !important;
+           }
+        ion-item{
+            color: #eee;
+            p{
+                width: 60%;
+                float: left;
+            }
+            .mny_io{
+                float: right;
+                span{
+                    color : green;
+                }
+            }
+            .trans_date{
+                width: 60%;
+                float: left;
+            }
+            .bal{
+                float: right;
+                span{
+                    color : #fcd736;
+                }
+            }
+        }
+        
+    }
+}

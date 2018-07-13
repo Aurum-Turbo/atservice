@@ -1,0 +1,89 @@
+page-profile {
+    ion-row{
+        border-bottom: 1px #eee solid;
+    }
+        ion-avatar{
+            max-width: 80px;
+            max-height: 80px;
+            overflow: hidden;
+            border-radius: 50px;
+        }
+        p{
+            color: #eee;
+            margin-top: 25px;
+        }
+
+        .button{
+            float: right;
+            margin-right: -40px !important;
+            margin-top: 10px !important;
+            font-size: 30px !important;
+        }
+        .sys_font{
+            display: block;
+            color: #eee;
+            margin: 25px !important;
+            margin-left: 15px !important;
+        }
+        .usr_font{
+            display: block;
+            margin-top: 25px !important;
+            // margin-left: 30px;
+            color: #fcd736;
+        }
+        ion-label{
+            float: left;
+        }
+        ion-select{
+            float: left;
+            margin-top: 15px;
+            color: #fcd736;
+        }
+        ion-datetime{
+            display: block;
+            margin-top: 25px !important;
+            color: #fcd736;
+        }
+        ion-textarea{
+            min-height: 80px;
+        }
+
+    /* ion-item{
+
+        .avatar{
+            // margin-top: 10px;
+            float: left;
+            ion-avatar{
+                float: left;
+                img{
+                    min-width: 50px !important;
+                    min-height: 50px !important;
+                }
+            }
+            p{
+                float: left;
+                margin: 15px;
+            }
+
+        }
+        .btn_rt{
+            float: right;
+            margin-right: -40px !important;
+            .button{
+                margin-top: 10px !important;
+                font-size: 30px !important;
+            }
+        }
+        .sys_font{
+            color: #eee;
+        }
+            .dspl_lt{
+                margin-top:20px;
+                float: left;
+                #usr{
+                    margin-left: 30px;
+                    color: #fcd736;
+                }
+            }
+    } */
+}

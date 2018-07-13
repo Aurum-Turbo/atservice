@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { JobPage } from '../job/job';
+import { HomePage} from '../home/home';
+import { UserPage } from '../user/user';
 import { ServicePage } from '../service/service';
 import { OrderPage } from '../order/order';
 /**
@@ -18,9 +19,9 @@ import { OrderPage } from '../order/order';
 })
 export class TabsPage {
 
-  tab1Root: any = JobPage;
+  tab1Root: any = HomePage;
   tab2Root: any = ServicePage;
-  tab3Root: any = OrderPage;
+  tab3Root: any = UserPage;
   mySelectedIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

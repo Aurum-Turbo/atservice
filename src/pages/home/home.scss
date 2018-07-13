@@ -1,0 +1,13 @@
+page-home {
+    
+    .homecard_pad{
+        column-count: 2; //瀑布流实现关键
+    }
+            ion-card{
+                width: 100% !important;
+                margin:5px 0 !important;
+                display: inline-block;
+                background-color: #eee !important;
+                border-radius: 5px !important;
+            }
+}
