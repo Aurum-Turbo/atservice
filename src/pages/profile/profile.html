@@ -23,7 +23,7 @@
           <p>Change your avatar</p>
       </ion-col>
       <ion-col col-2>
-          <button ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
+          <button ion-button class="fwd_btn" clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -34,7 +34,7 @@
           <span class="usr_font">Jack</span>
       </ion-col>
       <ion-col col-2>
-          <button ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
+          <button ion-button class="fwd_btn" clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -60,7 +60,7 @@
           <span class="usr_font">Sydney</span>
       </ion-col>
       <ion-col col-2>
-          <button ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
+          <button class="fwd_btn" ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -68,11 +68,10 @@
           <span class="sys_font">Birthday</span>
       </ion-col>
       <ion-col col-6>
-          <ion-label>Date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="dateofBirth"></ion-datetime>
       </ion-col>
       <ion-col col-2>
-          <button ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
+          <button ion-button class="fwd_btn" clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -83,7 +82,7 @@
           <ion-textarea class="usr_font"></ion-textarea>
       </ion-col>
       <ion-col col-2>
-          <button ion-button clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
+          <button ion-button class="fwd_btn" clear block><ion-icon name="ios-arrow-forward" color=light></ion-icon></button>
       </ion-col>
     </ion-row>
   </ion-grid>

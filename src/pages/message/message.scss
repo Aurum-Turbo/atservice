@@ -1,0 +1,20 @@
+page-message {
+    ion-avatar{
+        img{
+            border-radius: 5px !important;
+            min-width: 50px !important;
+            min-height: 50px !important;
+        }
+    }
+ h2{
+     color: snow;
+     float: left;
+ }
+ span{
+     color: gray;
+     float: right;
+ }
+ p{
+     float: left;
+ }
+}

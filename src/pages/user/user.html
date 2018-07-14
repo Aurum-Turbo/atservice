@@ -25,10 +25,10 @@
           <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{star[i]}}"></i></ion-icon>
           <span span-small>{{mark}}</span>
           </p>
-          <div class="sgn_btn">
+          <!-- <div class="sgn_btn">
             <button ion-button>Sign up</button>
             <button ion-button>Sign in</button>
-          </div>
+          </div> -->
         </ion-item>
         <ion-item>
             <ion-segment color="grey" [(ngModel)]="tabs">
@@ -53,11 +53,20 @@
                   </ion-item>
                 </ion-list>
               </ion-slide>
-              <ion-slide>
+              <ion-slide class="cal_sld">
                 <h1>ContentTab 2</h1>
               </ion-slide>
-              <ion-slide>
+              <ion-slide class="pst_sld">
                 <h1>ContentTab 3</h1>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span id="date">26</span>
+                      <span id="month"></span>
+                    </ion-col>
+                    <ion-col col-8></ion-col>
+                  </ion-row>
+                </ion-grid>
               </ion-slide>
             </ion-slides>
         </ion-item>

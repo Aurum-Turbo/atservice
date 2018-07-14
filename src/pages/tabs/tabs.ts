@@ -5,6 +5,7 @@ import { HomePage} from '../home/home';
 import { UserPage } from '../user/user';
 import { ServicePage } from '../service/service';
 import { OrderPage } from '../order/order';
+import { MessagePage } from '../message/message';
 /**
  * Generated class for the TabsPage page.
  *
@@ -20,8 +21,9 @@ import { OrderPage } from '../order/order';
 export class TabsPage {
 
   tab1Root: any = HomePage;
-  tab2Root: any = ServicePage;
+  tab2Root: any = MessagePage;
   tab3Root: any = UserPage;
+  // tab4Root: any = MessagePage;
   mySelectedIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

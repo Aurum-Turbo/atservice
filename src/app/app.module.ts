@@ -17,6 +17,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
 import { UserPage } from '../pages/user/user';
 import { ProfilePage } from '../pages/profile/profile';
+import { MessagePage } from '../pages/message/message';
 import { JobPage } from '../pages/job/job';
 import { ServicePage } from '../pages/service/service';
 import { OrderPage } from '../pages/order/order';
@@ -40,6 +41,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     HomePage,
     UserPage,
     ProfilePage,
+    MessagePage,
     JobPage,
     ServicePage,
     OrderPage,
@@ -66,6 +68,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     HomePage,
     UserPage,
     ProfilePage,
+    MessagePage,
     JobPage,
     ServicePage,
     OrderPage,
