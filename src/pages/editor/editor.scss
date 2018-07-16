@@ -1,11 +1,12 @@
 page-editor {
     ion-row {
         ion-img {
-            position: relative !important;
+            // position: relative !important;
             //background-color: transparent !important;
             //margin: auto;
-            max-width: 100% !important;
-            min-height: 300px !important;
+            // max-width: 100% !important;
+            min-height: 80px !important;
+            min-width: 80px !important;
             display: block !important;
         }
 
@@ -21,10 +22,11 @@ page-editor {
         }
 
         [image-button] {
-          position: absolute;
+          // position: absolute;
           visibility: visible !important;
-          top: 240px !important;
-          right: 25px !important;
+          /* top: 240px !important;
+          right: 25px !important; */
+
         }
 
         [image-label] {
@@ -58,6 +60,7 @@ page-editor {
     }
 
     quill-editor {
+        width: 100%;
         margin-top: 20px !important;
         background-color: theme-colors('textColors','accent') !important;
     }
@@ -971,6 +974,20 @@ page-editor {
       .ql-container.ql-snow {
         border: 1px solid #ccc;
       }
-
-
+      // 图片添加部分
+      ion-scroll{
+        height: 80px;
+        width: auto;
+        white-space: nowrap;
+        img{
+          height:80px;
+          width: 80px;
+        }
+      }
+      ion-row{
+        .button{
+          margin:20px 0px !important;
+          width: 100% !important;
+        }
+      }
 }

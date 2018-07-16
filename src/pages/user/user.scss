@@ -57,4 +57,41 @@ page-user {
         }
         
     }
+    ion-grid{
+        ion-row{ 
+            .dat_lt{
+                padding-left: 0px;
+                 color: snow;
+                 width: 100%;
+           
+                #date{
+                    font-size: 30px;   
+                }
+                #month{
+                    font-size: 15px;
+                }
+            }
+            .cnt_rt{
+                padding-right: 0px;
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                // white-space: pre-wrap !important;
+            }
+    
+        }
+    }
+    #nw_pst{
+        border: 1px solid #424242;
+        border-radius: 5px;
+        margin: 10px 0px;
+        p{
+            float: left;
+        }
+        ion-icon{
+            float: right;
+            color: #424242;
+        }
+    }
+    
 }

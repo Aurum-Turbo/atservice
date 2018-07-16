@@ -15,30 +15,48 @@
   <ion-grid padding-top>
     <ion-row justify-content-center>
       <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-        <ion-row>
+       <!--  <ion-row>
           <ion-col col-12>
           <ion-img src={{serviceObj.coverimage}}></ion-img>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
-          <ion-label image-label>Cover Image</ion-label>
-          <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
-          <button ion-button default-button image-button (click)="imageInput.click()"><ion-icon name="folder"></ion-icon></button>
+          <ion-col col-2>
+            <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
+          <button ion-button default-button image-button (click)="imageInput.click()"><ion-icon name="add"></ion-icon></button>
+          </ion-col>
+          <!-- <ion-label image-label>Cover Image</ion-label> -->
+          <ion-col col-10>
+              <ion-scroll scrollX="true">
+
+                  <!-- <ion-item *ngFor="let item of imgsList"> -->
+                    <img src="../../assets/imgs/00.jpeg"/>
+                    <img src="../../assets/imgs/01.jpeg"/>
+                    <img src="../../assets/imgs/02.jpeg"/>
+                    <img src="../../assets/imgs/03.jpeg"/>
+                    <img src="../../assets/imgs/04.jpeg"/>
+                    <img src="../../assets/imgs/05.jpeg"/>
+                  <!-- </ion-item> -->
+                </ion-scroll>
+                <!-- src={{serviceObj.coverimage}} -->
+          </ion-col>         
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-input clearInput type="text" placeholder="Please enter the Title" [(ngModel)]="serviceObj.title"></ion-input>
-        </ion-row>
-        <ion-row>
+        </ion-row> -->
+        <!-- <ion-row>
             <ion-input clearInput type="text" placeholder="Please enter the Brief" [(ngModel)]="serviceObj.brief"></ion-input>
-        </ion-row>
+        </ion-row> -->
         <!--ion-row>
           <ion-input clearInput type="text" placeholder="Please enter the Price" [(ngModel)]="serviceObj.price"></ion-input>
       </ion-row-->
         <ion-row>
-          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:['bold', 'italic', 'underline', 'strike','blockquote', 'code-block',{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }, 'clean',{ 'color': [] }, { 'background': [] }, { 'header': [1, 2, 3, 4, 5, 6, false] }, 'link', 'image', 'video']}"></quill-editor>
+          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
+        <button ion-button block default-button>Submit</button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
 </ion-content>
+<!-- ['bold', 'italic', 'underline', 'strike','blockquote', 'code-block',{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }, 'clean',{ 'color': [] }, { 'background': [] }, { 'header': [1, 2, 3, 4, 5, 6, false] }, 'link', 'image', 'video'] -->

@@ -31,6 +31,8 @@ export class EditorPage {
   public brief: any;
   public description: any;
   */
+  public imgsList: any = [];
+
   constructor(
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
@@ -39,6 +41,10 @@ export class EditorPage {
       {
         this.serviceObj = navParams.data; 
         console.log("edit page: ", this.serviceObj);
+      }
+
+      for(let i:0; i<8; i++){
+        this.imgsList.push('../../assets/imgs/0'+i+'.jpeg')
       }
   }
 
