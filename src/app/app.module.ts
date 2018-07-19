@@ -34,7 +34,6 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Calendar } from '@ionic-native/calendar';
 import { MessageData } from '../providers/message-data/message-data';
 
-
 @NgModule({
   declarations: [
     MyApp,
