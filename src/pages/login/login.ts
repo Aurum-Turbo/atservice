@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
+import { UserPage } from '../user/user';
 import { AppSettings } from '../../providers/app-setting';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -104,7 +105,7 @@ export class LoginPage {
       {
         this.authService.login(this.loginForm.value)
         .then(response => {
-            this.navCtrl.setRoot(TabsPage);
+            this.navCtrl.setRoot(UserPage);
             this.dataService.setLogin();
             this.dataService.load();
         })

@@ -1,8 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, AlertController } from 'ionic-angular';
+import { Calendar } from '@ionic-native/calendar';
+
+
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
-import { Calendar } from '@ionic-native/calendar';
+
+
 
 /**
  * Generated class for the UserPage page.
@@ -35,8 +39,11 @@ export class UserPage {
   isSelected: any;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-    private calendar: Calendar) {
+  constructor(
+              public navCtrl: NavController, 
+              public navParams: NavParams, 
+              private alertCtrl: AlertController,
+              private calendar: Calendar) {
     for(let i=0; i<10; i++){
       this.transList.push('这是第'+i+'条数据')
       this.posList.push("assets/imgs/0"+i+".jpeg")

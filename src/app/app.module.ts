@@ -32,6 +32,7 @@ import { JobData } from '../providers/job-data/job-data';
 import { AppSettings } from '../providers/app-setting';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Calendar } from '@ionic-native/calendar';
+import { MessageData } from '../providers/message-data/message-data';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { Calendar } from '@ionic-native/calendar';
     OrderData,
     JobData,
     AuthServiceProvider,
-    Calendar
+    Calendar,
+    MessageData
   ]
 })
 export class AppModule {}

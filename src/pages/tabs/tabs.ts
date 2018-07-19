@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { HomePage} from '../home/home';
+import { LoginPage } from '../login/login';
 import { UserPage } from '../user/user';
-import { ServicePage } from '../service/service';
-import { OrderPage } from '../order/order';
 import { MessagePage } from '../message/message';
 /**
  * Generated class for the TabsPage page.
@@ -22,12 +22,24 @@ export class TabsPage {
 
   tab1Root: any = HomePage;
   tab2Root: any = MessagePage;
-  tab3Root: any = UserPage;
+  tab3Root: any;
   // tab4Root: any = MessagePage;
   mySelectedIndex: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public localStorage: Storage,
+    public navCtrl: NavController, public navParams: NavParams) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
+
+    localStorage.ready().then(() => {
+      this.localStorage.get("loginstatus").then(status => {
+        this.tab3Root = status? UserPage : LoginPage;
+        //this.tab3Root = LoginPage;
+        console.log("loginstatus: ", status, "tab3Root: ", this.tab3Root);
+      });
+      //console.log("login status: ", this.dataService.isLogin());
+      //this.rootPage = this.dataService.isLogin()? TabsPage:LoginPage; 
+    });
   }
 
   ionViewDidLoad() {

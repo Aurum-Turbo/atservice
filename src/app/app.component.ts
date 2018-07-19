@@ -25,7 +25,9 @@ export class MyApp {
     });
 
     localStorage.ready().then(() => {
-      
+
+      this.rootPage = TabsPage;
+      /*
       this.localStorage.get("loginstatus").then(status => {
         this.rootPage = status? TabsPage : LoginPage;
         if (this.rootPage == TabsPage)
@@ -33,7 +35,7 @@ export class MyApp {
           this.dataService.load();
         }
 
-      });
+      });*/
       //console.log("login status: ", this.dataService.isLogin());
       //this.rootPage = this.dataService.isLogin()? TabsPage:LoginPage; 
     });
