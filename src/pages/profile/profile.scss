@@ -1,102 +1,41 @@
 page-profile {
-    ion-row{
-        border-bottom: 1px #eee solid;
+    ion-list{
+        background-color: #424242 !important;
     }
         ion-avatar{
             max-width: 80px;
             max-height: 80px;
             overflow: hidden;
-            border-radius: 50px;
+            border-radius: 50%;
         }
         p{
             color: #eee;
-            margin-top: 25px;
         }
 
-        .fwd_btn{
-            float: right;
-            margin-right: -40px !important;
-            margin-top: 10px !important;
-            font-size: 30px !important;
-        }
         .sys_font{
-            display: block;
             color: #eee;
-            margin: 25px !important;
-            margin-left: 15px !important;
+            width: 100px;
         }
         .usr_font{
-            display: block;
-            margin-top: 25px !important;
-            // margin-left: 30px;
             color: #fcd736;
         }
-        ion-label{
-            float: left;
-        }
-        ion-select{
-            float: left;
-            margin-top: 15px;
-            color: #fcd736;
-            padding-left: 0px !important;
-        }
+        
         ion-datetime{
-            display: block;
-            margin-top: 15px !important;
+            display: inline-block;
             color: #fcd736;
             padding-left: 0px !important;
         }
-        ion-textarea{
-            min-height: 100px;
-        }
-        
-        
+        /* ion-textarea{
+            rows: 5;
+        } */
 
-    /* ion-item{
-
-        .avatar{
-            // margin-top: 10px;
-            float: left;
-            ion-avatar{
-                float: left;
-                img{
-                    min-width: 50px !important;
-                    min-height: 50px !important;
-                }
-            }
-            p{
-                float: left;
-                margin: 15px;
-            }
-
-        }
-        .btn_rt{
-            float: right;
-            margin-right: -40px !important;
-            .button{
-                margin-top: 10px !important;
-                font-size: 30px !important;
-            }
-        }
-        .sys_font{
-            color: #eee;
-        }
-            .dspl_lt{
-                margin-top:20px;
-                float: left;
-                #usr{
-                    margin-left: 30px;
-                    color: #fcd736;
-                }
-            }
-    } */
-}
-.picker-wrapper{
-    .picker-opt{
-        color: snow;
     }
-    .button{
-        margin-top: 0px !important;
-    }  
-}
+            .picker-wrapper{
+                .picker-opt{
+                    color: snow;
+                }
+                .button{
+                    margin-top: 0px !important;
+                }  
+            }       
 

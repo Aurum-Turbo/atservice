@@ -21,7 +21,7 @@ export class UserData {
   brief: string = "";
   messagebox: Array<MessageData>[];
 
-  constructor(public http: HttpClient) {
+  constructor() {
     console.log('Hello UserDataProvider Provider');
   }
 

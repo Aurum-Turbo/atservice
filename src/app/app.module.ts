@@ -33,7 +33,7 @@ import { AppSettings } from '../providers/app-setting';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Calendar } from '@ionic-native/calendar';
 import { MessageData } from '../providers/message-data/message-data';
-
+import { UserData } from '../providers/user-data/user-data';
 
 @NgModule({
   declarations: [
@@ -88,7 +88,8 @@ import { MessageData } from '../providers/message-data/message-data';
     JobData,
     AuthServiceProvider,
     Calendar,
-    MessageData
+    MessageData,
+    UserData
   ]
 })
 export class AppModule {}
