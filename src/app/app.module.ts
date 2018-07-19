@@ -88,7 +88,6 @@ import { MessageData } from '../providers/message-data/message-data';
     JobData,
     AuthServiceProvider,
     Calendar,
-    MessageData
   ]
 })
 export class AppModule {}
