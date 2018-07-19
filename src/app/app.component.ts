@@ -27,6 +27,7 @@ export class MyApp {
     localStorage.ready().then(() => {
 
       this.rootPage = TabsPage;
+      this.dataService.load();
       /*
       this.localStorage.get("loginstatus").then(status => {
         this.rootPage = status? TabsPage : LoginPage;

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserData } from '../../providers/user-data/user-data';
 
 /**
  * Generated class for the ProfilePage page.
@@ -15,13 +16,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProfilePage {
 
-  private dateofBirth: Date = new Date();
+  userDataObj: UserData = new UserData();
+  dateofBirth: Date = new Date();
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+  }
+  ionViewWillEnter() {
+    
+  }
+  ionViewWillLeave() {
+    //create service
+    //this.serviceObj.coverimage = this.coverimage;
+    console.log(this.userDataObj);
+    //this.dataService.updateServiceList("new",this.serviceObj);
+
   }
 
 }

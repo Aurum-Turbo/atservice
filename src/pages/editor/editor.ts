@@ -31,7 +31,7 @@ export class EditorPage {
   public brief: any;
   public description: any;
   */
-  public imgsList: any = [];
+  //public imgsList: any = [];
 
   constructor(
     public dataService: DataServiceProvider,
@@ -43,9 +43,9 @@ export class EditorPage {
         console.log("edit page: ", this.serviceObj);
       }
 
-      for(let i:0; i<8; i++){
+      /*for(let i:0; i<8; i++){
         this.imgsList.push('../../assets/imgs/0'+i+'.jpeg')
-      }
+      }*/
   }
 
   ionViewDidLoad() {
@@ -62,10 +62,19 @@ export class EditorPage {
 
   onSelect(event) {
     let reader = new FileReader();
+    if(this.serviceObj.images == null)
+    {
+      this.serviceObj.images = [];
+    }
+    console.log("images: ", this.serviceObj);
     reader.onload = (event: any) => {
-      this.serviceObj.coverimage = event.target.result;
+      this.serviceObj.images.push(event.target.result);
     }
     reader.readAsDataURL(event.target.files[0]);
+  }
+
+  onClick(event) {
+    console.log("event = ", event);
   }
 
 }

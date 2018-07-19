@@ -28,16 +28,9 @@
           <!-- <ion-label image-label>Cover Image</ion-label> -->
           <ion-col col-10>
               <ion-scroll scrollX="true">
-
-                  <!-- <ion-item *ngFor="let item of imgsList"> -->
-                    <img src="../../assets/imgs/00.jpeg"/>
-                    <img src="../../assets/imgs/01.jpeg"/>
-                    <img src="../../assets/imgs/02.jpeg"/>
-                    <img src="../../assets/imgs/03.jpeg"/>
-                    <img src="../../assets/imgs/04.jpeg"/>
-                    <img src="../../assets/imgs/05.jpeg"/>
-                  <!-- </ion-item> -->
-                </ion-scroll>
+                  <img *ngFor="let item of serviceObj.images" [src]="item" height="200px"/>
+                  <img src="assets/imgs/02.jpeg" (click)="onClick('addImage')"/>
+              </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->
           </ion-col>         
         </ion-row>

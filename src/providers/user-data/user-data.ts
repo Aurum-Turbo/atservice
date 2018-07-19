@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { MessageData } from '../message-data/message-data';
@@ -12,6 +11,7 @@ import { MessageData } from '../message-data/message-data';
 export class UserData {
 
   uid: string = "";
+  type: string = ""; //Service Provider or User
   status: string = "";
   avatar: any;
   nickname: string = "";
@@ -21,7 +21,7 @@ export class UserData {
   brief: string = "";
   messagebox: Array<MessageData>[];
 
-  constructor(public http: HttpClient) {
+  constructor() {
     console.log('Hello UserDataProvider Provider');
   }
 

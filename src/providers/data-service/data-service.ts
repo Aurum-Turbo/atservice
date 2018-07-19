@@ -11,6 +11,7 @@ import { JobData } from '../job-data/job-data';
 
 import 'uuid';
 import { AppSettings } from '../app-setting';
+import { UserData } from '../user-data/user-data';
 
 /*
   Generated class for the DataServiceProvider provider.
@@ -300,6 +301,11 @@ export class DataServiceProvider {
       console.log("order list is invalid");
     }
   }
+
+  updateUserData(userData: UserData) {
+    
+  }
+
 
   /*
   fbsAdd(event: string, item: any) {

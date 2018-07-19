@@ -38,7 +38,7 @@ export class ServiceData {
   sid: string = ""; //service id
   status: string = ""; //created, submitted, activated, suspended, discard 
   type: string = ""; // classified by qualification, transport, escorts
-  coverimage: any = "";
+  images: string[];
   title: string = ""; //title will display on the service list.
   brief: string = ""; //brief will display on the service list.
   description: string = ""; //description will be display on the service details
