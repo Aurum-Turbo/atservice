@@ -15,12 +15,8 @@ import { UserData } from '../../providers/user-data/user-data';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-<<<<<<< HEAD
 
   userDataObj: UserData = new UserData();
-=======
-  userDataObj:UserData = new UserData();
->>>>>>> 56cc9b5230e984d6552fd5e541a76e9dc35fad09
   dateofBirth: Date = new Date();
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -30,7 +26,6 @@ export class ProfilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
   }
-<<<<<<< HEAD
   ionViewWillEnter() {
     
   }
@@ -40,18 +35,6 @@ export class ProfilePage {
     console.log(this.userDataObj);
     //this.dataService.updateServiceList("new",this.serviceObj);
 
-=======
-  
-  onSelect(event) {
-    let reader = new FileReader();
-    console.log("userDataObj: ", this.userDataObj, "result: ", event.target.result);
-    reader.onload = (event: any) => {
-      
-      this.userDataObj.avatar = event.target.result;
-      
-    }
-    reader.readAsDataURL(event.target.files[0]);
->>>>>>> 56cc9b5230e984d6552fd5e541a76e9dc35fad09
   }
 
   onClick(item) {
