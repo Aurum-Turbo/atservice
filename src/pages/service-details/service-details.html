@@ -14,7 +14,45 @@
 
 
 <ion-content>
-  <ion-card>
-    <div [innerHtml]="serviceObj.description"></div>
-  </ion-card>
+    <ion-slides>
+      <ion-slide>
+        <img src="../../assets/imgs/02.jpeg"/>
+      </ion-slide>
+      <ion-slide>
+        <img src="../../assets/imgs/03.jpeg"/>
+      </ion-slide>
+      <ion-slide>
+        <img src="../../assets/imgs/05.jpeg"/>
+      </ion-slide>
+    </ion-slides> 
+    <ion-list>
+      <ion-item class="hd_rw">
+              <ion-avatar item-start>
+                <img src="../../assets/imgs/avatar.png"/>
+              </ion-avatar>
+              <span>Nickname</span>
+              <button ion-button outline item-end>Follow</button>       
+      </ion-item>
+      <ion-item>
+        <div [innerHtml]="serviceObj.description"></div>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-8><span>Date</span></ion-col>
+            <ion-col col-2>Mark</ion-col>
+            <ion-col>Like</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+          <h2>Comments</h2>
+      </ion-item>
+      <ion-item>
+          <ion-avatar item-start>
+            <img src="../../assets/imgs/avatar.png"/>
+          </ion-avatar>
+          <p>jfkdsjlakdfjkls</p>
+      </ion-item>
+    </ion-list>
 </ion-content>
