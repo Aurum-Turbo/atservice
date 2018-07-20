@@ -46,7 +46,7 @@
         <ion-row>
           <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
-        <button ion-button block default-button>Submit</button>
+        <button ion-button block default-button (click)="onClick('submit')">Submit</button>
       </ion-col>
     </ion-row>
   </ion-grid>
