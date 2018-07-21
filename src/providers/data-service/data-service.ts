@@ -1,17 +1,21 @@
+declare var require: any
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage';
-import { AngularFirestore } from 'angularfire2/firestore';
-import firebase from 'firebase/app';
+import { AppSettings } from '../../providers/app-setting';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { ServiceData } from '../service-data/service-data';
 import { OrderData } from '../order-data/order-data';
 import { JobData } from '../job-data/job-data';
 
 import 'uuid';
-import { AppSettings } from '../app-setting';
 import { UserData } from '../user-data/user-data';
+import { LoadingServiceProvider } from '../loading-service/loading-service';
+
 
 /*
   Generated class for the DataServiceProvider provider.
@@ -28,96 +32,66 @@ export class DataServiceProvider {
   jobList = [];
   sortedJobList = [];
 
+  userDataObj = new UserData;
+
   constructor(
-    private afs: AngularFirestore,
+    private loadingService: LoadingServiceProvider,
     private localStorage: Storage,
     public http: HttpClient) {
     console.log('Hello DataServiceProvider Provider');
-    //load service list from localstorage
-    this.localStorage.get('servicelist').then(record => {
-      if(record)
-      {
-        this.serviceList = record;
-      }
-    }, err => {console.log(err)});
+
+    //initialize firebase
+    //firebase.initializeApp(AppSettings.FIREBASE_CONFIG);
+
+    //enable offline data sync
+    //const firestore = firebase.firestore();
+    //const settings = {/* your settings... */ timestampsInSnapshots: true};
+    //firestore.settings(settings);
+
+    //firebase.firestore().enablePersistence()  
+    //.then(function() {
+      // Initialize Cloud Firestore through firebase
+      //var db = firebase.firestore();
+    //})
+    //.catch(function(err) {
+    //  if (err.code == 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+    //      console.log("app.component.ts - constructor - failed-precondition");
+    //  } else if (err.code == 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+    //      console.log("app.component.ts - constructor - browser not support offline");
+    //  }
+    //});
   }
 
   load() {
-    this.localStorage.get('servicelist').then(snapshot => {
-      if(snapshot)
-      {
-        this.serviceList = snapshot;
-      }
-    });
+    //first look up local storage, get the local services.
 
-
-    if(AppSettings.IS_FIREBASE_ENABLED)
+    /*this.loadingService.show();
+    if(item == "service")
     {
-      //console.log("firebase current user: ", firebase.auth().currentUser);
-      this.afs.collection('services').ref.get()
-        .then(querysnapshot => {
-          querysnapshot.forEach(item => {
-            for(var index = 0; index < this.serviceList.length; index++)
-            {
-              if(item.uid )
-              this.serviceList.push(item);
-            }
-            
-          },err => {console.log(err)});
-        });  //this.localStorage.set("servicelist",this.serviceList);
-    }
-          
-           
-    /*
-    this.localStorage.get('servicelist').then(snapshot => {
-      if(snapshot)
-      {
-        this.serviceList = snapshot;
-      }
-      else
-      {
-        if(AppSettings.IS_FIREBASE_ENABLED)
-        {
-          //console.log("firebase current user: ", firebase.auth().currentUser);
-          
-          if(firebase.auth().currentUser)
+      return new Observable(observer => {
+        firebase.firestore().collection("services")
+        .orderBy("rank")
+        .onSnapshot({includeMetadataChanges:true}, snapshot => {snapshot.docChanges().forEach(change => {
+          if(change.type === "added") 
           {
-            this.afs.collection('services').ref.where("provider", "==", firebase.auth().currentUser.uid)
-            .get()
-            .then(querysnapshot => {
-              querysnapshot.forEach(item => {
-                this.serviceList.push(item);
-              });
-            });
-            this.localStorage.set("servicelist",this.serviceList);
+            this.serviceList.push(change.doc.data());
           }
-          
-          this.afs.collection('services').ref.get().then(snapshot => {
-            snapshot.forEach(item => {
-              this.serviceList.push(item);
-            });
-          });
-          this.localStorage.set("servicelist",this.serviceList);
 
-        }
-      }
-    }, err => {console.log(err)});
+          var source = snapshot.metadata.fromCache ? "local cache" : "server";
+            console.log("Data came from " + source);
+        });
+      });
 
 
-    this.localStorage.get('orderlist').then(snapshot => {
-      if(snapshot)
-      {
-        this.orderList = snapshot;
-      }
-    }, err => {console.log(err)});
-
-    this.localStorage.get('joblist').then(snapshot => {
-      if(snapshot)
-      {
-        this.jobList = snapshot;
-      }
-    }, err => {console.log(err)});
-    */
+      })
+      
+    }*/
   }
 
   isLogin(): boolean {
@@ -134,7 +108,19 @@ export class DataServiceProvider {
   }
 
   setLogin() {
+    /*
     this.localStorage.set('loginstatus',true);
+
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get()
+    .then(snapshot => {
+      console.log("data-service - setLogin - snapshot: ", snapshot.data());
+      if(snapshot.exists)
+      {
+        this.userDataObj = snapshot.data() as UserData;
+        console.log("data-service - setLogin - userData: ", this.userDataObj);
+      }
+    })
+    .catch(error => {console.log(error)});*/
   }
 
   getServiceByID(sid: string): ServiceData {
@@ -152,7 +138,7 @@ export class DataServiceProvider {
     return serviceByID;
   } 
 
-  updateServiceList(event:string, service: ServiceData) {
+  updateServiceList(event:string, service: ServiceData) {/*
     if(this.serviceList.length >= 0)
     {
       if(!service.sid && event == "new")
@@ -231,7 +217,7 @@ export class DataServiceProvider {
     else
     {
       console.log("service list is invalid");
-    }
+    }*/
   }
 
   updateOrderList(event:string, order: OrderData) {

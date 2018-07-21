@@ -35,7 +35,7 @@ export class TabsPage {
       this.localStorage.get("loginstatus").then(status => {
         this.tab3Root = status? UserPage : LoginPage;
         //this.tab3Root = LoginPage;
-        console.log("loginstatus: ", status, "tab3Root: ", this.tab3Root);
+        //console.log("loginstatus: ", status, "tab3Root: ", this.tab3Root);
       });
       //console.log("login status: ", this.dataService.isLogin());
       //this.rootPage = this.dataService.isLogin()? TabsPage:LoginPage; 

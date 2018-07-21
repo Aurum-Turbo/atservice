@@ -21,7 +21,7 @@
       </ion-item> -->
     </ion-list>
   <div class="homecard_pad">
-    <ion-card *ngFor="let item of serviceList">
+    <ion-card *ngFor="let item of items | async">
       <img src="{{item.images[0]}}"/>
       <ion-card-content>
           <div [innerHtml]="item.description"></div>

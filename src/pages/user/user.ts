@@ -6,6 +6,14 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 
+import { UserData } from '../../providers/user-data/user-data';
+import { DataServiceProvider } from '../../providers/data-service/data-service';
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import firebase from 'firebase/app';
 
 
 /**
@@ -38,12 +46,18 @@ export class UserPage {
   selectedEvent: any;
   isSelected: any;
   
-
+  itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+  items: Observable<UserData[]>; // read collection
+  currentUser: UserData;
   constructor(
+              private afs: AngularFirestore,
+              public dataService: DataServiceProvider,
               public navCtrl: NavController, 
               public navParams: NavParams, 
               private alertCtrl: AlertController,
-              private calendar: Calendar) {
+              private calendar: Calendar) {          
+    //this.userDataObj = this.dataService.userDataObj;
+
     for(let i=0; i<10; i++){
       this.transList.push('这是第'+i+'条数据')
       this.posList.push("assets/imgs/0"+i+".jpeg")
@@ -55,6 +69,12 @@ export class UserPage {
     this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     this.getDaysOfMonth();
     this.loadEventThisMonth();
+
+    //this.userDataObj = this.dataService.userDataObj;
+    //console.log("user.ts - constructor - userData: ", this.userDataObj); 
+    this.itemsCollection = this.afs.collection("users", ref => {return ref.where("uid","==",firebase.auth().currentUser.uid)});
+    this.items = this.itemsCollection.valueChanges();
+    
   }
   
 

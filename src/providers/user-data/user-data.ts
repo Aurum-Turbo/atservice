@@ -17,7 +17,7 @@ export class UserData {
   nickname: string = "";
   gender: string = "";
   birthday: string = "";
-  geolocation: string = "";
+  location: string = "";
   brief: string = "";
   messagebox: Array<MessageData>[];
 

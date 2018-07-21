@@ -64,7 +64,7 @@
 
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.email" >
-              <div class="error-message" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+              <div class="error-message" *ngIf="signupForm.get('email').hasError(validation.type) && (signupForm.get('email').dirty || signupForm.get('email').touched)">
                 {{validation.message}}
               </div>
             </ng-container>
@@ -77,11 +77,21 @@
 
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.password" >
-              <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+              <div class="error-message" *ngIf="signupForm.get('password').hasError(validation.type) && (signupForm.get('password').dirty || signupForm.get('password').touched)">
                 {{validation.message}}
               </div>
             </ng-container>
           </div>
+
+          <ion-segment formControlName="type" color="primary" style="margin-top: 20px;" [(ngModel)]="userType">
+            <ion-segment-button value="user">
+              User
+            </ion-segment-button>
+            <ion-segment-button value="provider">
+              Service Provider
+            </ion-segment-button>
+          </ion-segment>
+
 
           <div>
             <button ion-button float-right default-button type="submit" [disabled]="!signupForm.valid">Submit</button>

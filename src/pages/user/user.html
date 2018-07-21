@@ -16,9 +16,11 @@
 <ion-content padding>
     <ion-list>
         <ion-item no-lines>
+            <!--div *ngIf="currentUser | async"-->
           <ion-avatar>
-            <img src="assets/imgs/avatar.png">
+            <img src="{{currentUser.avatar}}"/>        
           </ion-avatar>
+        <!--/div-->
           <ion-item class="username" no-lines>
             <button ion-button (click)="goProfile()">Username</button>
           </ion-item>
