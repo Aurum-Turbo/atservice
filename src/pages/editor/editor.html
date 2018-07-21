@@ -21,15 +21,15 @@
           </ion-col>
         </ion-row> -->
         <ion-row>
-          <ion-col col-12>
+          <ion-col col-2>
             <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
+          <button ion-button default-button image-button (click)="imageInput.click()"><ion-icon name="add"></ion-icon></button>
+          </ion-col>
           <!-- <ion-label image-label>Cover Image</ion-label> -->
- 
+          <ion-col col-10>
               <ion-scroll scrollX="true">
                   <img *ngFor="let item of serviceObj.images" [src]="item" height="200px"/>
-                  <button ion-button class="add_btn" clear (click)="imageInput.click()"><i class="icon-plus"></i></button>
-
-                  <!-- <img src="assets/imgs/02.jpeg" (click)="onClick('addImage')"/> -->
+                  <img src="assets/imgs/02.jpeg" (click)="onClick('addImage')"/>
               </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->
           </ion-col>         
@@ -46,7 +46,7 @@
         <ion-row>
           <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
-        <button class="smt_btn"ion-button block default-button>Submit</button>
+        <button ion-button block default-button>Submit</button>
       </ion-col>
     </ion-row>
   </ion-grid>

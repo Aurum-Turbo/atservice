@@ -1,33 +1,10 @@
 page-service-details {
-   
-    /* ion-card {
+
+    ion-card {
         background-color: theme-colors('textColors','accent') !important;
         color: theme-colors('textColors', 'secondary') !important;
         min-height: 500px !important;
         padding: 10px !important;   
     }
- */
-    ion-slides{
-        height: auto;
-        ion-slide.swiper-slide {
-            align-items: flex-start;          
-            img{
-                max-width: 600px !important; 
-                width: 100%;
-            }
-        }
-    }
-    ion-list{
-        border-radius: 5px;
-        overflow: hidden;
-        ion-item{
-            background-color: #f6f6f6 !important;
-                .button{
-                    margin-top: 10px !important;
-                }
-        } 
-        .hd_rw{
-            height: 4em;
-        }
-    }
+
 }

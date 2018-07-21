@@ -48,14 +48,14 @@ page-editor {
             height: 120px !important;
         }
 
-    /*     .button {
-            // margin-top: 20px !important;
-            // margin-left: 10px !important;
-            // margin-right: 0px !important;
+        .button {
+            margin-top: 20px !important;
+            margin-left: 10px !important;
+            margin-right: 0px !important;
             width: 40px !important;
             height: 40px !important;
-            align-items: center !important;
-        } */
+            //align-items: center !important;
+        }
         
     }
 
@@ -975,7 +975,6 @@ page-editor {
         border: 1px solid #ccc;
       }
       // 图片添加部分
-      ion-row{
       ion-scroll{
         height: 80px;
         width: auto;
@@ -985,25 +984,15 @@ page-editor {
           width: 80px;
           margin-left: 5px;
         }
-      }
-      //button on this page
-        .add_btn{
-          margin: 0px !important;
-          margin-top: 2px !important;
-          margin-left: 5px !important;
-          padding: 0px !important;
-          border: 1px dashed #fcd736;
-          height: 60px !important;
-          width: 60px !important;
-          border-radius: 5px !important;
-          overflow: hidden;
-          color: #fcd736;
-          font-size: 40px !important;
+        .icon{
+          color: yellow;
+          font-size:80px;
+          width: 80px;
+          margin-left: 5px;
         }
-            .button{
-              vertical-align: top !important;
-            }
-        .smt_btn{
+      }
+      ion-row{
+        .button{
           margin:20px 0px !important;
           width: 100% !important;
         }
