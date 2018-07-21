@@ -21,10 +21,16 @@
       </ion-item> -->
     </ion-list>
   <div class="homecard_pad">
-    <ion-card *ngFor="let item of serviceList">
-      <img src="{{item.images[0]}}"/>
+    <ion-card *ngFor="let item of cardList">
+      <img src="{{item.pic}}"/>
       <ion-card-content>
-          <div [innerHtml]="item.description"></div>
+        <ion-card-title>
+          Nine Inch Nails Live
+          </ion-card-title>
+        <p>
+          The most popular industrial group ever, and largely
+          responsible for bringing the music to a mass audience.
+        </p>
       </ion-card-content>
     </ion-card>
   </div>

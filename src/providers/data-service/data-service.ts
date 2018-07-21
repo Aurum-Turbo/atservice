@@ -48,61 +48,21 @@ export class DataServiceProvider {
       {
         this.serviceList = snapshot;
       }
-    });
-
-
-    if(AppSettings.IS_FIREBASE_ENABLED)
-    {
-      //console.log("firebase current user: ", firebase.auth().currentUser);
-      this.afs.collection('services').ref.get()
-        .then(querysnapshot => {
-          querysnapshot.forEach(item => {
-            for(var index = 0; index < this.serviceList.length; index++)
-            {
-              if(item.uid )
-              this.serviceList.push(item);
-            }
-            
-          },err => {console.log(err)});
-        });  //this.localStorage.set("servicelist",this.serviceList);
-    }
-          
-           
-    /*
-    this.localStorage.get('servicelist').then(snapshot => {
-      if(snapshot)
-      {
-        this.serviceList = snapshot;
-      }
       else
       {
         if(AppSettings.IS_FIREBASE_ENABLED)
         {
-          //console.log("firebase current user: ", firebase.auth().currentUser);
-          
-          if(firebase.auth().currentUser)
-          {
-            this.afs.collection('services').ref.where("provider", "==", firebase.auth().currentUser.uid)
-            .get()
-            .then(querysnapshot => {
-              querysnapshot.forEach(item => {
-                this.serviceList.push(item);
-              });
-            });
-            this.localStorage.set("servicelist",this.serviceList);
-          }
-          
-          this.afs.collection('services').ref.get().then(snapshot => {
-            snapshot.forEach(item => {
+          this.afs.collection('services').ref.where("provider", "==", firebase.auth().currentUser.uid)
+          .get()
+          .then(querysnapshot => {
+            querysnapshot.forEach(item => {
               this.serviceList.push(item);
             });
           });
           this.localStorage.set("servicelist",this.serviceList);
-
         }
       }
     }, err => {console.log(err)});
-
 
     this.localStorage.get('orderlist').then(snapshot => {
       if(snapshot)
@@ -117,7 +77,6 @@ export class DataServiceProvider {
         this.jobList = snapshot;
       }
     }, err => {console.log(err)});
-    */
   }
 
   isLogin(): boolean {
@@ -172,10 +131,10 @@ export class DataServiceProvider {
 
         this.serviceList.push(service);
         //update the fbs
-        if(AppSettings.IS_FIREBASE_ENABLED)
+        /*if(AppSettings.IS_FIREBASE_ENABLED)
         {
           this.afs.collection('services').doc(service.sid).set(service);
-        }
+        }*/
       }
       else
       {

@@ -75,14 +75,6 @@ export class EditorPage {
 
   onClick(event) {
     console.log("event = ", event);
-    if(event == "submit")
-    {
-      console.log("editor.onClick: ", this.serviceObj);
-      if(this.serviceObj.images != [] && this.serviceObj.description != null)
-      { 
-        this.dataService.updateServiceList("new",this.serviceObj);
-      }
-    }
   }
 
 }
