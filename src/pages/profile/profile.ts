@@ -66,24 +66,17 @@ export class ProfilePage {
   }
   ionViewWillLeave() {
     //create service
-    //this.serviceObj.coverimage = this.coverimage;
-    /*firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-    .set({
-      uid: firebase.auth().currentUser.uid,
+    this.userDocument.update({
       status: "updated",
       avatar: this.userDataObj.avatar,
       nickname: this.userDataObj.nickname,
       gender: this.userDataObj.gender,
       birthday: this.userDataObj.birthday,
       location: this.userDataObj.location,
-      brief: this.userDataObj.brief
-    })
-    .catch(error => {
-      console.log("data update failed: ", error);
-    });*/
+      brief: this.userDataObj.brief,
+    });
 
-
-    console.log(this.userDataObj);
+    //console.log(this.userDataObj);
     //this.dataService.updateServiceList("new",this.serviceObj);
   }
 

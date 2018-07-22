@@ -28,7 +28,7 @@
           <!-- <ion-label image-label>Cover Image</ion-label> -->
           <ion-col col-10>
               <ion-scroll scrollX="true">
-                  <img *ngFor="let item of serviceObj.images" [src]="item" height="200px"/>
+                  <img *ngFor="let item of postObj.images" [src]="item" height="200px"/>
                   <img src="assets/imgs/02.jpeg" (click)="onClick('addImage')"/>
               </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->
@@ -44,7 +44,7 @@
           <ion-input clearInput type="text" placeholder="Please enter the Price" [(ngModel)]="serviceObj.price"></ion-input>
       </ion-row-->
         <ion-row>
-          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="serviceObj.description" [modules]="{toolbar:false}"></quill-editor>
+          <quill-editor placeholder="Please insert the description ..." [(ngModel)]="postObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
         <!--button ion-button block default-button (click)="onClick('submit')">Submit</button-->
       </ion-col>

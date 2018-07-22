@@ -8,7 +8,7 @@ import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
 
 import { UserData } from '../../providers/user-data/user-data';
-import { ServiceData } from '../../providers/service-data/service-data';
+import { PostData } from '../../providers/post-data/post-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -31,7 +31,7 @@ import firebase from 'firebase/app';
   templateUrl: 'user.html',
 })
 export class UserPage {
-  public star: string[]=[];
+  public star: Observable<string[]>;
   public mark: number;
   
   public transList= [];
@@ -48,12 +48,13 @@ export class UserPage {
   selectedEvent: any;
   isSelected: any;
   
-  itemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
-  items: Observable<ServiceData[]>;
+  itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
+  items: Observable<PostData[]>;
 
   userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
-  //currentUser: UserData;
+
+  postDate: Date;
 
   constructor(
               private afs: AngularFirestore,
@@ -78,21 +79,22 @@ export class UserPage {
 
     //this.userDataObj = this.dataService.userDataObj;
     //console.log("user.ts - constructor - userData: ", this.userDataObj); 
-    this.itemsCollection = this.afs.collection("services", ref => {
-      return ref.where("uid","==",firebase.auth().currentUser.uid)
-                .orderBy("rank");
+    this.itemsCollection = this.afs.collection("posts", ref => {
+      return ref.where("author","==",firebase.auth().currentUser.uid)
+                .orderBy("updateAt", 'desc');
     });
     this.items = this.itemsCollection.valueChanges();
+
+    /*this.items.subscribe(Value => {
+      Value.forEach(item => {
+        const d = new Date(item.updateAt.seconds*1000);
+        console.log("change time: ", d.toString());
+      });
+    });*/
     
-    console.log("currentUser: ", firebase.auth().currentUser.uid);
     this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
     this.currentUser = this.userDocument.valueChanges();
-    /*this.currentUser.subscribe(observer => {
-      if(observer)
-      {
-        this.getRank(observer.rate);
-      }
-    });*/
+
   }
   
 
@@ -108,6 +110,7 @@ export class UserPage {
   changeWillSlide($event) {
     this.tabs = $event._snapIndex.toString();
   }
+  
   onClick(event: string) {
     if(event == "new")
     {
@@ -120,25 +123,7 @@ export class UserPage {
       this.navCtrl.push(LoginPage);
     }
   }
-  getRank(rate: number) {
-    //let rating: number = 3.4; /* rating的值预设固定，拿到数据后可以自动显示 */
-    console.log("rank: ",rate);
-    //this.mark = rate;
-    for (var i = 1; i <= 5; i++)
-    {
-      if(i <= Math.floor(rate))
-        this.star[i] = "icon-star";
-      else
-      {
-        if(i == Math.round(rate))
-          this.star[i] = "icon-star-half";
-        else
-          this.star[i] =  "icon-star-outline";
-      }
-    //this.onEvent("onRates", index, e);
-    };
-    console.log("star: ", this.star);
-  }
+  
   goProfile(){
     this.navCtrl.push(ProfilePage)
   }

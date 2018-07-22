@@ -37,6 +37,8 @@ export class LoginPage {
   
   userType: string = "user";
 
+  itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+
   //form group
   validation_messages = {
     'password': [
@@ -58,6 +60,8 @@ export class LoginPage {
     //private authService: AuthServiceProvider,
     private fb: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
+
+    this.itemsCollection = this.afs.collection("users");
       
     this.loginForm = this.fb.group({
       email: ['',Validators.compose([
@@ -129,6 +133,7 @@ export class LoginPage {
     firebase.auth().createUserWithEmailAndPassword(this.signupForm.value.email, this.signupForm.value.password)
     .then(response => {
       //create user data record
+      /*
       firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid)
       .set({
         uid: firebase.auth().currentUser.uid,
@@ -140,10 +145,28 @@ export class LoginPage {
         birthday: "",
         location: "",
         brief: "",
-        rate: 5
+        rate: 5,
+        star: this.user
+
       })
       .catch(err => {
         console.log(err);
+      });*/
+      var userObj = new UserData();
+      userObj.setRate();
+      this.itemsCollection.doc(firebase.auth().currentUser.uid).set({
+        uid: firebase.auth().currentUser.uid,
+        type: this.userType,
+        status: "created",
+        avatar: "assets/imgs/avatar.png",
+        nickname: "nickname",
+        gender: "",
+        birthday: "",
+        location: "",
+        brief: "",
+        rate: 5,
+        star: ["icon-star","icon-star","icon-star","icon-star","icon-star"]
+
       });
       this.navCtrl.setRoot(UserPage);
     })
@@ -152,4 +175,6 @@ export class LoginPage {
         console.log(error);
     });
   }
+
+  
 }

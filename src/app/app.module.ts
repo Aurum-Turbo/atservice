@@ -33,6 +33,7 @@ import { MessageData } from '../providers/message-data/message-data';
 import { UserData } from '../providers/user-data/user-data';
 import { LoadingServiceProvider } from '../providers/loading-service/loading-service';
 import { AppSettings } from '../providers/app-setting';
+import { PostData } from '../providers/post-data/post-data';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { AppSettings } from '../providers/app-setting';
     Calendar,
     MessageData,
     UserData,
-    LoadingServiceProvider
+    LoadingServiceProvider,
+    PostData
   ]
 })
 export class AppModule {}

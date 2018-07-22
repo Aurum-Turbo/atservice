@@ -18,14 +18,14 @@
         <ion-item no-lines>
             <!--div *ngIf="currentUser | async"-->
           <ion-avatar>
-            <img src="{{currentUser.avatar}}"/>        
+            <img src="{{(currentUser | async)?.avatar}}"/>        
           </ion-avatar>
         <!--/div-->
           <ion-item class="username" no-lines>
-            <button ion-button (click)="goProfile()">{{currentUser.nickname}}</button>
+            <button ion-button (click)="goProfile()">{{(currentUser | async)?.nickname}}</button>
           </ion-item>
-          <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{star[i]}}"></i></ion-icon>
-          <span span-small>{{currentUser.rate}}</span>
+          <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{(currentUser | async)?.star[i]}}"></i></ion-icon>
+          <span span-small>{{(currentUser | async)?.rate}}</span>
           </p>
           <div class="sgn_btn">
             <button ion-button (click)="onClick('signout')">Sign out</button>
@@ -113,17 +113,16 @@
                       <ion-row *ngFor="let item of items | async">
                           <ion-col col-3>
                             <ion-item class="dat_lt">
-                              <span id="date">26</span>
-                              <span id="month">07</span>
+                                <span id="date">{{item.postDate}}</span>
+                                <span id="month">{{item.postMonth}}</span>
                             </ion-item>
                           </ion-col>
                           <ion-col col-3>
-                            <img src="{{item}}"/>
+                            <img src="{{item.images[0]}}"/>
                           </ion-col>
                           <ion-col col-6>
                             <ion-item class="cnt_rt">
-                              <p>The post header and content. The post header and content. The post header and content.
-                                The post header and content. The post header and content.</p>
+                              <div innerHTML = {{item.description}}></div>
                             </ion-item>
                           </ion-col>
                         </ion-row>
