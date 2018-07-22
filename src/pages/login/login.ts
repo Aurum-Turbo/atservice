@@ -10,6 +10,9 @@ import { UserPage } from '../user/user';
 import { UserData } from '../../providers/user-data/user-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 //import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 
 
@@ -32,7 +35,7 @@ export class LoginPage {
   loginError: string;
   isSignUp: boolean = false;
   
-  userObj: UserData;
+  userType: string = "user";
 
   //form group
   validation_messages = {
@@ -50,7 +53,8 @@ export class LoginPage {
     }
 
   constructor(
-    public dataService: DataServiceProvider,
+    private afs: AngularFirestore,
+    //public dataService: DataServiceProvider,
     //private authService: AuthServiceProvider,
     private fb: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
@@ -90,6 +94,11 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    if(firebase.auth().currentUser)
+    {
+      this.navCtrl.setRoot(UserPage);
+    }
+
   }
 
   ionViewWillLeave() {
@@ -106,25 +115,14 @@ export class LoginPage {
   }
 
   login() {
-
-    if(this.dataService.isLogin())
-    {
-      this.navCtrl.setRoot(TabsPage);
-    }
-    else
-    {
       firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
       .then(response => {
         this.navCtrl.setRoot(UserPage);
-        //this.dataService.setLogin();
-        //this.dataService.load();
-
       })
       .catch(error => {
         // handle error by showing alert
         console.log("login failed");
       });
-    }
   }
 
   signup() {
@@ -142,17 +140,16 @@ export class LoginPage {
         birthday: "",
         location: "",
         brief: "",
-        messagebox: []
+        rate: 5
       })
       .catch(err => {
         console.log(err);
       });
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.setRoot(UserPage);
     })
     .catch(error => {
         // handle error by showing alert
         console.log(error);
     });
   }
-
 }

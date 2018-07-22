@@ -18,19 +18,18 @@
         <ion-item no-lines>
             <!--div *ngIf="currentUser | async"-->
           <ion-avatar>
-            <img src="{{(currentUser | async)?.avatar}}"/>        
+            <img src="{{currentUser.avatar}}"/>        
           </ion-avatar>
         <!--/div-->
           <ion-item class="username" no-lines>
-            <button ion-button (click)="goProfile()">{{(currentUser | async)?.nickname}}</button>
+            <button ion-button (click)="goProfile()">{{currentUser.nickname}}</button>
           </ion-item>
           <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{star[i]}}"></i></ion-icon>
-          <span span-small>{{(currentUser | async)?.rate}}</span>
+          <span span-small>{{currentUser.rate}}</span>
           </p>
-          <!-- <div class="sgn_btn">
-            <button ion-button>Sign up</button>
-            <button ion-button>Sign in</button>
-          </div> -->
+          <div class="sgn_btn">
+            <button ion-button (click)="onClick('signout')">Sign out</button>
+          </div>
         </ion-item>
         <ion-item no-lines>
             <ion-segment color="grey" [(ngModel)]="tabs">

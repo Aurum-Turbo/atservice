@@ -22,15 +22,18 @@ export class TabsPage {
 
   tab1Root: any = HomePage;
   tab2Root: any = MessagePage;
-  tab3Root: any;
+  tab3Root: any = LoginPage;
   // tab4Root: any = MessagePage;
   mySelectedIndex: number;
 
   constructor(
+
     public localStorage: Storage,
     public navCtrl: NavController, public navParams: NavParams) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
-
+    
+    //this.tab3Root = LoginPage;
+    /*
     localStorage.ready().then(() => {
       this.localStorage.get("loginstatus").then(status => {
         this.tab3Root = status? UserPage : LoginPage;
@@ -39,7 +42,7 @@ export class TabsPage {
       });
       //console.log("login status: ", this.dataService.isLogin());
       //this.rootPage = this.dataService.isLogin()? TabsPage:LoginPage; 
-    });
+    });*/
   }
 
   ionViewDidLoad() {

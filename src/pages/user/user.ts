@@ -5,6 +5,7 @@ import { Calendar } from '@ionic-native/calendar';
 
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
+import { LoginPage } from '../login/login';
 
 import { UserData } from '../../providers/user-data/user-data';
 import { ServiceData } from '../../providers/service-data/service-data';
@@ -83,15 +84,15 @@ export class UserPage {
     });
     this.items = this.itemsCollection.valueChanges();
     
-    
+    console.log("currentUser: ", firebase.auth().currentUser.uid);
     this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
     this.currentUser = this.userDocument.valueChanges();
-    this.currentUser.subscribe(observer => {
-      if(observer.rate)
+    /*this.currentUser.subscribe(observer => {
+      if(observer)
       {
         this.getRank(observer.rate);
       }
-    });
+    });*/
   }
   
 
@@ -111,6 +112,12 @@ export class UserPage {
     if(event == "new")
     {
       this.navCtrl.push(EditorPage);
+    }
+
+    if(event == "signout")
+    {
+      firebase.auth().signOut();
+      this.navCtrl.push(LoginPage);
     }
   }
   getRank(rate: number) {

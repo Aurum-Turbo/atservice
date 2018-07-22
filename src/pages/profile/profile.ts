@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserData } from '../../providers/user-data/user-data';
 
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import firebase from 'firebase/app';
 
 /**
@@ -21,8 +25,13 @@ export class ProfilePage {
   userDataObj: UserData = new UserData();
   dateofBirth: Date = new Date();
   isGender: Boolean = true;
+
+  userDocument: AngularFirestoreDocument<UserData>;
+  currentUser: Observable<UserData>; 
   
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private afs: AngularFirestore,
+    public navCtrl: NavController, public navParams: NavParams) {
     //this.userDataObj.avatar = "assets/imgs/avatar.png";
   }
 
@@ -31,6 +40,7 @@ export class ProfilePage {
   }
 
   ionViewWillEnter() {
+    /*
     firebase.firestore().collection("users").where("uid","==",firebase.auth().currentUser.uid).get()
     .then(snapshot => {snapshot.forEach(change => {
       this.userDataObj = change.data() as UserData;
@@ -45,12 +55,19 @@ export class ProfilePage {
     {
       this.userDataObj.avatar = "assets/imgs/avatar.png";
     }
-    
+    */
+   this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
+   this.userDocument.valueChanges().subscribe(value => {
+     if(value)
+     {
+       this.userDataObj = value;
+     }
+   });
   }
   ionViewWillLeave() {
     //create service
     //this.serviceObj.coverimage = this.coverimage;
-    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    /*firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
     .set({
       uid: firebase.auth().currentUser.uid,
       status: "updated",
@@ -63,7 +80,8 @@ export class ProfilePage {
     })
     .catch(error => {
       console.log("data update failed: ", error);
-    });
+    });*/
+
 
     console.log(this.userDataObj);
     //this.dataService.updateServiceList("new",this.serviceObj);
