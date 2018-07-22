@@ -9,10 +9,13 @@ page-service-details {
  */
     ion-slides{
         height: auto;
+        max-width: 800px !important; 
+        width: 100%;
+        margin-left:  auto;
+        margin-right:  auto;
         ion-slide.swiper-slide {
             align-items: flex-start;          
             img{
-                max-width: 600px !important; 
                 width: 100%;
             }
         }
@@ -20,14 +23,21 @@ page-service-details {
     ion-list{
         border-radius: 5px;
         overflow: hidden;
+        max-width: 800px !important; 
+        width: 100%;
+        margin: 0 auto !important;
         ion-item{
             background-color: #f6f6f6 !important;
-                .button{
-                    margin-top: 10px !important;
-                }
-        } 
+        }
         .hd_rw{
             height: 4em;
         }
-    }
+        .ft_rw{
+            
+            .button{
+                width: 50px !important;
+                height: 40px !important;
+            }
+        }
+    }    
 }
