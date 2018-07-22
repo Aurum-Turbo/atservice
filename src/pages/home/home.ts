@@ -19,17 +19,19 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 export class HomePage {
 
   serviceList = [];
-
+  cardList: any = [];
+  date = new Date();
   constructor(
     public dataService: DataServiceProvider,
     public navCtrl: NavController, 
     public navParams: NavParams) { 
     // 首页卡片图片循环。
-    /*for(let i = 0; i < 10; i++){
+    for(let i = 0; i < 10; i++){
     this.cardList.push({
       pic: 'assets/imgs/0'+i+'.jpeg'
-    })*/
+    })
   }
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
@@ -40,5 +42,4 @@ export class HomePage {
     console.log("load servicelist: ", this.serviceList);
     //this.data = this.dataService.readList("service");
   }
- 
 }

@@ -13,15 +13,16 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-item no-lines no-padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-    <ion-list>
-      <!-- 搜索栏功能暂未添加 -->
-      <!-- <ion-item *ngFor="let item of items">
-        {{ item }}
-      </ion-item> -->
-    </ion-list>
-  <div class="homecard_pad">
-    <ion-card *ngFor="let item of cardList">
+  </ion-item>
+
+    <!-- 搜索栏功能暂未添加 -->
+    <!-- <ion-item *ngFor="let item of items">
+      {{ item }}
+    </ion-item> -->
+    <div class="homecard_pad">
+    <!-- ion-card *ngFor="let item of cardList">
       <img src="{{item.pic}}"/>
       <ion-card-content>
         <ion-card-title>
@@ -32,7 +33,40 @@
           responsible for bringing the music to a mass audience.
         </p>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+    <ion-card *ngFor="let item of cardList">
+        <img src="{{item.pic}}">      
+        <ion-card-content>
+          <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>  
+              <ion-item>
+                <ion-label item-end>Marty McFly</ion-label>
+                <ion-avatar item-start>
+                  <img src="../../assets/imgs/avatar.png">
+                </ion-avatar>
+                <button ion-button icon-start clear item-end>
+                  <i class="icon-thumb-up"></i>
+                  <div>12</div>
+                </button>
+              </ion-item>
+        </ion-card-content>
+        <!-- <ion-item>
+
+        </ion-item>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>4 Comments</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              11h ago
+            </ion-note>
+          </ion-col>
+        </ion-row> -->
+      
+      </ion-card>
   </div>
 
 </ion-content>
