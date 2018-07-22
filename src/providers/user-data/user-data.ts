@@ -19,7 +19,7 @@ export class UserData {
   birthday: string = "";
   location: string = "";
   brief: string = "";
-  messagebox: Array<MessageData>[];
+  rate: number = 5; //the service level
 
   constructor() {
     console.log('Hello UserDataProvider Provider');

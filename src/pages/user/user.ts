@@ -7,6 +7,7 @@ import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 
 import { UserData } from '../../providers/user-data/user-data';
+import { ServiceData } from '../../providers/service-data/service-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -46,9 +47,13 @@ export class UserPage {
   selectedEvent: any;
   isSelected: any;
   
-  itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
-  items: Observable<UserData[]>; // read collection
-  currentUser: UserData;
+  itemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
+  items: Observable<ServiceData[]>;
+
+  userDocument: AngularFirestoreDocument<UserData>;
+  currentUser: Observable<UserData>; // read collection
+  //currentUser: UserData;
+
   constructor(
               private afs: AngularFirestore,
               public dataService: DataServiceProvider,
@@ -72,15 +77,27 @@ export class UserPage {
 
     //this.userDataObj = this.dataService.userDataObj;
     //console.log("user.ts - constructor - userData: ", this.userDataObj); 
-    this.itemsCollection = this.afs.collection("users", ref => {return ref.where("uid","==",firebase.auth().currentUser.uid)});
+    this.itemsCollection = this.afs.collection("services", ref => {
+      return ref.where("uid","==",firebase.auth().currentUser.uid)
+                .orderBy("rank");
+    });
     this.items = this.itemsCollection.valueChanges();
     
+    
+    this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
+    this.currentUser = this.userDocument.valueChanges();
+    this.currentUser.subscribe(observer => {
+      if(observer.rate)
+      {
+        this.getRank(observer.rate);
+      }
+    });
   }
   
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
-    this.getRank();
+    //this.getRank();
   }
   @ViewChild('pageSlider') pageSlider: Slides;
   tabs: any = '0';
@@ -96,17 +113,17 @@ export class UserPage {
       this.navCtrl.push(EditorPage);
     }
   }
-  getRank() {
-    let rating: number = 3.4; /* rating的值预设固定，拿到数据后可以自动显示 */
-    console.log("rank: ",rating);
-    this.mark = rating;
+  getRank(rate: number) {
+    //let rating: number = 3.4; /* rating的值预设固定，拿到数据后可以自动显示 */
+    console.log("rank: ",rate);
+    //this.mark = rate;
     for (var i = 1; i <= 5; i++)
     {
-      if(i <= Math.floor(rating))
+      if(i <= Math.floor(rate))
         this.star[i] = "icon-star";
       else
       {
-        if(i == Math.round(rating))
+        if(i == Math.round(rate))
           this.star[i] = "icon-star-half";
         else
           this.star[i] =  "icon-star-outline";

@@ -5,7 +5,9 @@ import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
 import { UserPage } from '../user/user';
-import { AppSettings } from '../../providers/app-setting';
+
+
+import { UserData } from '../../providers/user-data/user-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 //import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import firebase from 'firebase/app';
@@ -29,7 +31,8 @@ export class LoginPage {
   signupForm: FormGroup;
   loginError: string;
   isSignUp: boolean = false;
-  userType: string = "user";
+  
+  userObj: UserData;
 
   //form group
   validation_messages = {
@@ -113,8 +116,9 @@ export class LoginPage {
       firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
       .then(response => {
         this.navCtrl.setRoot(UserPage);
-        this.dataService.setLogin();
+        //this.dataService.setLogin();
         //this.dataService.load();
+
       })
       .catch(error => {
         // handle error by showing alert

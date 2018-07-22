@@ -18,14 +18,14 @@
         <ion-item no-lines>
             <!--div *ngIf="currentUser | async"-->
           <ion-avatar>
-            <img src="{{currentUser.avatar}}"/>        
+            <img src="{{(currentUser | async)?.avatar}}"/>        
           </ion-avatar>
         <!--/div-->
           <ion-item class="username" no-lines>
-            <button ion-button (click)="goProfile()">Username</button>
+            <button ion-button (click)="goProfile()">{{(currentUser | async)?.nickname}}</button>
           </ion-item>
           <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{star[i]}}"></i></ion-icon>
-          <span span-small>{{mark}}</span>
+          <span span-small>{{(currentUser | async)?.rate}}</span>
           </p>
           <!-- <div class="sgn_btn">
             <button ion-button>Sign up</button>
@@ -111,7 +111,7 @@
                   <ion-icon name="ios-arrow-forward"></ion-icon>
               </ion-item>
                     <ion-grid>
-                      <ion-row *ngFor="let item of posList">
+                      <ion-row *ngFor="let item of items | async">
                           <ion-col col-3>
                             <ion-item class="dat_lt">
                               <span id="date">26</span>
