@@ -36,14 +36,10 @@
       <ion-item>
         <div [innerHtml]="serviceObj.description"></div>
       </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-8><span>Date</span></ion-col>
-            <ion-col col-2>Mark</ion-col>
-            <ion-col>Like</ion-col>
-          </ion-row>
-        </ion-grid>
+      <ion-item class="ft_rw">
+        <span>{{date | date:"MMMM dd yyyy"}}</span>
+        <button ion-button clear item-end><i class="icon-heart"></i></button>
+        <button ion-button clear item-end><i class="icon-thumb-up"></i></button>
       </ion-item>
       <ion-item>
           <h2>Comments</h2>

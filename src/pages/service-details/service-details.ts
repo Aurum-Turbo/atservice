@@ -15,7 +15,7 @@ import { ServiceData } from '../../providers/service-data/service-data';
   templateUrl: 'service-details.html',
 })
 export class ServiceDetailsPage {
-
+  date: Date = new Date();
   serviceObj = new ServiceData();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -25,6 +25,7 @@ export class ServiceDetailsPage {
     }
 
     console.log("get navParams: ", navParams.data);
+    console.log("Date: ", this.date);
   }
 
   ionViewDidLoad() {

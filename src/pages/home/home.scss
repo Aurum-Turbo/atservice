@@ -1,13 +1,57 @@
 page-home {
-    
-    .homecard_pad{
-        column-count: 2; //瀑布流实现关键
-    }
-            ion-card{
-                width: 100% !important;
-                margin:5px 0 !important;
-                display: inline-block;
-                background-color: #eee !important;
-                border-radius: 5px !important;
-            }
+        .homecard_pad{
+            max-width: 960px!important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            column-count: 2; //瀑布流实现关键
+        }
+                ion-card{
+                    width: 100% !important;
+                    margin:5px 0 !important;
+                    display: inline-block;
+                    background-color: #eee !important;
+                    border-radius: 5px !important;
+                    ion-card-content{
+                        padding: 5px 10px !important;
+                        p{
+                            word-break: break-all;
+                            
+                            text-overflow: ellipsis;
+                            
+                            display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+                            
+                            -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+                            
+                            -webkit-line-clamp: 2; /** 显示的行数 **/
+                            
+                            overflow: hidden;  /** 隐藏超出的内容 **/
+                        }
+                        ion-item{
+                            height: 2em !important;
+                            line-height: 1em !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                            background-color: #eee !important;
+                            ion-avatar{
+                                margin-right: 0 !important;
+                                min-width: 2rem !important;
+                                img{
+                                    margin-top: .5rem !important;
+                                    width: 2rem !important;
+                                    height: 2rem !important;
+                                }
+                            }
+                            ion-label{
+                                font-size: 1rem !important;
+           
+                            }
+                            .button{
+                                width: 5rem !important;
+                                padding: 0 !important;
+                                margin-right: -1rem !important;
+                            }
+                        }
+                    }
+                   
+                }
 }
