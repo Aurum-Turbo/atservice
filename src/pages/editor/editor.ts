@@ -89,6 +89,7 @@ export class EditorPage {
         "avatar": this.userObj.avatar,
         "tags": "",
         "rank": 0,
+        "likeList": [],
         "like": 0,
         "follow": [],
         "comments": [],

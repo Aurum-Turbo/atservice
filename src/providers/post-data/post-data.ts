@@ -20,7 +20,8 @@ export class PostData {
   /* Social Media*/
   tags: string = ""; //for searching
   rank: number = 0; // rank = rate + like + length of comments + timestamp
-  like: number = 0; //thumb up for the service
+  likeList: string[]; //thumb up for the service
+  like: number = 0;
   follow: string[];
   comments: any[];
   postDate: string = "";

@@ -6,7 +6,10 @@ import { PostData } from '../../providers/post-data/post-data';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import firebase from 'firebase/app';
+
 import { ServiceDetailsPage } from '../service-details/service-details';
+
 /**
  * Generated class for the HomePage page.
  *
@@ -40,7 +43,7 @@ export class HomePage {
     this.items = this.itemsCollection.valueChanges();
   }
 
-  onClick(event: string, object: any) {
+  onClick(event: string, item: any) {
     if(event == "detail")
     {
       this.navCtrl.push(ServiceDetailsPage);
@@ -50,10 +53,17 @@ export class HomePage {
     {
       if(this.iconlike == "icon-heart-outline")
       {
-        this.itemsCollection.doc((<PostData>object).pid).update({
-          "like": (<PostData>object).like + 1
-        });
-        this.iconlike = "icon-heart";
+        let updateLike = (<PostData>item).likeList;
+        console.log("onClick.like: ", item);
+        if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
+        {
+          updateLike.push(firebase.auth().currentUser.uid);
+          this.itemsCollection.doc((<PostData>item).pid).update({
+            "likeList": updateLike,
+            "like": updateLike.length
+          });
+          this.iconlike = "icon-heart";
+        }
       }
     }
   }
