@@ -1,39 +1,32 @@
 import { Injectable } from '@angular/core';
 
 /*
-  Generated class for the ServiceDataProvider provider.
+  Generated class for the PostDataProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-
-
 @Injectable()
-export class ServiceData {
+export class PostData {
 
-  sid: string = ""; //service id
+  pid: string = ""; //service id
   status: string = ""; //created, submitted, activated, suspended, discard 
-  type: string = ""; // classified by qualification, transport, escorts
   images: string[];
   description: string = ""; //description will be display on the service details
-  provider: string = "";
-  duration: string = ""; //service duration from task proceeded to completed
-  unit: string = ""; //单位
-  price: string = "";
-  currency: string = "";
-  declaimer: string = "";
-  location: string = "";
-  availability: {
-       time: [{}],
-      };
+  author: string = "";
   /* Social Media*/
   tags: string = ""; //for searching
   rank: number = 0; // rank = rate + like + length of comments + timestamp
   like: number = 0; //thumb up for the service
+  follow: string[];
   comments: any[];
+  postDate: string = "";
+  postMonth: string = "";
+  createAt: any;
+  updateAt: any;
 
   constructor() {
-    //console.log('Hello Service Data Model');
+    console.log('Hello PostDataProvider Provider');
   }
 
 }

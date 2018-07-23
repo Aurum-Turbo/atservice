@@ -5,9 +5,16 @@ import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
 import { UserPage } from '../user/user';
-import { AppSettings } from '../../providers/app-setting';
+
+
+import { UserData } from '../../providers/user-data/user-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+//import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import firebase from 'firebase/app';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -27,6 +34,10 @@ export class LoginPage {
   signupForm: FormGroup;
   loginError: string;
   isSignUp: boolean = false;
+  
+  userType: string = "user";
+
+  itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
 
   //form group
   validation_messages = {
@@ -44,10 +55,13 @@ export class LoginPage {
     }
 
   constructor(
-    public dataService: DataServiceProvider,
-    private authService: AuthServiceProvider,
+    private afs: AngularFirestore,
+    //public dataService: DataServiceProvider,
+    //private authService: AuthServiceProvider,
     private fb: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
+
+    this.itemsCollection = this.afs.collection("users");
       
     this.loginForm = this.fb.group({
       email: ['',Validators.compose([
@@ -74,7 +88,9 @@ export class LoginPage {
         Validators.maxLength(8),
         Validators.minLength(6),
         Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-      ])]
+      ])],
+
+      type: ['']
 
     });
 
@@ -82,6 +98,15 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    if(firebase.auth().currentUser)
+    {
+      this.navCtrl.setRoot(UserPage);
+    }
+
+  }
+
+  ionViewWillLeave() {
+    this.isSignUp = false;
   }
 
   onClick(event: String) {
@@ -94,49 +119,62 @@ export class LoginPage {
   }
 
   login() {
-
-    if(this.dataService.isLogin())
-    {
-      this.navCtrl.setRoot(TabsPage);
-    }
-    else
-    {
-      if(AppSettings.IS_FIREBASE_ENABLED)
-      {
-        this.authService.login(this.loginForm.value)
-        .then(response => {
-            this.navCtrl.setRoot(UserPage);
-            this.dataService.setLogin();
-            this.dataService.load();
-        })
-        .catch(error => {
-            // handle error by showing alert
-            console.log("login failed");
-        });
-      }
-      else
-      {
-        console.log("need to connect internet");
-      }
-    }
+      firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
+      .then(response => {
+        this.navCtrl.setRoot(UserPage);
+      })
+      .catch(error => {
+        // handle error by showing alert
+        console.log("login failed");
+      });
   }
 
   signup() {
-    if(AppSettings.IS_FIREBASE_ENABLED)
-      {
-        this.authService.register(this.signupForm.value)
-        .then(response => {
-            this.navCtrl.setRoot(TabsPage);
-        })
-        .catch(error => {
-            // handle error by showing alert
-            console.log("signup failed");
-        });
-      }
-      else
-      {
-        console.log("SIGNUP: need to connect internet");
-      }
+    firebase.auth().createUserWithEmailAndPassword(this.signupForm.value.email, this.signupForm.value.password)
+    .then(response => {
+      //create user data record
+      /*
+      firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid)
+      .set({
+        uid: firebase.auth().currentUser.uid,
+        type: this.userType,
+        status: "created",
+        avatar: "",
+        nickname: "",
+        gender: "",
+        birthday: "",
+        location: "",
+        brief: "",
+        rate: 5,
+        star: this.user
+
+      })
+      .catch(err => {
+        console.log(err);
+      });*/
+      var userObj = new UserData();
+      userObj.setRate();
+      this.itemsCollection.doc(firebase.auth().currentUser.uid).set({
+        uid: firebase.auth().currentUser.uid,
+        type: this.userType,
+        status: "created",
+        avatar: "assets/imgs/avatar.png",
+        nickname: "nickname",
+        gender: "",
+        birthday: "",
+        location: "",
+        brief: "",
+        rate: 5,
+        star: ["icon-star","icon-star","icon-star","icon-star","icon-star"]
+
+      });
+      this.navCtrl.setRoot(UserPage);
+    })
+    .catch(error => {
+        // handle error by showing alert
+        console.log(error);
+    });
   }
 
+  
 }

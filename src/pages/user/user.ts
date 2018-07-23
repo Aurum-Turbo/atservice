@@ -5,7 +5,17 @@ import { Calendar } from '@ionic-native/calendar';
 
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
+import { LoginPage } from '../login/login';
 
+import { UserData } from '../../providers/user-data/user-data';
+import { PostData } from '../../providers/post-data/post-data';
+import { DataServiceProvider } from '../../providers/data-service/data-service';
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import firebase from 'firebase/app';
 
 
 /**
@@ -21,7 +31,7 @@ import { EditorPage } from '../editor/editor';
   templateUrl: 'user.html',
 })
 export class UserPage {
-  public star: string[]=[];
+  public star: Observable<string[]>;
   public mark: number;
   
   public transList= [];
@@ -38,12 +48,23 @@ export class UserPage {
   selectedEvent: any;
   isSelected: any;
   
+  itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
+  items: Observable<PostData[]>;
+
+  userDocument: AngularFirestoreDocument<UserData>;
+  currentUser: Observable<UserData>; // read collection
+
+  postDate: Date;
 
   constructor(
+              private afs: AngularFirestore,
+              public dataService: DataServiceProvider,
               public navCtrl: NavController, 
               public navParams: NavParams, 
               private alertCtrl: AlertController,
-              private calendar: Calendar) {
+              private calendar: Calendar) {          
+    //this.userDataObj = this.dataService.userDataObj;
+
     for(let i=0; i<10; i++){
       this.transList.push('这是第'+i+'条数据')
       this.posList.push("assets/imgs/0"+i+".jpeg")
@@ -55,12 +76,31 @@ export class UserPage {
     this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     this.getDaysOfMonth();
     this.loadEventThisMonth();
+
+    //this.userDataObj = this.dataService.userDataObj;
+    //console.log("user.ts - constructor - userData: ", this.userDataObj); 
+    this.itemsCollection = this.afs.collection("posts", ref => {
+      return ref.where("author","==",firebase.auth().currentUser.uid)
+                .orderBy("updateAt", 'desc');
+    });
+    this.items = this.itemsCollection.valueChanges();
+
+    /*this.items.subscribe(Value => {
+      Value.forEach(item => {
+        const d = new Date(item.updateAt.seconds*1000);
+        console.log("change time: ", d.toString());
+      });
+    });*/
+    
+    this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
+    this.currentUser = this.userDocument.valueChanges();
+
   }
   
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
-    this.getRank();
+    //this.getRank();
   }
   @ViewChild('pageSlider') pageSlider: Slides;
   tabs: any = '0';
@@ -70,31 +110,20 @@ export class UserPage {
   changeWillSlide($event) {
     this.tabs = $event._snapIndex.toString();
   }
+  
   onClick(event: string) {
     if(event == "new")
     {
       this.navCtrl.push(EditorPage);
     }
-  }
-  getRank() {
-    let rating: number = 3.4; /* rating的值预设固定，拿到数据后可以自动显示 */
-    console.log("rank: ",rating);
-    this.mark = rating;
-    for (var i = 1; i <= 5; i++)
+
+    if(event == "signout")
     {
-      if(i <= Math.floor(rating))
-        this.star[i] = "icon-star";
-      else
-      {
-        if(i == Math.round(rating))
-          this.star[i] = "icon-star-half";
-        else
-          this.star[i] =  "icon-star-outline";
-      }
-    //this.onEvent("onRates", index, e);
-    };
-    console.log("star: ", this.star);
+      firebase.auth().signOut();
+      this.navCtrl.push(LoginPage);
+    }
   }
+  
   goProfile(){
     this.navCtrl.push(ProfilePage)
   }

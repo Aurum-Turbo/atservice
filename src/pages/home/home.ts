@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { ServiceData } from '../../providers/service-data/service-data';
+import { PostData } from '../../providers/post-data/post-data';
 
 import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 /**
  * Generated class for the HomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -20,15 +22,14 @@ export class HomePage {
 
   serviceList = [];
 
+  itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
+  items: Observable<PostData[]>; // read collection
+
   constructor(
+    private afs: AngularFirestore,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, 
     public navParams: NavParams) { 
-    // 首页卡片图片循环。
-    /*for(let i = 0; i < 10; i++){
-    this.cardList.push({
-      pic: 'assets/imgs/0'+i+'.jpeg'
-    })*/
   }
 
   ionViewDidLoad() {
@@ -36,9 +37,10 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
-    this.serviceList = this.dataService.serviceList;
-    console.log("load servicelist: ", this.serviceList);
+    //this.serviceList = this.dataService.serviceList;
+    //console.log("load servicelist: ", this.serviceList);
     //this.data = this.dataService.readList("service");
+    this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
+    this.items = this.itemsCollection.valueChanges();
   }
- 
 }

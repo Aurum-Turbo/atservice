@@ -7,9 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -29,11 +28,12 @@ import { OrderData } from '../providers/order-data/order-data';
 import { OrderCreatorPage } from '../pages/order-creator/order-creator';
 import { ServiceDetailsPage } from '../pages/service-details/service-details';
 import { JobData } from '../providers/job-data/job-data';
-import { AppSettings } from '../providers/app-setting';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Calendar } from '@ionic-native/calendar';
 import { MessageData } from '../providers/message-data/message-data';
 import { UserData } from '../providers/user-data/user-data';
+import { LoadingServiceProvider } from '../providers/loading-service/loading-service';
+import { AppSettings } from '../providers/app-setting';
+import { PostData } from '../providers/post-data/post-data';
 
 @NgModule({
   declarations: [
@@ -56,11 +56,10 @@ import { UserData } from '../providers/user-data/user-data';
     HttpClientModule,
     QuillModule,
     IonicStorageModule.forRoot(),
-    IonicModule.forRoot(MyApp),
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG)
+    AngularFireAuthModule,
+    AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
+    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -86,10 +85,11 @@ import { UserData } from '../providers/user-data/user-data';
     ServiceData,
     OrderData,
     JobData,
-    AuthServiceProvider,
     Calendar,
     MessageData,
-    UserData
+    UserData,
+    LoadingServiceProvider,
+    PostData
   ]
 })
 export class AppModule {}
