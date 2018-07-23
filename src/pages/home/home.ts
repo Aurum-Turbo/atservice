@@ -48,7 +48,7 @@ export class HomePage {
 
     if(event == "like")
     {
-      if(this.iconlike == "icon-heart-outline" && )
+      if(this.iconlike == "icon-heart-outline")
       {
         this.itemsCollection.doc((<PostData>object).pid).update({
           "like": (<PostData>object).like + 1
