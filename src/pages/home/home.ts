@@ -48,7 +48,7 @@ export class HomePage {
     {
       this.navCtrl.push(ServiceDetailsPage);
     }
-
+  
     if(event == "like")
     {
       if(this.iconlike == "icon-heart-outline")

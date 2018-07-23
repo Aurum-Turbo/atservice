@@ -20,7 +20,7 @@
     <ion-card>
         <img (click)="onClick('detail')" src="{{item.images[0]}}"/> 
       <ion-card-content>  
-        <div (click)="onClick('detail')" class="e2e-trusted-url" [innerHtml]="item.description"></div>
+        <div (click)="onClick('detail')" [innerHtml]="item.description"></div>
       <ion-item>
         <ion-avatar item-start (click)="onClick('detail')">
           <img src="{{item.avatar}}"/>
