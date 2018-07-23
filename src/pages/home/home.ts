@@ -54,7 +54,6 @@ export class HomePage {
       if(this.iconlike == "icon-heart-outline")
       {
         let updateLike = (<PostData>item).likeList;
-        console.log("onClick.like: ", item);
         if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
         {
           updateLike.push(firebase.auth().currentUser.uid);
