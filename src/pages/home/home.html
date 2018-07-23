@@ -16,22 +16,24 @@
   <ion-item no-lines no-padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-item>
-    <div class="homecard_pad" *ngFor="let item of items | async">
-    <ion-card (click)="onClick('detail')">
-        <img src="{{item.images[0]}}"/>     
-        <ion-card-content>
-          <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>  
-              <ion-item>
-                <ion-label item-end>Marty McFly</ion-label>
-                <ion-avatar item-start>
-                  <img src="../../assets/imgs/avatar.png">
-                </ion-avatar>
-                <button ion-button icon-start clear item-end>
-                  <i class="icon-thumb-up"></i>
-                  <div>12</div>
-                </button>
-              </ion-item>
-        </ion-card-content>
-      </ion-card>
+  <div class="homecard_pad" *ngFor="let item of items | async">
+    <ion-card>
+        <img (click)="onClick('detail')" src="{{item.images[0]}}"/> 
+      <ion-card-content>  
+        <div (click)="onClick('detail')" class="e2e-trusted-url" [innerHtml]="item.description"></div>
+      <ion-item>
+        <ion-avatar item-start (click)="onClick('detail')">
+          <img src="{{item.avatar}}"/>
+        </ion-avatar>
+        <ion-label item-end (click)="onClick('detail')">
+          {{item.nickname}}
+        </ion-label>
+        <button ion-button icon-start clear item-end (click)="onClick('like', item)">
+          <i class="{{iconlike}}"></i>
+          <p>{{item.like}}</p>
+        </button>
+      </ion-item>
+    </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

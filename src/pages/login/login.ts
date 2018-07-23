@@ -165,7 +165,7 @@ export class LoginPage {
         location: "",
         brief: "",
         rate: 5,
-        star: ["icon-star","icon-star","icon-star","icon-star","icon-star"]
+        star: ["","icon-star","icon-star","icon-star","icon-star","icon-star"]
 
       });
       this.navCtrl.setRoot(UserPage);

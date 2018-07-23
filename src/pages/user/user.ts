@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
+import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
 
 
 /**
@@ -54,7 +55,9 @@ export class UserPage {
   userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
 
-  postDate: Date;
+  userObj = new UserData();
+
+  //postDate: Date;
 
   constructor(
               private afs: AngularFirestore,
@@ -94,7 +97,9 @@ export class UserPage {
     
     this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
     this.currentUser = this.userDocument.valueChanges();
-
+    this.userDocument.valueChanges().subscribe(snapshot => {
+      this.userObj = snapshot;
+    });
   }
   
 
@@ -114,7 +119,8 @@ export class UserPage {
   onClick(event: string) {
     if(event == "new")
     {
-      this.navCtrl.push(EditorPage);
+      //console.log("set author: ", this.userObj.nickname);
+      this.navCtrl.push(EditorPage, {"user": this.userObj, "post": new PostData()});
     }
 
     if(event == "signout")

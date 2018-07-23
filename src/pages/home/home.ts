@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { PostData } from '../../providers/post-data/post-data';
 
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -20,15 +19,14 @@ import { ServiceDetailsPage } from '../service-details/service-details';
   templateUrl: 'home.html',
 })
 export class HomePage {
-
-  serviceList = [];
-
+  //for posts
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>; // read collection
 
+  iconlike: string = "icon-heart-outline";
   constructor(
     private afs: AngularFirestore,
-    public dataService: DataServiceProvider,
+    //public dataService: DataServiceProvider,
     public navCtrl: NavController, 
     public navParams: NavParams) { 
   }
@@ -38,17 +36,25 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
-    //this.serviceList = this.dataService.serviceList;
-    //console.log("load servicelist: ", this.serviceList);
-    //this.data = this.dataService.readList("service");
     this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
     this.items = this.itemsCollection.valueChanges();
   }
 
-  onClick(event: string) {
+  onClick(event: string, object: any) {
     if(event == "detail")
     {
       this.navCtrl.push(ServiceDetailsPage);
+    }
+
+    if(event == "like")
+    {
+      if(this.iconlike == "icon-heart-outline" && )
+      {
+        this.itemsCollection.doc((<PostData>object).pid).update({
+          "like": (<PostData>object).like + 1
+        });
+        this.iconlike = "icon-heart";
+      }
     }
   }
 }

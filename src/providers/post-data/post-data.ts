@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserData } from '../user-data/user-data';
 
 /*
   Generated class for the PostDataProvider provider.
@@ -14,6 +15,8 @@ export class PostData {
   images: string[];
   description: string = ""; //description will be display on the service details
   author: string = "";
+  nickname: string = "";
+  avatar: any;
   /* Social Media*/
   tags: string = ""; //for searching
   rank: number = 0; // rank = rate + like + length of comments + timestamp

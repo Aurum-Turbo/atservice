@@ -10,6 +10,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Timestamp } from '../../../node_modules/rxjs';
+import { UserData } from '../../providers/user-data/user-data';
 
 //import { QuillModule } from 'ngx-quill';
 
@@ -31,7 +32,9 @@ import { Timestamp } from '../../../node_modules/rxjs';
 
 export class EditorPage {
   
-  postObj = new PostData();
+  postObj: PostData;
+  userObj: UserData;
+
   calltype = "creating";
 
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
@@ -46,12 +49,14 @@ export class EditorPage {
       
       if(navParams.data != null)
       {
-        this.postObj = navParams.data; 
+        this.postObj = navParams.get("post"); 
+        this.userObj = navParams.get("user");
+
         if(this.postObj.pid)
         {
           this.calltype = "editing";
         }
-        console.log("edit page: ", this.postObj);
+        //console.log("edit page: ", this.postObj);
       }
       
 
@@ -79,7 +84,9 @@ export class EditorPage {
         "status": "created",
         "images": this.postObj.images,
         "description": this.postObj.description,
-        "author": firebase.auth().currentUser.uid,
+        "author":this.userObj.uid,
+        "nickname": this.userObj.nickname,
+        "avatar": this.userObj.avatar,
         "tags": "",
         "rank": 0,
         "like": 0,
