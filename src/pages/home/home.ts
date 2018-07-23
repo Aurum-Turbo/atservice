@@ -7,6 +7,7 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { ServiceDetailsPage } from '../service-details/service-details';
 /**
  * Generated class for the HomePage page.
  *
@@ -42,5 +43,12 @@ export class HomePage {
     //this.data = this.dataService.readList("service");
     this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
     this.items = this.itemsCollection.valueChanges();
+  }
+
+  onClick(event: string) {
+    if(event == "detail")
+    {
+      this.navCtrl.push(ServiceDetailsPage);
+    }
   }
 }

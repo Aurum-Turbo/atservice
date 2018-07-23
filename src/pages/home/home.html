@@ -16,8 +16,8 @@
   <ion-item no-lines no-padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-item>
-    <div class="homecard_pad">
-    <ion-card *ngFor="let item of items | async">
+    <div class="homecard_pad" *ngFor="let item of items | async">
+    <ion-card (click)="onClick('detail')">
         <img src="{{item.images[0]}}"/>     
         <ion-card-content>
           <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>  
