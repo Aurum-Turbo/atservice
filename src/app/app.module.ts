@@ -18,6 +18,7 @@ import { UserPage } from '../pages/user/user';
 import { ProfilePage } from '../pages/profile/profile';
 import { MessagePage } from '../pages/message/message';
 import { JobPage } from '../pages/job/job';
+import { ServicetypePage } from '../pages/servicetype/servicetype';
 import { ServicePage } from '../pages/service/service';
 import { OrderPage } from '../pages/order/order';
 import { EditorPage } from '../pages/editor/editor';
@@ -45,6 +46,7 @@ import { PostData } from '../providers/post-data/post-data';
     ProfilePage,
     MessagePage,
     JobPage,
+    ServicetypePage,
     ServicePage,
     OrderPage,
     EditorPage,
@@ -71,6 +73,7 @@ import { PostData } from '../providers/post-data/post-data';
     ProfilePage,
     MessagePage,
     JobPage,
+    ServicetypePage,
     ServicePage,
     OrderPage,
     EditorPage,

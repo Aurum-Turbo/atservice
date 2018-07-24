@@ -57,6 +57,19 @@ page-user {
         }
         
     }
+    .svs_sld{
+    
+            span{
+                color: #f4f4f4 !important;
+            }
+        
+        ion-fab{
+            right: 0px;
+            top: 320px;
+            z-index: 999999;
+        }
+    }
+    // post list 
     ion-grid{
         ion-row{ 
             .dat_lt{

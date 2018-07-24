@@ -34,8 +34,9 @@
         <ion-item no-lines>
             <ion-segment color="grey" [(ngModel)]="tabs">
                 <ion-segment-button (click)="selectTab(0)" value="0">Wallet</ion-segment-button>
-                <ion-segment-button (click)="selectTab(1)" value="1">Calender</ion-segment-button>
-                <ion-segment-button (click)="selectTab(2)" value="2">Posts</ion-segment-button>
+                <ion-segment-button (click)="selectTab(1)" value="1">Service</ion-segment-button>
+                <ion-segment-button (click)="selectTab(2)" value="2">Calender</ion-segment-button>
+                <ion-segment-button (click)="selectTab(3)" value="3">Posts</ion-segment-button>
                 <div id="slide" class="slide"></div>
             </ion-segment>
           <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
@@ -53,6 +54,26 @@
                    <div class="bal">balance <span>$200.00</span></div>
                   </ion-item>
                 </ion-list>
+              </ion-slide>
+              <ion-slide class="svs_sld">
+                <ion-item id="nw_pst" (click)="onClick('newtype')">
+                    <p>New Service</p>
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                </ion-item >
+                <button ion-item (click)="onClick('sv_dscp')"> 
+                  <ion-col col-8>
+                      <span>Service Name</span>
+                  </ion-col>
+                  <ion-col col-4>
+                      <span>$AUD 500</span>
+                  </ion-col>
+                </button>
+                <!-- ion-grid>
+                  <ion-row>
+                    <ion-col col-8>Service Name</ion-col>
+                    <ion-col col-4> Price</ion-col>
+                  </ion-row>
+                </ion-grid> -->
               </ion-slide>
               <ion-slide class="cal_sld">
                 <div class="cal_blk">

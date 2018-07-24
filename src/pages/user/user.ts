@@ -6,6 +6,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
+import { ServicetypePage } from '../servicetype/servicetype';
 
 import { UserData } from '../../providers/user-data/user-data';
 import { PostData } from '../../providers/post-data/post-data';
@@ -115,6 +116,14 @@ export class UserPage {
     if(event == "new")
     {
       this.navCtrl.push(EditorPage);
+    }
+    if(event == "newtype")
+    {
+      this.navCtrl.push(ServicetypePage);
+    }
+    if(event == "sv_dscp")
+    {
+      this.navCtrl.push(ServicetypePage);
     }
 
     if(event == "signout")
