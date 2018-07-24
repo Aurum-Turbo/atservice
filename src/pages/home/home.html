@@ -22,7 +22,7 @@
       <ion-card-content>  
         <div (click)="onClick('detail')" [innerHtml]="item.description"></div>
       <ion-item>
-        <ion-avatar item-start (click)="onClick('detail')">
+        <ion-avatar item-start (click)="onClick('detail', item)">
           <img src="{{item.avatar}}"/>
         </ion-avatar>
         <ion-label item-end (click)="onClick('detail')">

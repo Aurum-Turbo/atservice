@@ -16,7 +16,7 @@ import { ServiceData } from '../../providers/service-data/service-data';
 })
 export class ServiceDetailsPage {
   date: Date = new Date();
-  serviceObj = new ServiceData();
+  postObj = new ServiceData();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     if(navParams.data != null)

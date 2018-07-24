@@ -116,11 +116,16 @@ export class UserPage {
     this.tabs = $event._snapIndex.toString();
   }
   
-  onClick(event: string) {
+  onClick(event: string, item: any) {
     if(event == "new")
     {
       //console.log("set author: ", this.userObj.nickname);
       this.navCtrl.push(EditorPage, {"user": this.userObj, "post": new PostData()});
+    }
+
+    if(event == "edit")
+    {
+      this.navCtrl.push(EditorPage, {"user": this.userObj, "post": item as PostData});
     }
 
     if(event == "signout")

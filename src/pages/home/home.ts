@@ -46,7 +46,7 @@ export class HomePage {
   onClick(event: string, item: any) {
     if(event == "detail")
     {
-      this.navCtrl.push(ServiceDetailsPage);
+      this.navCtrl.push(ServiceDetailsPage, item);
     }
   
     if(event == "like")

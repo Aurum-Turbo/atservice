@@ -108,8 +108,18 @@ export class EditorPage {
       .catch(error => console.log(error));
     }
     else
-    {
+    { 
       console.log("content is not match the rule");
+    }
+
+    if(this.calltype == "editing" && this.postObj.images != [] && this.postObj.description != null)
+    {
+      this.itemsCollection.doc(this.postObj.pid).update({
+        "status": "created",
+        "images": this.postObj.images,
+        "description": this.postObj.description,
+        "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+      });
     }
   }
 

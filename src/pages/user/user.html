@@ -109,8 +109,8 @@
                   <p>New Post</p>
                   <ion-icon name="ios-arrow-forward"></ion-icon>
               </ion-item>
-                    <ion-grid>
-                      <ion-row *ngFor="let item of items | async">
+                    <ion-grid *ngFor="let item of items | async">
+                      <ion-row (click)="onClick('edit', item)">
                           <ion-col col-3>
                             <ion-item class="dat_lt">
                                 <span id="date">{{item.postDate}}</span>
