@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>Service Editor</ion-title>
+    <ion-title text-center>Post Editor</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -22,8 +22,12 @@
         </ion-row> -->
         <ion-row>
           <ion-col col-12>
-            <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
+            <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event.target.files)"/>
           <!-- <ion-label image-label>Cover Image</ion-label> -->
+          <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <P>{{downloadURL | async}}</P>
  
               <ion-scroll scrollX="true">
                   <img *ngFor="let item of postObj.images" [src]="item" height="200px"/>

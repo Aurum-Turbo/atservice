@@ -46,23 +46,20 @@ export class HomePage {
   onClick(event: string, item: any) {
     if(event == "detail")
     {
-      this.navCtrl.push(ServiceDetailsPage, item);
+      this.navCtrl.push(ServiceDetailsPage, {"post": item as PostData});
     }
   
     if(event == "like")
     {
-      if(this.iconlike == "icon-heart-outline")
+
+      let updateLike = (<PostData>item).likeList;
+      if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
       {
-        let updateLike = (<PostData>item).likeList;
-        if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
-        {
-          updateLike.push(firebase.auth().currentUser.uid);
-          this.itemsCollection.doc((<PostData>item).pid).update({
-            "likeList": updateLike,
-            "like": updateLike.length
-          });
-          this.iconlike = "icon-heart";
-        }
+        updateLike.push(firebase.auth().currentUser.uid);
+        this.itemsCollection.doc((<PostData>item).pid).update({
+          "likeList": updateLike,
+          "like": updateLike.length
+        });
       }
     }
   }

@@ -14,26 +14,21 @@
 
 
 <ion-content>
-    <ion-slides>
-        <img src="../../assets/imgs/00.jpeg"/>
-      </ion-slide>
+    <ion-slides *ngFor="let i of [0,1,2,3,4,5]">
       <ion-slide>
-        <img src="../../assets/imgs/03.jpeg"/>
-      </ion-slide>
-      <ion-slide>
-        <img src="../../assets/imgs/05.jpeg"/>
+        <img src="{{postObj.images[i]}}"/>
       </ion-slide>
     </ion-slides> 
     <ion-list>
       <ion-item class="hd_rw">
               <ion-avatar item-start>
-                <img src="../../assets/imgs/avatar.png"/>
+                <img src="{{postObj.avatar}}"/>
               </ion-avatar>
-              <span>Nickname</span>
+              <span>{{postObj.nickname}}</span>
               <button ion-button outline item-end>Follow</button>       
       </ion-item>
       <ion-item>
-        <div [innerHtml]="serviceObj.description"></div>
+        <div [innerHtml]="postObj.description"></div>
       </ion-item>
       <ion-item class="ft_rw">
         <span>{{date | date:"MMMM dd yyyy"}}</span>

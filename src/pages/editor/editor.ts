@@ -7,6 +7,8 @@ import { PostData } from '../../providers/post-data/post-data';
 import firebase from 'firebase/app';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Timestamp } from '../../../node_modules/rxjs';
@@ -39,13 +41,23 @@ export class EditorPage {
 
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   itemDocument: AngularFirestoreDocument<PostData>; // read collection
+
+  //for image upload
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  uploadState: Observable<string>;
+  uploadProgress: Observable<number>;
+  downloadURL: Observable<string>;
   
   constructor(
     private afs: AngularFirestore,
+    private afStorage: AngularFireStorage,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
       this.itemsCollection = this.afs.collection("posts");
+
+
       
       if(navParams.data != null)
       {
@@ -124,15 +136,66 @@ export class EditorPage {
   }
 
   onSelect(event) {
+    const file = event.item(0);
     let reader = new FileReader();
-    if(this.postObj.images == null)
+
+    if (file.type.split('/')[0] !== 'image') { 
+      console.error('unsupported file type :( ')
+      return;
+    }
+
+    reader.readAsDataURL(event.item(0));
+
+    const path = `${firebase.auth().currentUser.uid}/images/${new Date().getTime()}_${file.name}`;
+    this.ref = this.afStorage.ref(path);
+    //this.task = this.afStorage.upload(path, file);
+    //this.uploadProgress = this.task.percentageChanges();
+    //this.task.snapshotChanges().subscribe(snapshot => {this.downloadURL = this.ref.getDownloadURL();});
+    var uploadTask = firebase.storage().ref(path).put(file);
+
+    uploadTask.on('state_changed', snapshot => {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+    }, err => {
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (err.code) {
+        case 'storage/unauthorized':
+        // User doesn't have permission to access the object
+        break;
+
+        case 'storage/canceled':
+        // User canceled the upload
+        break;
+        case 'storage/unknown':
+        // Unknown error occurred, inspect error.serverResponse
+        break;
+      }
+    }, function() {
+      uploadTask.snapshot.ref.getDownloadURL().then(downloadurl => {
+        console.log("file download Url: ", downloadurl);
+      }); 
+    });
+
+
+
+
+    /*
+    let reader = new FileReader();
+    
+    if(reader)
     {
-      this.postObj.images = [];
-    }
-    console.log("images: ", this.postObj);
-    reader.onload = (event: any) => {
-      this.postObj.images.push(event.target.result);
-    }
-    reader.readAsDataURL(event.target.files[0]);
+      //console.log("images: ", this.postObj);
+      reader.onload = (event: any) => {
+        const id = Math.random().toString(36).substring(2);
+      this.ref = this.afStorage.ref(firebase.auth().currentUser.uid + "/images/"+ id);
+      this.task = this.ref.put(event.target.files[0]);
+      
+      this.downloadURL = this.ref.getDownloadURL();
+      this.downloadURL.subscribe(observer => {this.postObj.images.push(observer.toString());});
+      
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }*/
   }
 }

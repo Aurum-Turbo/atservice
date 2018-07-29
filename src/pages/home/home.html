@@ -18,18 +18,18 @@
   </ion-item>
   <div class="homecard_pad" *ngFor="let item of items | async">
     <ion-card>
-        <img (click)="onClick('detail')" src="{{item.images[0]}}"/> 
+        <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
       <ion-card-content>  
-        <div (click)="onClick('detail')" [innerHtml]="item.description"></div>
+        <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
       <ion-item>
         <ion-avatar item-start (click)="onClick('detail', item)">
           <img src="{{item.avatar}}"/>
         </ion-avatar>
-        <ion-label item-end (click)="onClick('detail')">
+        <ion-label item-end (click)="onClick('detail', item)">
           {{item.nickname}}
         </ion-label>
         <button ion-button icon-start clear item-end (click)="onClick('like', item)">
-          <i class="{{iconlike}}"></i>
+          <i class="icon-heart-outline"></i>
           <p>{{item.like}}</p>
         </button>
       </ion-item>

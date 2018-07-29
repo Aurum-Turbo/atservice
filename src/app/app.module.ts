@@ -9,6 +9,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -57,6 +58,7 @@ import { PostData } from '../providers/post-data/post-data';
     QuillModule,
     IonicStorageModule.forRoot(),
     AngularFireAuthModule,
+    AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
