@@ -20,7 +20,7 @@ export class UserData {
   location: string = "";
   brief: string = "";
   rate: number = 5; //the service level
-  star: string[] = ["","icon-star","icon-star","icon-star","icon-star","icon-star"]
+  star: string[] = ["","icon-star","icon-star","icon-star","icon-star","icon-star"];
 
   constructor() {
     console.log('Hello UserDataProvider Provider');

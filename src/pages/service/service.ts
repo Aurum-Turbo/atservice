@@ -31,7 +31,7 @@ export class ServicePage {
   }
 
   ionViewWillEnter(){
-    this.serviceList = this.dataService.serviceList;
+    //this.serviceList = this.dataService.serviceList;
     console.log("load servicelist: ", this.serviceList);
     //this.data = this.dataService.readList("service");
   }
@@ -44,7 +44,7 @@ export class ServicePage {
 
     if(event == "discard")
     {
-      this.dataService.updateServiceList(event,item);
+      //this.dataService.updateServiceList(event,item);
     }
 
     if(event == "edit")
@@ -56,21 +56,21 @@ export class ServicePage {
     {
       //this.navCtrl.push(EditorPage, item);
       item.status = "activated";
-      this.dataService.updateServiceList('update',item);
+      //this.dataService.updateServiceList('update',item);
     }
 
     if(event == "suspend")
     {
       //this.navCtrl.push(EditorPage, item);
       item.status = "suspended";
-      this.dataService.updateServiceList('update',item);
+      //this.dataService.updateServiceList('update',item);
     }
 
     if(event == "resume")
     {
       //this.navCtrl.push(EditorPage, item);
       item.status = "activated";
-      this.dataService.updateServiceList('update',item);
+      //this.dataService.updateServiceList('update',item);
     }
 
     if(event == "details")

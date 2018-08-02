@@ -52,10 +52,11 @@ export class UserPage {
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
 
-  userDocument: AngularFirestoreDocument<UserData>;
+  //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
 
-  userObj = new UserData();
+
+  //userDataObj = new UserData();
 
   //postDate: Date;
 
@@ -66,47 +67,51 @@ export class UserPage {
               public navParams: NavParams, 
               private alertCtrl: AlertController,
               private calendar: Calendar) {          
-    //this.userDataObj = this.dataService.userDataObj;
-
-    for(let i=0; i<10; i++){
-      this.transList.push('这是第'+i+'条数据')
-      this.posList.push("assets/imgs/0"+i+".jpeg")
-    };
-    
   }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad UserPage');
+    //this.userDataObj = this.dataService.userDataObj;
+    this.currentUser = this.dataService.loadCurUserData();
+  }
+
   ionViewWillEnter() {
     this.date = new Date();
     this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     this.getDaysOfMonth();
     this.loadEventThisMonth();
 
-    //this.userDataObj = this.dataService.userDataObj;
-    //console.log("user.ts - constructor - userData: ", this.userDataObj); 
-    this.itemsCollection = this.afs.collection("posts", ref => {
-      return ref.where("author","==",firebase.auth().currentUser.uid)
-                .orderBy("updateAt", 'desc');
-    });
-    this.items = this.itemsCollection.valueChanges();
+    //check user login status
 
-    /*this.items.subscribe(Value => {
-      Value.forEach(item => {
-        const d = new Date(item.updateAt.seconds*1000);
-        console.log("change time: ", d.toString());
+    console.log("page name: ", this.navCtrl.getActive().name);
+
+    if(this.navCtrl.getActive().name == "UserPage")
+    {
+      firebase.auth().onAuthStateChanged(user => {
+        if(user)
+        {
+          console.log("user is logged in");
+          this.itemsCollection = this.afs.collection("posts", ref => {
+            return ref.where("author","==",firebase.auth().currentUser.uid)
+                      .orderBy("updateAt", 'desc');
+          });
+
+          this.items = this.itemsCollection.valueChanges();
+          //this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
+          //this.currentUser = this.userDocument.valueChanges();
+          //this.userDocument.valueChanges().subscribe(snapshot => {
+          //  this.userObj = snapshot;
+          //});
+        }
+        else
+        {
+          this.navCtrl.setRoot(LoginPage, {"from": UserPage});
+          console.log("user is not logged in");
+        }
       });
-    });*/
-    
-    this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
-    this.currentUser = this.userDocument.valueChanges();
-    this.userDocument.valueChanges().subscribe(snapshot => {
-      this.userObj = snapshot;
-    });
+    }
   }
   
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
-    //this.getRank();
-  }
   @ViewChild('pageSlider') pageSlider: Slides;
   tabs: any = '0';
   selectTab(index) {
@@ -120,18 +125,18 @@ export class UserPage {
     if(event == "new")
     {
       //console.log("set author: ", this.userObj.nickname);
-      this.navCtrl.push(EditorPage, {"user": this.userObj, "post": new PostData()});
+      this.navCtrl.push(EditorPage, {"post": new PostData()});
     }
 
     if(event == "edit")
     {
-      this.navCtrl.push(EditorPage, {"user": this.userObj, "post": item as PostData});
+      this.navCtrl.push(EditorPage, {"post": item as PostData});
     }
 
     if(event == "signout")
     {
       firebase.auth().signOut();
-      this.navCtrl.push(LoginPage);
+      //this.navCtrl.push(LoginPage);
     }
   }
   

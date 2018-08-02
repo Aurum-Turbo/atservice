@@ -25,7 +25,7 @@
                 <img src="{{postObj.avatar}}"/>
               </ion-avatar>
               <span>{{postObj.nickname}}</span>
-              <button ion-button outline item-end>Follow</button>       
+              <button ion-button outline item-end>Follow</button>      
       </ion-item>
       <ion-item>
         <div [innerHtml]="postObj.description"></div>
@@ -43,6 +43,12 @@
             <img src="../../assets/imgs/avatar.png"/>
           </ion-avatar>
           <p>jfkdsjlakdfjkls</p>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="message here" [(ngModel)]="message.message">
+        </ion-input>
+        </ion-item><ion-item>
+        <button ion-button (click)="onClick()">Send</button>
       </ion-item>
     </ion-list>
 </ion-content>

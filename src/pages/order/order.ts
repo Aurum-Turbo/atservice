@@ -31,7 +31,7 @@ export class OrderPage {
   }
 
   ionViewWillEnter(){
-    this.orderList = this.dataService.orderList;
+    //this.orderList = this.dataService.orderList;
     console.log("load orderlist: ", this.orderList);
     //this.data = this.dataService.readList("service");
   }
@@ -45,22 +45,22 @@ export class OrderPage {
 
     if(event == "discard")
     {
-      this.dataService.updateOrderList("discard",item);
+      //this.dataService.updateOrderList("discard",item);
     }
 
     if(event == "decline")
     {
       //send decline message to server
       //delete local copy
-      this.dataService.updateOrderList("discard",item);
+      //this.dataService.updateOrderList("discard",item);
     }
 
     if(event == "accept")
     {
       var jobObj = new JobData();
       jobObj.order = item;
-      this.dataService.updateJobList("new",jobObj);
-      this.dataService.updateOrderList("discard", item);
+      //this.dataService.updateJobList("new",jobObj);
+      //this.dataService.updateOrderList("discard", item);
     }
   }
 

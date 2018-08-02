@@ -35,6 +35,7 @@ import { UserData } from '../providers/user-data/user-data';
 import { LoadingServiceProvider } from '../providers/loading-service/loading-service';
 import { AppSettings } from '../providers/app-setting';
 import { PostData } from '../providers/post-data/post-data';
+import { ChatDetailsPage } from '../pages/chat-details/chat-details';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PostData } from '../providers/post-data/post-data';
     OrderPage,
     EditorPage,
     OrderCreatorPage,
-    ServiceDetailsPage
+    ServiceDetailsPage,
+    ChatDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { PostData } from '../providers/post-data/post-data';
     OrderPage,
     EditorPage,
     OrderCreatorPage,
-    ServiceDetailsPage
+    ServiceDetailsPage,
+    ChatDetailsPage
   ],
   providers: [
     StatusBar,

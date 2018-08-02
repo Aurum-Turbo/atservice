@@ -16,13 +16,13 @@
 <ion-content padding>
   <ion-list>
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-    <ion-item *ngFor="let item of msgList">
+    <ion-item *ngFor="let item of msgList" (click)="onClick(item)">
       <ion-avatar item-start>
-        <img src="../../assets/imgs/avatar.png">
+        <img src="{{item.savatar}}">
       </ion-avatar>
-      <h2>nickname</h2>
-      <span>9:12PM</span>
-      <p>The last received message.</p>
+      <p>{{item.snickname}}<p>
+      <span>{{item.time}}</span>
+      <p>{{item.message}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

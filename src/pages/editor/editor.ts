@@ -11,7 +11,6 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Timestamp } from '../../../node_modules/rxjs';
 import { UserData } from '../../providers/user-data/user-data';
 
 //import { QuillModule } from 'ngx-quill';
@@ -35,7 +34,6 @@ import { UserData } from '../../providers/user-data/user-data';
 export class EditorPage {
   
   postObj: PostData;
-  userObj: UserData;
 
   calltype = "creating";
 
@@ -47,7 +45,7 @@ export class EditorPage {
   task: AngularFireUploadTask;
   uploadState: Observable<string>;
   uploadProgress: Observable<number>;
-  downloadURL: Observable<string>;
+  downloadURL: string;
   
   constructor(
     private afs: AngularFirestore,
@@ -56,36 +54,24 @@ export class EditorPage {
     public navCtrl: NavController, public navParams: NavParams) {
 
       this.itemsCollection = this.afs.collection("posts");
-
-
-      
       if(navParams.data != null)
       {
         this.postObj = navParams.get("post"); 
-        this.userObj = navParams.get("user");
 
         if(this.postObj.pid)
         {
           this.calltype = "editing";
         }
-        //console.log("edit page: ", this.postObj);
       }
-      
-
-      /*for(let i:0; i<8; i++){
-        this.imgsList.push('../../assets/imgs/0'+i+'.jpeg')
-      }*/
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditorPage');
+    this.dataService.loadCurUserData();
   }
 
   ionViewWillLeave() {
     //create service
-    //this.serviceObj.coverimage = this.coverimage;
-    //console.log(this.serviceObj);
-    //this.dataService.updateServiceList("new",this.serviceObj);
     if(this.calltype == "creating" && this.postObj.images != [] && this.postObj.description != null)
     { 
       //this.dataService.updateServiceList("new",this.serviceObj);
@@ -96,9 +82,9 @@ export class EditorPage {
         "status": "created",
         "images": this.postObj.images,
         "description": this.postObj.description,
-        "author":this.userObj.uid,
-        "nickname": this.userObj.nickname,
-        "avatar": this.userObj.avatar,
+        "author":this.dataService.userDataObj.uid,
+        "nickname": this.dataService.userDataObj.nickname,
+        "avatar": this.dataService.userDataObj.avatar,
         "tags": "",
         "rank": 0,
         "likeList": [],
@@ -136,66 +122,65 @@ export class EditorPage {
   }
 
   onSelect(event) {
-    const file = event.item(0);
-    let reader = new FileReader();
+    const file = event.target.files[0];
+    const path = `${firebase.auth().currentUser.uid}/images/${new Date().getTime()}_${file.name}`;
 
-    if (file.type.split('/')[0] !== 'image') { 
-      console.error('unsupported file type :( ')
-      return;
+    if(this.postObj.images == null)
+    {
+      this.postObj.images = [];
     }
 
-    reader.readAsDataURL(event.item(0));
-
-    const path = `${firebase.auth().currentUser.uid}/images/${new Date().getTime()}_${file.name}`;
-    this.ref = this.afStorage.ref(path);
-    //this.task = this.afStorage.upload(path, file);
-    //this.uploadProgress = this.task.percentageChanges();
-    //this.task.snapshotChanges().subscribe(snapshot => {this.downloadURL = this.ref.getDownloadURL();});
-    var uploadTask = firebase.storage().ref(path).put(file);
-
-    uploadTask.on('state_changed', snapshot => {
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-    }, err => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (err.code) {
-        case 'storage/unauthorized':
-        // User doesn't have permission to access the object
-        break;
-
-        case 'storage/canceled':
-        // User canceled the upload
-        break;
-        case 'storage/unknown':
-        // Unknown error occurred, inspect error.serverResponse
-        break;
-      }
-    }, function() {
-      uploadTask.snapshot.ref.getDownloadURL().then(downloadurl => {
-        console.log("file download Url: ", downloadurl);
-      }); 
-    });
-
-
-
-
-    /*
-    let reader = new FileReader();
-    
-    if(reader)
+    if(this.postObj.images.length < 6)
     {
-      //console.log("images: ", this.postObj);
-      reader.onload = (event: any) => {
-        const id = Math.random().toString(36).substring(2);
-      this.ref = this.afStorage.ref(firebase.auth().currentUser.uid + "/images/"+ id);
-      this.task = this.ref.put(event.target.files[0]);
-      
-      this.downloadURL = this.ref.getDownloadURL();
-      this.downloadURL.subscribe(observer => {this.postObj.images.push(observer.toString());});
-      
+      this.ref = this.afStorage.ref(path);
+      this.task = this.afStorage.upload(path, event.target.files[0]);
+      this.uploadProgress = this.task.percentageChanges();
+
+      this.task.task.then(snapshot => {
+        if(snapshot.state == "success")
+        {
+          this.ref.getDownloadURL().subscribe(
+            snapshot => {this.postObj.images.push(snapshot);}
+          );
+        }
+      });
+    }
+    else
+    {
+      console.log("image number is exceeded the limitation (6)");
+    }
+  }
+
+  onClick(event:string, item: any) {
+    if(event == "discardImage" && item)
+    {
+      var index = this.postObj.images.indexOf(item);
+      //delete the URL in the images
+      if(index > -1)
+      {
+        this.postObj.images.splice(index,1);
       }
-      reader.readAsDataURL(event.target.files[0]);
-    }*/
+
+      this.afStorage.ref(item).delete().subscribe(result => { //delete the image in fire storage
+
+        this.itemsCollection.doc(this.postObj.pid).update({
+          "status": "updated",
+          "images": this.postObj.images,
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+        })
+        .catch(err => {console.log(err);});
+      });
+    }
+
+    if(event == "discard" && item)
+    {
+      this.itemsCollection.doc(this.postObj.pid).delete().then(result => {
+        console.log("delete success");
+        this.calltype ="deleting";
+        this.navCtrl.pop();
+      })
+      .catch(err => {console.log(err);});
+    }
+
   }
 }

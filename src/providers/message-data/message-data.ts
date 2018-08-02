@@ -14,11 +14,13 @@ export class MessageData {
   mid: string = "";
   time: string = "";
   sender: string = "";
+  snickname: string = "";
+  savatar: any;
   receiver: string = "";
   message: string = "";
-  lifetime: string = "";
+  status: string = "";
 
-  constructor(public http: HttpClient) {
+  constructor() {
     console.log('Hello MessageDataProvider Provider');
   }
 

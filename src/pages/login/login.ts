@@ -56,7 +56,7 @@ export class LoginPage {
 
   constructor(
     private afs: AngularFirestore,
-    //public dataService: DataServiceProvider,
+    public dataService: DataServiceProvider,
     //private authService: AuthServiceProvider,
     private fb: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
@@ -98,11 +98,26 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    if(firebase.auth().currentUser)
-    {
-      this.navCtrl.setRoot(UserPage);
-    }
+  }
 
+  ionViewWillEnter() {
+    console.log("page name: ", this.navCtrl.getActive().name);
+
+    if(this.navCtrl.getActive().name == "LoginPage")
+    {
+      firebase.auth().onAuthStateChanged(user => {
+        if(user)
+        {
+          this.navCtrl.setRoot(this.navParams.get("from"));
+          console.log("user is logged in");
+        }
+        else
+        {
+          //this.navCtrl.setRoot(LoginPage, {"from": MessagePage});
+          console.log("user is not logged in");
+        }
+      });
+    }
   }
 
   ionViewWillLeave() {
@@ -121,7 +136,9 @@ export class LoginPage {
   login() {
       firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
       .then(response => {
-        this.navCtrl.setRoot(UserPage);
+        //this.navCtrl.setRoot(UserPage);
+        this.dataService.loadCurUserData();
+        this.navCtrl.setRoot(this.navParams.get("from"));
       })
       .catch(error => {
         // handle error by showing alert

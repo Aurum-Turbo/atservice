@@ -28,7 +28,7 @@ export class JobPage {
   }
 
   ionViewWillEnter(){
-    this.jobList = this.dataService.jobList;
+    //this.jobList = this.dataService.jobList;
     console.log("load joblist: ", this.jobList);
     //this.data = this.dataService.readList("service");
   }
@@ -43,6 +43,6 @@ export class JobPage {
 
   onClick(event: string, item: any) {
     item.status = event;
-    this.dataService.updateJobList(event,item);
+    //this.dataService.updateJobList(event,item);
   }
 }

@@ -7,6 +7,8 @@ import { LoginPage } from '../login/login';
 import { UserPage } from '../user/user';
 import { MessagePage } from '../message/message';
 import { ServiceDetailsPage } from '../service-details/service-details';
+
+import firebase from 'firebase/app';
 /**
  * Generated class for the TabsPage page.
  *
@@ -23,7 +25,7 @@ export class TabsPage {
 
   tab1Root: any = HomePage;
   tab2Root: any = MessagePage;
-  tab3Root: any = LoginPage;
+  tab3Root: any = UserPage;
   // tab4Root: any = MessagePage;
   mySelectedIndex: number;
 
@@ -32,18 +34,6 @@ export class TabsPage {
     public localStorage: Storage,
     public navCtrl: NavController, public navParams: NavParams) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
-    
-    //this.tab3Root = LoginPage;
-    /*
-    localStorage.ready().then(() => {
-      this.localStorage.get("loginstatus").then(status => {
-        this.tab3Root = status? UserPage : LoginPage;
-        //this.tab3Root = LoginPage;
-        //console.log("loginstatus: ", status, "tab3Root: ", this.tab3Root);
-      });
-      //console.log("login status: ", this.dataService.isLogin());
-      //this.rootPage = this.dataService.isLogin()? TabsPage:LoginPage; 
-    });*/
   }
 
   ionViewDidLoad() {

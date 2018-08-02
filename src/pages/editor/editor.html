@@ -22,15 +22,13 @@
         </ion-row> -->
         <ion-row>
           <ion-col col-12>
-            <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event.target.files)"/>
+            <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
           <!-- <ion-label image-label>Cover Image</ion-label> -->
           <div class="progress">
               <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <P>{{downloadURL | async}}</P>
- 
               <ion-scroll scrollX="true">
-                  <img *ngFor="let item of postObj.images" [src]="item" height="200px"/>
+                  <img *ngFor="let item of postObj.images" [src]="item" height="200px" (click)="onClick('discardImage',item)"/>
                   <button ion-button class="add_btn" clear (click)="imageInput.click()"><i class="icon-plus"></i></button>
               </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->
@@ -48,7 +46,7 @@
         <ion-row>
           <quill-editor placeholder="Please insert the description ..." [(ngModel)]="postObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
-        <!--button ion-button block default-button (click)="onClick('submit')">Submit</button-->
+        <button ion-button block default-button (click)="onClick('discard',postObj)">Discard</button>
       </ion-col>
     </ion-row>
   </ion-grid>
