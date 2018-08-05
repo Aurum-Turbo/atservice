@@ -26,16 +26,15 @@ export class DataServiceProvider {
     console.log('Hello DataServiceProvider Provider');
   }
 
-  loadCurUserData(): Observable<UserData> {
-    this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges().subscribe(snapshot => {
-      this.userDataObj = snapshot;
+  loadCurUserData() {
+    
+    firebase.auth().onAuthStateChanged(user => {
+      if(user)
+      {
+        this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges().subscribe(snapshot => {
+          this.userDataObj = snapshot;
+        });
+      }
     });
-
-    //console.log("load current user data: ", this.userDataObj);
-    return new Observable<UserData>(observer => {
-                observer.next(this.userDataObj);
-                observer.complete();
-              });
-  
   }
 }

@@ -72,7 +72,6 @@ export class UserPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
     //this.userDataObj = this.dataService.userDataObj;
-    this.currentUser = this.dataService.loadCurUserData();
   }
 
   ionViewWillEnter() {
@@ -82,7 +81,6 @@ export class UserPage {
     this.loadEventThisMonth();
 
     //check user login status
-
     console.log("page name: ", this.navCtrl.getActive().name);
 
     if(this.navCtrl.getActive().name == "UserPage")
@@ -90,7 +88,9 @@ export class UserPage {
       firebase.auth().onAuthStateChanged(user => {
         if(user)
         {
-          console.log("user is logged in");
+          this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
+          
+          this.dataService.loadCurUserData();
           this.itemsCollection = this.afs.collection("posts", ref => {
             return ref.where("author","==",firebase.auth().currentUser.uid)
                       .orderBy("updateAt", 'desc');
