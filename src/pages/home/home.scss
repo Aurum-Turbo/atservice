@@ -9,8 +9,7 @@ page-home {
                     width: 100% !important;
                     margin:5px 0 !important;
                     display: inline-block;
-                    background-color: #eee !important;
-                    border-radius: 5px !important;
+                    // border-radius: 5px !important;
                     ion-card-content{
                         padding: 5px 10px !important;
                         div{
@@ -24,7 +23,7 @@ page-home {
                             line-height: 1em !important;
                             padding: 0 !important;
                             margin: 0 !important;
-                            background-color: #eee !important;
+                            // background-color: #eee !important;
                             ion-avatar{
                                 margin-right: 0 !important;
                                 min-width: 2rem !important;
@@ -34,15 +33,15 @@ page-home {
                                     height: 2rem !important;
                                 }
                             }
-                            ion-label{
+                            /* ion-label{
                                 font-size: 1rem !important;
            
-                            }
-                            .button{
+                            } */
+                            /* .button{
                                 width: 5rem !important;
                                 padding: 0 !important;
                                 margin-right: -1rem !important;
-                            }
+                            } */
                         }
                     }
                    

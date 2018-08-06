@@ -9,7 +9,7 @@ $font-path: "../assets/fonts";
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
-$app-direction: ltr;
+// $app-direction: ltr;
 
 
 @import "ionic.globals";
@@ -33,16 +33,6 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-/*
-$colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
-);*/
-
-// Global Colors
 $colors: (
   primary:    #424242,
   secondary:  #fcd736,
@@ -73,7 +63,38 @@ $colors: (
   ),
 );
 
-$palettes: (
+// Global Colors
+/* $colors: (
+  primary:    #424242,
+  secondary:  #fcd736,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  accent:     #202020,
+  dark:       #222222,
+  favorite:   #69BB7B, */
+  // Button Twitter
+/*   twitter:(
+    base: #64B5F6,
+    contrast: #fff
+  ), */
+  // Button Facebook
+/*   facebook:(
+    base: #3949ab,
+    contrast: #fff
+  ), */
+  // Button Google
+/*   google:(
+    base: #bf360c,
+    contrast: #fff
+  ), */
+  // Button Pinterest
+/*   pinterest:(
+    base: #ff3d00,
+    contrast: #fff
+  ),
+); */
+
+/* $palettes: (
     mainColors: ( // Also used for backgrounds.
 
         primary:   #424242, // Used for toolbars
@@ -92,10 +113,10 @@ $palettes: (
         primary:  #ffffff,
         secondary: #424242
     )
-);
+); */
 
 // Global Opacity
-$global-opacity: (
+/* $global-opacity: (
   'opacity0': 0,
   'opacity10': 0.1,
   'opacity20': 0.2,
@@ -122,14 +143,14 @@ $global-opacity: (
     $color: rgba($color, $alpha);
   }
   @return $color;
-}
+} */
 
 //main background color
-$background-color: theme-colors('mainColors', 'accent');
-$toolbar-background: theme-colors('mainColors', 'secondary');
+/* $background-color: theme-colors('mainColors', 'accent');
+$toolbar-background: theme-colors('mainColors', 'secondary'); */
 
 //tool bar color
-$toolbar-md-height: 49px !important;
+/* $toolbar-md-height: 49px !important;
 $toolbar-ios-height: 49px !important;
 
 ion-header {
@@ -137,7 +158,7 @@ ion-header {
       color: theme-colors('textColors', 'secondary') !important;
       text-transform: uppercase;
     }
-}
+} */
 
 
 
@@ -181,7 +202,7 @@ ion-header {
 
 // // App Fontelo Style
 //--------------------------------------------------
-@import "fontello";
+ @import "fontello";
 
 @import "ionicons";
 
@@ -193,7 +214,7 @@ ion-header {
 
 @import "roboto";
 @import "noto-sans";
-
+/*
 @font-face {
   font-family: "Open Sans";
   src: url("../assets/fonts/open-sans.woff2");
@@ -231,10 +252,10 @@ p,
 {
   font-family: $font-name;
   font-weight: $font-weight-value; 
-}
+} */
 
 // Settings Font Size
-$h1-font-size: 26px;
+/* $h1-font-size: 26px;
 $h2-font-size: 20px;
 $h3-font-size: 16px;
 $h4-font-size: 14px;
@@ -290,10 +311,10 @@ $text-font-size: 14px;
   //border: 0px !important;
   margin: 0px !important;
   box-shadow: 0px !important;
-}
+} */
 
 //Tab Settings
-[tabs-bcg] {
+/* [tabs-bcg] {
   background-color: theme-colors('mainColors', 'primary');
 }
 
@@ -315,10 +336,10 @@ $icon-size:(
 );
 @function icon-size($key: 'icon-small') {
   @return map-get($icon-size, $key);
-}
+} */
 
 // Icon Settings
-[icon-small] {
+/* [icon-small] {
   color: theme-colors('mainColors', 'primary', 'opacity60') !important;
   font-size: icon-size('icon-small') !important;
 }
@@ -330,10 +351,10 @@ $icon-size:(
 [icon-large] {
   color: theme-colors('mainColors', 'secondary', 'opacity60') !important;
   font-size: icon-size('icon-large') !important;
-}
+} */
 
 //Fab Button Settings
-[button-ion-fab] {
+/* [button-ion-fab] {
   background-color: theme-colors('mainColors', 'secondary') !important;
   color: theme-colors('mainColors', 'accent') !important;
   z-index: 9 !important;
@@ -356,5 +377,8 @@ ion-item{
   max-width: 960px;
   margin-left: auto !important;
   margin-right: auto !important;
-}
+} */
 
+
+// 引入 main.scss
+@import "main";

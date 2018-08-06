@@ -22,17 +22,17 @@
           </ion-avatar>
         <!--/div-->
           <ion-item class="username" no-lines>
-            <button ion-button (click)="goProfile()">{{(currentUser | async)?.nickname}}</button>
+            <button ion-button (click)="goProfile()" color="secondary" >{{(currentUser | async)?.nickname}}</button>
           </ion-item>
           <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{(currentUser | async)?.star[i]}}"></i></ion-icon>
           <span span-small>{{(currentUser | async)?.rate}}</span>
           </p>
           <div class="sgn_btn">
-            <button ion-button (click)="onClick('signout')">Sign out</button>
+            <button color="secondary" ion-button (click)="onClick('signout')">Sign out</button>
           </div>
         </ion-item>
         <ion-item no-lines>
-            <ion-segment color="grey" [(ngModel)]="tabs">
+            <ion-segment  [(ngModel)]="tabs" color="secondary">
                 <ion-segment-button (click)="selectTab(0)" value="0">Wallet</ion-segment-button>
                 <ion-segment-button (click)="selectTab(1)" value="1">Calender</ion-segment-button>
                 <ion-segment-button (click)="selectTab(2)" value="2">Posts</ion-segment-button>
@@ -42,8 +42,8 @@
               <ion-slide class="wal_sld" >
                 <h1>$100.00</h1>
                 <div>
-                  <button ion-button>Top up</button>
-                  <button ion-button>Transfer</button>
+                  <button ion-button color="secondary">Top up</button>
+                  <button ion-button color="secondary">Transfer</button>
                 </div>
                 <ion-list>
                   <ion-item *ngFor="let item of transList">

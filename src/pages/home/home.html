@@ -13,9 +13,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item no-lines no-padding>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  </ion-item>
+ 
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <div class="homecard_pad" *ngFor="let item of items | async">
     <ion-card>
         <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
