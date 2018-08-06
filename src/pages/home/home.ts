@@ -27,6 +27,9 @@ export class HomePage {
   items: Observable<PostData[]>; // read collection
 
   iconlike: string = "icon-heart-outline";
+  public Masonry: any;
+  public msnry: any;
+  public imagesLoad: any;
   constructor(
     private afs: AngularFirestore,
     //public dataService: DataServiceProvider,
@@ -63,4 +66,20 @@ export class HomePage {
       }
     }
   }
+  ionViewDidEnter() {
+    let instance = this;
+    setTimeout(() => {
+    
+    let elem = document.querySelector('.grid');
+    imagesLoaded (elem, function () {})
+      // all images loaded
+      //  instance.utils.debug("images loaded done, instantiating packery");
+    instance.msnry = new Masonry (elem, {
+         // options
+         itemSelector: '.grid-item',
+         percentPosition: true,  
+       });
+      
+    }, 100);
+}
 }

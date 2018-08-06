@@ -12,11 +12,11 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
  
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <div class="homecard_pad" *ngFor="let item of items | async">
-    <ion-card>
+  <div class="grid" >
+    <ion-card class="grid-item" *ngFor="let item of items | async">
         <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
       <ion-card-content>  
         <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
@@ -27,8 +27,8 @@
         <ion-label item-end (click)="onClick('detail', item)">
           {{item.nickname}}
         </ion-label>
-        <button ion-button icon-start clear item-end (click)="onClick('like', item)">
-          <i class="icon-heart-outline"></i>
+        <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">
+          <i class="icon-heart-outline" ></i>
           <p>{{item.like}}</p>
         </button>
       </ion-item>

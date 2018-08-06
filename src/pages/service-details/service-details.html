@@ -14,8 +14,8 @@
 
 
 <ion-content>
-    <ion-slides *ngFor="let i of [0,1,2,3,4,5]">
-      <ion-slide>
+    <ion-slides >
+      <ion-slide *ngFor="let i of [0,1,2,3,4,5]">
         <img src="{{postObj.images[i]}}"/>
       </ion-slide>
     </ion-slides> 
