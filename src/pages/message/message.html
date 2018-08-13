@@ -13,16 +13,33 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
     <ion-item *ngFor="let item of msgList" (click)="onClick(item)">
-      <ion-avatar item-start>
-        <img src="{{item.savatar}}">
-      </ion-avatar>
-      <p>{{item.snickname}}<p>
-      <span>{{item.time}}</span>
-      <p>{{item.message}}</p>
+      <ion-row>
+
+        <ion-col col-2>
+          <ion-row>
+            <ion-avatar item-start>
+              <img src="{{item.savatar}}">
+            </ion-avatar>
+          </ion-row>
+        </ion-col>
+        <ion-col col-10>
+          <ion-row>
+            <ion-col col-8>
+              <div class="msg-nm">{{item.snickname}}</div>
+            </ion-col>
+            <ion-col col-4>
+              <div class="msg-tm">{{item.time | date: "HH:mm"}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <div class="msg-ctn">{{item.message}}</div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
     </ion-item>
   </ion-list>
 </ion-content>

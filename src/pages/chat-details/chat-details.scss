@@ -1,3 +1,21 @@
 page-chat-details {
-
+    ion-item{
+        background-color: theme-colors('mainColors', 'primary','opacity0') !important;
+       /*  img{
+           width: 5% !important;
+           height: 
+        } */
+        .msg-ctn{
+            display: inline-block;
+            background:color($colors,'favorite');
+            color: color($colors,'dark');
+            font-family: Arial, Helvetica, sans-serif;
+            border-radius: 4px;
+            width: auto !important;
+            max-width: 80% !important;
+            height: auto;
+            padding: 0 5px;
+            white-space: normal;
+        }
+    }
 }

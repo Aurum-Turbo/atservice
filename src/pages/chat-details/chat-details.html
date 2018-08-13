@@ -13,13 +13,33 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-item *ngFor="let item of items | async">
-    <ion-avatar item-start>
-      <img src="{{item.savatar}}">
-    </ion-avatar>
-    <p>{{item.snickname}}<p>
-    <span>{{item.time}}</span>
-    <p>{{item.message}}</p>
-  </ion-item>
+<ion-content>
+  <ion-list no-lines clear>
+    <ion-item *ngFor="let item of items | async">
+      <ion-avatar item-start>
+        <img src="{{item.savatar}}">
+      </ion-avatar>
+      <!-- <p>{{item.snickname}}<p> -->
+      <!-- <span>{{item.time}}</span> -->
+      <div class="msg-ctn">{{item.message}}</div>
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button icon-only>
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-buttons>
+      <form>
+        <ion-input  type="text"></ion-input>
+        <button *ngIf="">按住 说话</button>
+      </form>
+      <ion-buttons end>
+        <button ion-button icon-only>
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>

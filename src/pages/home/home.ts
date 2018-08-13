@@ -27,9 +27,9 @@ export class HomePage {
   items: Observable<PostData[]>; // read collection
 
   iconlike: string = "icon-heart-outline";
-  public Masonry: any;
-  public msnry: any;
-  public imagesLoad: any;
+  Masonry: any;
+  msnry: any;
+  imagesLoad: any;
   constructor(
     private afs: AngularFirestore,
     //public dataService: DataServiceProvider,

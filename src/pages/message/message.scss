@@ -6,16 +6,23 @@ page-message {
             min-height: 50px !important;
         }
     }
- h2{
-     color: snow;
-     float: left;
-     margin-right: 2rem !important;
- }
- span{
-     color: gray;
-     float: right;
- }
- p{
-     float: left;
- }
+    ion-row{
+        color: theme-colors('textColors', 'secondary', 'opacity60');
+        align-items: center;
+        .msg-nm{
+            float: left;
+            font-weight: bold;
+            color: theme-colors('textColors', 'accent', 'opacity100');
+        }
+        .msg-tm{
+           float: right;
+        }
+        .msg-ctn{
+            width: 80%;
+            float: left;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+    }
 }

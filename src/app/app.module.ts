@@ -63,7 +63,7 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true' })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
