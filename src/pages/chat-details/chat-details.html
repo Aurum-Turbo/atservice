@@ -16,19 +16,24 @@
 <ion-content>
   <ion-list no-lines clear>
     <ion-item *ngFor="let item of items | async">
-      <ion-avatar item-start>
+      <ion-avatar item-end *ngIf="item.sender === currentUid">
+        <img src="{{item.savatar}}">
+      </ion-avatar>
+      <ion-avatar item-start *ngIf="item.sender != currentUid">
         <img src="{{item.savatar}}">
       </ion-avatar>
       <!-- <p>{{item.snickname}}<p> -->
       <!-- <span>{{item.time}}</span> -->
-      <div class="msg-ctn">{{item.message}}</div>
+      <div [class]="item.sender == currentUid ?  'msg-ctn msg-right' : 'msg-ctn msg-left'">     
+        {{item.message}}
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
       <ion-buttons start>
-        <button ion-button icon-only>
+        <button ion-button icon-only (click)="onClick()">
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-buttons>

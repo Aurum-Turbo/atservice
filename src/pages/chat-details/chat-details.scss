@@ -5,17 +5,48 @@ page-chat-details {
            width: 5% !important;
            height: 
         } */
+        .msg-right{
+            float: right;
+            background:color($colors,'favorite'); 
+            box-shadow: 0 0 6px color($colors,'favorite'); 
+        }
+        .msg-left{
+            float: left;
+            background: color($colors,'light');
+        }       
         .msg-ctn{
-            display: inline-block;
-            background:color($colors,'favorite');
+            display: inline-block;      
+              
             color: color($colors,'dark');
             font-family: Arial, Helvetica, sans-serif;
             border-radius: 4px;
             width: auto !important;
             max-width: 80% !important;
             height: auto;
+            font-size: 14px !important;
+            line-height: 22px !important;
+
             padding: 0 5px;
             white-space: normal;
+            // margin: 0 10px;
+        }
+        .msg-right:after, .msg-left:before{
+            content:'';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            margin-top: -8px;
+        }
+        .msg-right:after{
+            border-left: 8px solid color($colors,'favorite');
+            right: 53px;
+            top: 50%;
+        }
+        .msg-left:before{
+            border-right: 8px solid color($colors,'light');
+            left: 53px;
+            top: 50%;
         }
     }
 }
