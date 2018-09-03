@@ -1,3 +1,5 @@
+declare var imagesLoaded, Masonry;
+
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -29,7 +31,7 @@ export class HomePage {
   iconlike: string = "icon-heart-outline";
   Masonry: any;
   msnry: any;
-  imagesLoad: any;
+  imagesLoaded: any;
   constructor(
     private afs: AngularFirestore,
     //public dataService: DataServiceProvider,
@@ -67,19 +69,17 @@ export class HomePage {
     }
   }
   ionViewDidEnter() {
-    let instance = this;
     setTimeout(() => {
-    
     let elem = document.querySelector('.grid');
-    imagesLoaded (elem, function () {})
-      // all images loaded
-      //  instance.utils.debug("images loaded done, instantiating packery");
-    instance.msnry = new Masonry (elem, {
-         // options
-         itemSelector: '.grid-item',
-         percentPosition: true,  
-       });
-      
-    }, 100);
-}
+    imagesLoaded(elem, function() {
+        // all images loaded
+        //  instance.utils.debug("images loaded done, instantiating packery");
+        this.msnry = new Masonry (elem, {
+          // options
+          itemSelector: '.grid-item',
+          percentPosition: true,  
+        });
+      }, 100);
+    });
+  }
 }
