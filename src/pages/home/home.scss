@@ -1,8 +1,30 @@
 page-home {
-        .grid {
+    ngx-masonry {
+        margin: 0 auto;
+        height: 100px !important;
+        max-width: 960px;
+        .masonry-item {
+          margin-bottom: 20px;
+          background-color: #f1f1f1;
+          background-size: cover;
+          width: 170px !important;
+          .io-cd{
+              width: 100%;
+          }
+        }
+      }
+
+      
+      /* .masonry-item img {
+        width: 100%;
+        height: 100%;
+        min-height: 340px;
+      } */
+        /* .grid {
             max-width: 960px;
+            height: auto !important;
             margin: 0 auto;
-            .grid-item { width: 46%;
+            ngx-masonry-item { width: 170px;
                          margin:5px; 
                          ion-card-content{
                              padding: 5px 10px !important;
@@ -30,5 +52,5 @@ page-home {
                              }
                          }
             }
-            }
+            } */
 }

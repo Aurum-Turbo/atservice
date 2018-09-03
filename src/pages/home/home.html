@@ -13,10 +13,10 @@
 </ion-header>
 
 <ion-content>
- 
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <div class="grid" >
-    <ion-card class="grid-item" *ngFor="let item of items | async">
+  <ngx-masonry [useImagesLoaded]="true" [options]="{percentPosition: ture, transitionDuration: '0.8s' }">
+    <ngx-masonry-item *ngFor="let item of items | async" class="masonry-item">
+    <ion-card class="io-cd">
         <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
       <ion-card-content>  
         <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
@@ -34,5 +34,6 @@
       </ion-item>
     </ion-card-content>
     </ion-card>
-  </div>
+  </ngx-masonry-item>
+  </ngx-masonry>
 </ion-content>

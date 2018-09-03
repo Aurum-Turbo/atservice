@@ -1,5 +1,3 @@
-declare var imagesLoaded, Masonry;
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -9,6 +7,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
+
+import { NgxMasonryModule } from 'angular-masonry';
 
 import { ServiceDetailsPage } from '../service-details/service-details';
 
@@ -46,6 +46,8 @@ export class HomePage {
   ionViewWillEnter(){
     this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
     this.items = this.itemsCollection.valueChanges();
+
+    
   }
 
   onClick(event: string, item: any) {
@@ -68,18 +70,20 @@ export class HomePage {
       }
     }
   }
+
   ionViewDidEnter() {
-    setTimeout(() => {
-    let elem = document.querySelector('.grid');
-    imagesLoaded(elem, function() {
-        // all images loaded
-        //  instance.utils.debug("images loaded done, instantiating packery");
-        this.msnry = new Masonry (elem, {
-          // options
-          itemSelector: '.grid-item',
-          percentPosition: true,  
+    /*setTimeout(() => {
+      let elem = document.querySelector('.grid');
+      imagesLoaded(elem, function() {
+          // all images loaded
+          //  instance.utils.debug("images loaded done, instantiating packery");
+          console.log('imagesloaded called');
+          this.msnry = new Masonry (elem, {
+            // options
+            itemSelector: '.grid-item',
+            percentPosition: true,  
+          });
         });
-      }, 100);
-    });
+      }, 1000);*/
   }
 }

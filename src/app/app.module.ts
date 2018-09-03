@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -10,6 +10,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+
+import { NgxMasonryModule } from 'ngx-masonry';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -58,6 +60,7 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     BrowserModule,
     HttpClientModule,
     QuillModule,
+    NgxMasonryModule,
     IonicStorageModule.forRoot(),
     AngularFireAuthModule,
     AngularFireStorageModule,
@@ -93,8 +96,9 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     Calendar,
     MessageData,
     UserData,
-    LoadingServiceProvider,
+    LoadingServiceProvider, 
     PostData
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
