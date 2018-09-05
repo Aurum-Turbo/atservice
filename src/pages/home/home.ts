@@ -8,8 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 
-import { NgxMasonryModule } from 'angular-masonry';
-
 import { ServiceDetailsPage } from '../service-details/service-details';
 
 /**

@@ -53,19 +53,23 @@ export class ChatDetailsPage {
   ionViewWillEnter() {
     this.itemsCollection = this.afs.collection('messages').doc(firebase.auth().currentUser.uid)
     .collection('chat', ref => {return ref.where("sender","==", this.chatItem.sender)
-    .orderBy("time",'desc')});
+    .orderBy("time",'asc')});
 
     this.items = this.itemsCollection.valueChanges();
   }
- /*  onClick() {
-
-    console.log("message: ", this.message.message);
+ 
+  onClick() {
     if(this.message.message)
     {
-      this.message.receiver = firebase.auth().currentUser.uid;
+      this.message.receiver = this.chatItem.sender;
       this.message.sender = firebase.auth().currentUser.uid;
       this.message.time = (new Date()).toString();
 
+      //set Collection
+      this.itemsCollection = this.afs.collection("messages");
+
+      console.log("message: ", this.message);
+      //save to receiver's inbox
       this.itemsCollection.doc(this.message.receiver)
       .collection('chat').add({
         "mid": "",
@@ -86,7 +90,28 @@ export class ChatDetailsPage {
       })
       .catch(error => console.log(error));
 
+      //save to sender's inbox
+      this.itemsCollection.doc(this.message.sender)
+      .collection('chat').add({
+        "mid": "",
+        "time": this.message.time,
+        "sender": this.message.sender,
+        "snickname": this.dataService.userDataObj.nickname,
+        "savatar": this.dataService.userDataObj.avatar,
+        "receiver": this.message.receiver,
+        "message": this.message.message,
+        "status": "sent",
+        "sendAt": firebase.firestore.FieldValue.serverTimestamp()
+      }).then(docRef => {
+        this.itemsCollection.doc(this.message.sender)
+        .collection('chat').doc(docRef.id).update({
+          "mid": docRef.id,
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+        });
+      })
+      .catch(error => console.log(error));
+
 
     }
-  } */
+  }
 }

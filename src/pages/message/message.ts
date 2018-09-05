@@ -48,7 +48,7 @@ export class MessagePage {
       firebase.auth().onAuthStateChanged(user => {
         if(user)
         {
-          console.log("user is logged in");
+          console.log("user is logged in: ", user);
           //get update senderlist
           this.afs.collection('messages').doc(firebase.auth().currentUser.uid).collection<MessageData>('chat').valueChanges().subscribe(snapshot => {
             snapshot.forEach(item => {
