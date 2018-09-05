@@ -52,8 +52,7 @@ export class ChatDetailsPage {
 
   ionViewWillEnter() {
     this.itemsCollection = this.afs.collection('messages').doc(firebase.auth().currentUser.uid)
-    .collection('chat', ref => {return ref.where("sender","==", this.chatItem.sender)
-    .orderBy("time",'asc')});
+    .collection('chat', ref => {return ref.orderBy("time",'asc')});
 
     this.items = this.itemsCollection.valueChanges();
   }

@@ -52,20 +52,22 @@ export class MessagePage {
           //get update senderlist
           this.afs.collection('messages').doc(firebase.auth().currentUser.uid).collection<MessageData>('chat').valueChanges().subscribe(snapshot => {
             snapshot.forEach(item => {
-
-              var senderIndex = this.senderList.indexOf(item.sender);
-              if(senderIndex < 0)
+              if(item.sender != (firebase.auth().currentUser.uid))
               {
-                this.senderList.push(item.sender);
-                this.msgList.push(item);
-              }
-              else
-              {
-                var new_time = (new Date(item.time)).getTime();
-                var old_time = (new Date(this.msgList[senderIndex].time)).getTime();
-                if(new_time > old_time)
+                var senderIndex = this.senderList.indexOf(item.sender);
+                if(senderIndex < 0)
                 {
-                  this.msgList.splice(senderIndex,1,item);
+                  this.senderList.push(item.sender);
+                  this.msgList.push(item);
+                }
+                else
+                {
+                  var new_time = (new Date(item.time)).getTime();
+                  var old_time = (new Date(this.msgList[senderIndex].time)).getTime();
+                  if(new_time > old_time)
+                  {
+                    this.msgList.splice(senderIndex,1,item);
+                  }
                 }
               }
             });
