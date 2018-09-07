@@ -1,15 +1,13 @@
 page-home {
     ngx-masonry {
-        margin: 0 auto;
-        height: 100px !important;
+        margin: 0 auto !important;
         max-width: 960px;
         .masonry-item {
-          margin-bottom: 20px;
-          background-color: #f1f1f1;
-          background-size: cover;
-          width: 170px !important;
-          .io-cd{
-              width: 100%;
+          width: 46%!important;
+          margin: 0.5rem 0.8rem;
+          ion-card{
+              width: 100% !important;
+            margin: 0 auto !important;
           }
         }
       }

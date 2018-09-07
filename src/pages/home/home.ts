@@ -5,6 +5,7 @@ import { PostData } from '../../providers/post-data/post-data';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
+import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 
@@ -27,9 +28,9 @@ export class HomePage {
   items: Observable<PostData[]>; // read collection
 
   iconlike: string = "icon-heart-outline";
-  Masonry: any;
-  msnry: any;
-  imagesLoaded: any;
+  // Masonry: any;
+  // msnry: any;
+  // imagesLoaded: any;
   constructor(
     private afs: AngularFirestore,
     //public dataService: DataServiceProvider,
