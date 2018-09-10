@@ -8,6 +8,31 @@ page-home {
           ion-card{
               width: 100% !important;
             margin: 0 auto !important;
+            ion-card-content{
+                // padding: 5px 10px !important;
+                div{
+                    overflow: hidden !important;
+                    display: -webkit-box !important;
+                    max-height: 60px !important;
+                    max-width: 200px !important;
+                }
+                ion-item{
+                    height: 2em !important;
+                    line-height: 1em !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    // background-color: #eee !important;
+                    ion-avatar{
+                        margin-right: 0 !important;
+                        min-width: 2rem !important;
+                        img{
+                            margin-top: .5rem !important;
+                            width: 2rem !important;
+                            height: 2rem !important;
+                        }
+                    }
+                }
+            }
           }
         }
       }
