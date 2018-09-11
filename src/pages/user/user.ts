@@ -7,9 +7,15 @@ import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
 import { ServiceCreatorPage } from '../service-creator/service-creator';
+=======
+import { OrderCreatorPage } from '../order-creator/order-creator';
+>>>>>>> c39453aeec5bff392d836ebd14d3ad1717c3abd2
 
 import { UserData } from '../../providers/user-data/user-data';
 import { PostData } from '../../providers/post-data/post-data';
+import { OrderData } from '../../providers/order-data/order-data';
+import { JobData } from '../../providers/job-data/job-data';
+import { ServiceData } from '../../providers/service-data/service-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -33,12 +39,35 @@ import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/ut
   templateUrl: 'user.html',
 })
 export class UserPage {
+  
+
   public star: Observable<string[]>;
   public mark: number;
   
   public transList= [];
   public posList = [];
-  date: any;
+  public orderList =[];
+  oid: string; //order id
+  timestamp: string;
+  status: string;
+  type: string;
+  /* Info */
+  service: ServiceData;
+  /* Pricing */
+  quantity: string;
+  subtotal: string;
+  servedate: string;
+  servetime: string;
+  servelocation: string;
+  note: string;
+  /* Parties */
+  orderby: any;
+  beneficiary: any;
+  email: string;
+  phone: string;
+  /* for quote and search */
+  tags: string[];
+  /* date: any;
   daysInThisMonth: any;
   daysInLastMonth: any;
   daysInNextMonth: any;
@@ -48,7 +77,7 @@ export class UserPage {
   currentDate: any;
   eventList: any;
   selectedEvent: any;
-  isSelected: any;
+  isSelected: any; */
   
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
@@ -69,7 +98,7 @@ export class UserPage {
               private alertCtrl: AlertController,
               private calendar: Calendar) {          
   }
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
     //this.userDataObj = this.dataService.userDataObj;
@@ -150,6 +179,32 @@ export class UserPage {
     if(event == "service")
     {
       this.navCtrl.push(ServiceCreatorPage);
+=======
+    if(event == "newOrder")
+    {
+      this.navCtrl.push(OrderCreatorPage);
+
+    }
+
+    if(event == "discard")
+    {
+      //this.dataService.updateOrderList("discard",item);
+    }
+
+    if(event == "decline")
+    {
+      //send decline message to server
+      //delete local copy
+      //this.dataService.updateOrderList("discard",item);
+    }
+
+    if(event == "accept")
+    {
+      var jobObj = new JobData();
+      jobObj.order = item;
+      //this.dataService.updateJobList("new",jobObj);
+      //this.dataService.updateOrderList("discard", item);
+>>>>>>> c39453aeec5bff392d836ebd14d3ad1717c3abd2
     }
   }
   

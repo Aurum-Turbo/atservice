@@ -28,16 +28,18 @@ page-service-details {
         margin: 0 auto !important;
         ion-item{
             background-color: #f6f6f6 !important;
+            width: 100% !important;
+            height: auto !important;
         }
         .hd_rw{
             height: 4em;
         }
-        .ft_rw{
-            
-            .button{
-                width: 50px !important;
-                height: 40px !important;
-            }
+        .txt-ctnt{
+            margin-bottom: 20px;
+        }
+        ion-item-divider{
+            height: 10px !important;
+            min-height: 10px !important;
         }
     }    
 }

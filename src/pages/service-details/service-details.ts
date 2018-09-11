@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { ServiceData } from '../../providers/service-data/service-data';
 import { PostData } from '../../providers/post-data/post-data';
 import { MessageData } from '../../providers/message-data/message-data';
@@ -20,6 +20,7 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
   templateUrl: 'service-details.html',
 })
 export class ServiceDetailsPage {
+  @ViewChild('slider') slider: Slides;
   date: Date = new Date();
   postObj: PostData;
   message = new MessageData();
@@ -42,7 +43,9 @@ export class ServiceDetailsPage {
     console.log("get post: ", this.postObj);
     console.log("Date: ", this.date);
   }
-
+  ngAfterViewInit() {
+    this.slider.autoHeight = true;
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiceDetailsPage');
     this.dataService.loadCurUserData();
