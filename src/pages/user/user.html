@@ -33,12 +33,36 @@
         </ion-item>
         <ion-item no-lines>
             <ion-segment  [(ngModel)]="tabs" color="secondary">
-                <ion-segment-button (click)="selectTab(0)" value="0">Order</ion-segment-button>
-                <ion-segment-button (click)="selectTab(1)" value="1">Job</ion-segment-button>
-                <ion-segment-button (click)="selectTab(2)" value="2">Posts</ion-segment-button>
+                <ion-segment-button (click)="selectTab(0)" value="0">Services</ion-segment-button>
+                <ion-segment-button (click)="selectTab(1)" value="1">Order</ion-segment-button>
+                <ion-segment-button (click)="selectTab(2)" value="2">Job</ion-segment-button>
+                <ion-segment-button (click)="selectTab(3)" value="3">Posts</ion-segment-button>
                 <div id="slide" class="slide"></div>
             </ion-segment>
           <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
+              <ion-slide class="sevs-sld">
+                  <ion-grid *ngFor="let item of items | async">
+                      <ion-row (click)="onClick('edit', item)">
+                          <ion-col col-3>
+                            <ion-item class="dat_lt">
+                                <span id="date">{{item.postDate}}</span>
+                                <span id="month">{{item.postMonth}}</span>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col col-3>
+                            <img src="{{item.images[0]}}"/>
+                          </ion-col>
+                          <ion-col col-6>
+                            <ion-item class="cnt_rt">
+                              <div innerHTML = {{item.description}}></div>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <button ion-item id="nw_pst" (click)="onClick('new')" color="secondary">
+                      <ion-icon name="add">New Post</ion-icon>
+                  </button>
+              </ion-slide>
               <ion-slide class="wal_sld" >
                <!--  <h1>$100.00</h1>
                 <div>

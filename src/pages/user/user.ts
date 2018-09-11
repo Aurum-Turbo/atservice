@@ -6,11 +6,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
-<<<<<<< HEAD
 import { ServiceCreatorPage } from '../service-creator/service-creator';
-=======
-import { OrderCreatorPage } from '../order-creator/order-creator';
->>>>>>> c39453aeec5bff392d836ebd14d3ad1717c3abd2
 
 import { UserData } from '../../providers/user-data/user-data';
 import { PostData } from '../../providers/post-data/post-data';
@@ -47,6 +43,7 @@ export class UserPage {
   
   public transList= [];
   public posList = [];
+  public jobList =[];
   public orderList =[];
   oid: string; //order id
   timestamp: string;
@@ -176,37 +173,10 @@ export class UserPage {
       firebase.auth().signOut();
       //this.navCtrl.push(LoginPage);
     }
-<<<<<<< HEAD
 
     if(event == "service")
     {
       this.navCtrl.push(ServiceCreatorPage);
-=======
-    if(event == "newOrder")
-    {
-      this.navCtrl.push(OrderCreatorPage);
-
-    }
-
-    if(event == "discard")
-    {
-      //this.dataService.updateOrderList("discard",item);
-    }
-
-    if(event == "decline")
-    {
-      //send decline message to server
-      //delete local copy
-      //this.dataService.updateOrderList("discard",item);
-    }
-
-    if(event == "accept")
-    {
-      var jobObj = new JobData();
-      jobObj.order = item;
-      //this.dataService.updateJobList("new",jobObj);
-      //this.dataService.updateOrderList("discard", item);
->>>>>>> c39453aeec5bff392d836ebd14d3ad1717c3abd2
     }
   }
   
