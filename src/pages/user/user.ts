@@ -80,6 +80,10 @@ export class UserPage {
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
 
+  sItemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
+  sItems: Observable<ServiceData[]>;
+
+
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
 
@@ -127,6 +131,13 @@ export class UserPage {
           });
 
           this.items = this.itemsCollection.valueChanges();
+
+          this.sItemsCollection = this.afs.collection("services", ref => {
+            return ref.where("provider","==",firebase.auth().currentUser.uid)
+                      .orderBy("updateAt", 'desc');
+          })
+
+          this.sItems = this.sItemsCollection.valueChanges();
           //this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
           //this.currentUser = this.userDocument.valueChanges();
           //this.userDocument.valueChanges().subscribe(snapshot => {
@@ -176,7 +187,14 @@ export class UserPage {
 
     if(event == "service")
     {
-      this.navCtrl.push(ServiceCreatorPage);
+      if(item)
+      {
+        this.navCtrl.push(ServiceCreatorPage, {"service": item as ServiceData});
+      }
+      else
+      {
+        this.navCtrl.push(ServiceCreatorPage, {"service": new ServiceData()});
+      }
     }
   }
   

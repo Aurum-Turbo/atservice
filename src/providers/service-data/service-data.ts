@@ -28,6 +28,9 @@ export class ServiceData {
   tags: string = ""; //for searching
   rank: number = 0; // rank = rate + like + length of comments + timestamp
   like: number = 0; //thumb up for the service
+  comments: any[] = [];
+  createAt: any;
+  updateAt: any;
 
   constructor() {
     //console.log('Hello Service Data Model');

@@ -113,7 +113,7 @@ export class EditorPage {
     if(this.calltype == "editing" && this.postObj.images != [] && this.postObj.description != null)
     {
       this.itemsCollection.doc(this.postObj.pid).update({
-        "status": "created",
+        "status": "updated",
         "images": this.postObj.images,
         "description": this.postObj.description,
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
