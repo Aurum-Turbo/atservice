@@ -6,6 +6,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
+import { ServiceCreatorPage } from '../service-creator/service-creator';
 
 import { UserData } from '../../providers/user-data/user-data';
 import { PostData } from '../../providers/post-data/post-data';
@@ -81,13 +82,15 @@ export class UserPage {
     this.loadEventThisMonth();
 
     //check user login status
-    console.log("page name: ", this.navCtrl.getActive().name);
+    //console.log("page name: ", this.navCtrl.getActive().name);
 
     if(this.navCtrl.getActive().name == "UserPage")
     {
       firebase.auth().onAuthStateChanged(user => {
         if(user)
         {
+
+          //load Current User Profile, Posts, and Services
           this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
           
           this.dataService.loadCurUserData();
@@ -102,6 +105,11 @@ export class UserPage {
           //this.userDocument.valueChanges().subscribe(snapshot => {
           //  this.userObj = snapshot;
           //});
+
+          //load services
+
+
+
         }
         else
         {
@@ -137,6 +145,11 @@ export class UserPage {
     {
       firebase.auth().signOut();
       //this.navCtrl.push(LoginPage);
+    }
+
+    if(event == "service")
+    {
+      this.navCtrl.push(ServiceCreatorPage);
     }
   }
   

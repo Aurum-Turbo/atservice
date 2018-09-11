@@ -12,7 +12,7 @@ export class MessageData {
 
   //define message fields
   mid: string = "";
-  time: string = "";
+  time: any;
   sender: string = "";
   snickname: string = "";
   savatar: any;

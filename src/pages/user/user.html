@@ -42,8 +42,28 @@
               <ion-slide class="wal_sld" >
                 <h1>$100.00</h1>
                 <div>
-                  <button ion-button color="secondary">Top up</button>
-                  <button ion-button color="secondary">Transfer</button>
+                  <ion-item id="nw_pst" (click)="onClick('service')">
+                    <p>New Service</p>
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                  </ion-item>
+                  <ion-grid *ngFor="let item of items | async">
+                    <ion-row (click)="onClick('edit', item)">
+                        <ion-col col-3>
+                          <ion-item class="dat_lt">
+                              <span id="date">{{item.postDate}}</span>
+                              <span id="month">{{item.postMonth}}</span>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col col-3>
+                          <img src="{{item.images[0]}}"/>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-item class="cnt_rt">
+                            <div innerHTML = {{item.description}}></div>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                  </ion-grid>
                 </div>
                 <ion-list>
                   <ion-item *ngFor="let item of transList">

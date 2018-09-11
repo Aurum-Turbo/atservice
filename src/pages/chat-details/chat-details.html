@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{chatItem.snickname}}</ion-title>
+    <ion-title>{{chatItem.ctitle}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -25,7 +25,8 @@
       <!-- <p>{{item.snickname}}<p> -->
       <!-- <span>{{item.time}}</span> -->
       <div [class]="item.sender == currentUid ?  'msg-ctn msg-right' : 'msg-ctn msg-left'">     
-        {{item.message}}
+        <h2>{{item.message}}</h2>
+        <h2>{{item.time.toDate() | date: "short"}}</h2> 
       </div>
     </ion-item>
   </ion-list>

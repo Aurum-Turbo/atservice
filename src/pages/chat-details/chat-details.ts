@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { MessageData } from '../../providers/message-data/message-data';
 import { UserData } from '../../providers/user-data/user-data';
+import { ChatData } from '../../providers/chat-data/chat-data';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +24,7 @@ import firebase from 'firebase/app';
 })
 export class ChatDetailsPage {
 
-  chatItem: MessageData;
+  chatItem: ChatData;
   itemsCollection: AngularFirestoreCollection<MessageData>; //Firestore collection
   items: Observable<MessageData[]>;
   userDocument: AngularFirestoreDocument<UserData>;
@@ -52,17 +53,18 @@ export class ChatDetailsPage {
 
   ionViewWillEnter() {
     this.itemsCollection = this.afs.collection('messages').doc(firebase.auth().currentUser.uid)
-    .collection('chat', ref => {return ref.orderBy("time",'asc')});
+    .collection('chat', ref => {return ref.orderBy("sendAt",'asc')});
 
     this.items = this.itemsCollection.valueChanges();
+    //this.items = this.chatItem.cmessageList;
   }
  
   onClick() {
     if(this.message.message)
     {
-      this.message.receiver = this.chatItem.sender;
+      this.message.receiver = this.chatItem.cid;
       this.message.sender = firebase.auth().currentUser.uid;
-      this.message.time = (new Date()).toString();
+      this.message.time = new Date();
 
       //set Collection
       this.itemsCollection = this.afs.collection("messages");
@@ -78,7 +80,7 @@ export class ChatDetailsPage {
         "savatar": this.dataService.userDataObj.avatar,
         "receiver": this.message.receiver,
         "message": this.message.message,
-        "status": "sent",
+        "status": "reply",
         "sendAt": firebase.firestore.FieldValue.serverTimestamp()
       }).then(docRef => {
         this.itemsCollection.doc(this.message.receiver)
@@ -99,7 +101,7 @@ export class ChatDetailsPage {
         "savatar": this.dataService.userDataObj.avatar,
         "receiver": this.message.receiver,
         "message": this.message.message,
-        "status": "sent",
+        "status": "reply",
         "sendAt": firebase.firestore.FieldValue.serverTimestamp()
       }).then(docRef => {
         this.itemsCollection.doc(this.message.sender)

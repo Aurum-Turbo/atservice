@@ -55,7 +55,7 @@ export class ServiceDetailsPage {
     {
       this.message.receiver = this.postObj.author;
       this.message.sender = firebase.auth().currentUser.uid;
-      this.message.time = (new Date()).toString();
+      this.message.time = new Date();
 
       this.itemsCollection.doc(this.message.receiver)
       .collection('chat').add({
@@ -66,7 +66,7 @@ export class ServiceDetailsPage {
         "savatar": this.dataService.userDataObj.avatar,
         "receiver": this.message.receiver,
         "message": this.message.message,
-        "status": "sent",
+        "status": "new",
         "sendAt": firebase.firestore.FieldValue.serverTimestamp()
       }).then(docRef => {
         this.itemsCollection.doc(this.message.receiver)

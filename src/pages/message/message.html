@@ -16,27 +16,27 @@
 <ion-content>
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let item of msgList" (click)="onClick(item)">
+    <ion-item *ngFor="let item of chatList" (click)="onClick(item)">
       <ion-row>
 
         <ion-col col-2>
           <ion-row>
             <ion-avatar item-start>
-              <img src="{{item.savatar}}">
+              <img src="{{item.cavatar}}">
             </ion-avatar>
           </ion-row>
         </ion-col>
         <ion-col col-10>
           <ion-row>
             <ion-col col-8>
-              <div class="msg-nm">{{item.snickname}}</div>
+              <div class="msg-nm">{{item.ctitle}}</div>
             </ion-col>
             <ion-col col-4>
-              <div class="msg-tm">{{item.time | date: "HH:mm"}}</div>
+              <div class="msg-tm" displya>{{item.cntime.toDate() | date: "short"}}</div>
             </ion-col>
           </ion-row>
           <ion-row>
-            <div class="msg-ctn">{{item.message}}</div>
+            <div class="msg-ctn">{{item.cnmessage}}</div>
           </ion-row>
         </ion-col>
       </ion-row>

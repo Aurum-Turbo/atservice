@@ -22,6 +22,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { MessagePage } from '../pages/message/message';
 import { JobPage } from '../pages/job/job';
 import { ServicePage } from '../pages/service/service';
+import { ServiceCreatorPage } from '../pages/service-creator/service-creator';
 import { OrderPage } from '../pages/order/order';
 import { EditorPage } from '../pages/editor/editor';
 import { QuillModule } from 'ngx-quill';
@@ -38,6 +39,7 @@ import { LoadingServiceProvider } from '../providers/loading-service/loading-ser
 import { AppSettings } from '../providers/app-setting';
 import { PostData } from '../providers/post-data/post-data';
 import { ChatDetailsPage } from '../pages/chat-details/chat-details';
+import { ChatData } from '../providers/chat-data/chat-data';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     MessagePage,
     JobPage,
     ServicePage,
+    ServiceCreatorPage,
     OrderPage,
     EditorPage,
     OrderCreatorPage,
@@ -79,6 +82,7 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     MessagePage,
     JobPage,
     ServicePage,
+    ServiceCreatorPage,
     OrderPage,
     EditorPage,
     OrderCreatorPage,
@@ -97,7 +101,8 @@ import { ChatDetailsPage } from '../pages/chat-details/chat-details';
     MessageData,
     UserData,
     LoadingServiceProvider, 
-    PostData
+    PostData,
+    ChatData
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
