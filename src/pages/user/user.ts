@@ -6,9 +6,13 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
+import { OrderCreatorPage } from '../order-creator/order-creator';
 
 import { UserData } from '../../providers/user-data/user-data';
 import { PostData } from '../../providers/post-data/post-data';
+import { OrderData } from '../../providers/order-data/order-data';
+import { JobData } from '../../providers/job-data/job-data';
+import { ServiceData } from '../../providers/service-data/service-data';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -32,12 +36,35 @@ import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/ut
   templateUrl: 'user.html',
 })
 export class UserPage {
+  
+
   public star: Observable<string[]>;
   public mark: number;
   
   public transList= [];
   public posList = [];
-  date: any;
+  public orderList =[];
+  oid: string; //order id
+  timestamp: string;
+  status: string;
+  type: string;
+  /* Info */
+  service: ServiceData;
+  /* Pricing */
+  quantity: string;
+  subtotal: string;
+  servedate: string;
+  servetime: string;
+  servelocation: string;
+  note: string;
+  /* Parties */
+  orderby: any;
+  beneficiary: any;
+  email: string;
+  phone: string;
+  /* for quote and search */
+  tags: string[];
+  /* date: any;
   daysInThisMonth: any;
   daysInLastMonth: any;
   daysInNextMonth: any;
@@ -47,7 +74,7 @@ export class UserPage {
   currentDate: any;
   eventList: any;
   selectedEvent: any;
-  isSelected: any;
+  isSelected: any; */
   
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
@@ -68,17 +95,17 @@ export class UserPage {
               private alertCtrl: AlertController,
               private calendar: Calendar) {          
   }
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
     //this.userDataObj = this.dataService.userDataObj;
   }
 
   ionViewWillEnter() {
-    this.date = new Date();
+   /*  this.date = new Date();
     this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     this.getDaysOfMonth();
-    this.loadEventThisMonth();
+    this.loadEventThisMonth(); */
 
     //check user login status
     console.log("page name: ", this.navCtrl.getActive().name);
@@ -138,12 +165,37 @@ export class UserPage {
       firebase.auth().signOut();
       //this.navCtrl.push(LoginPage);
     }
+    if(event == "newOrder")
+    {
+      this.navCtrl.push(OrderCreatorPage);
+
+    }
+
+    if(event == "discard")
+    {
+      //this.dataService.updateOrderList("discard",item);
+    }
+
+    if(event == "decline")
+    {
+      //send decline message to server
+      //delete local copy
+      //this.dataService.updateOrderList("discard",item);
+    }
+
+    if(event == "accept")
+    {
+      var jobObj = new JobData();
+      jobObj.order = item;
+      //this.dataService.updateJobList("new",jobObj);
+      //this.dataService.updateOrderList("discard", item);
+    }
   }
   
   goProfile(){
     this.navCtrl.push(ProfilePage)
   }
-  getDaysOfMonth() {
+  /* getDaysOfMonth() {
     this.daysInThisMonth = new Array();
     this.daysInLastMonth = new Array();
     this.daysInNextMonth = new Array();
@@ -177,9 +229,9 @@ export class UserPage {
         this.daysInNextMonth.push(l);
       }
     }
-  }
+  } */
 
-  goToLastMonth() {
+/*   goToLastMonth() {
     this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
     this.getDaysOfMonth();
   }
@@ -187,13 +239,13 @@ export class UserPage {
   goToNextMonth() {
     this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
     this.getDaysOfMonth();
-  }
+  } */
 
   /* addEvent() {
     this.navCtrl.push(AddEventPage);
   } */
 
-  loadEventThisMonth() {
+  /* loadEventThisMonth() {
     this.eventList = new Array();
     var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
     var endDate = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0);
@@ -266,6 +318,6 @@ export class UserPage {
       ]
     });
     alert.present();
-  }
+  } */
 
 }

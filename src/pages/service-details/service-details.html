@@ -14,27 +14,30 @@
 
 
 <ion-content>
-    <ion-slides >
+  <div id="wrapper">
+    <ion-slides #slider>
       <ion-slide *ngFor="let i of [0,1,2,3,4,5]">
         <img src="{{postObj.images[i]}}"/>
       </ion-slide>
     </ion-slides> 
+  </div>
     <ion-list>
       <ion-item class="hd_rw">
               <ion-avatar item-start>
                 <img src="{{postObj.avatar}}"/>
               </ion-avatar>
               <span>{{postObj.nickname}}</span>
-              <button ion-button outline item-end>Follow</button>      
+              <!-- <button ion-button outline item-end>Follow</button>       -->
       </ion-item>
-      <ion-item>
-        <div [innerHtml]="postObj.description"></div>
+      <ion-item text-wrap>
+          <div [innerHtml]="postObj.description" class="txt-ctnt"></div>
+          <div float-left>{{date | date:"MM-dd"}}</div>
+          <button ion-button clear float-right><i class="icon-heart"></i></button>
       </ion-item>
-      <ion-item class="ft_rw">
-        <span>{{date | date:"MMMM dd yyyy"}}</span>
-        <button ion-button clear item-end><i class="icon-heart"></i></button>
-        <button ion-button clear item-end><i class="icon-thumb-up"></i></button>
-      </ion-item>
+      <ion-item-divider>
+        
+        <!-- <button ion-button clear item-end><i class="icon-thumb-up"></i></button> -->
+      </ion-item-divider>
       <ion-item>
           <h2>Comments</h2>
       </ion-item>
