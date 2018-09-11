@@ -6,6 +6,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { ProfilePage } from '../profile/profile';
 import { EditorPage } from '../editor/editor';
 import { LoginPage } from '../login/login';
+<<<<<<< HEAD
 import { ServiceCreatorPage } from '../service-creator/service-creator';
 =======
 import { OrderCreatorPage } from '../order-creator/order-creator';
@@ -105,10 +106,10 @@ export class UserPage {
   }
 
   ionViewWillEnter() {
-    this.date = new Date();
+   /*  this.date = new Date();
     this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     this.getDaysOfMonth();
-    this.loadEventThisMonth();
+    this.loadEventThisMonth(); */
 
     //check user login status
     //console.log("page name: ", this.navCtrl.getActive().name);
@@ -175,6 +176,7 @@ export class UserPage {
       firebase.auth().signOut();
       //this.navCtrl.push(LoginPage);
     }
+<<<<<<< HEAD
 
     if(event == "service")
     {
@@ -211,7 +213,7 @@ export class UserPage {
   goProfile(){
     this.navCtrl.push(ProfilePage)
   }
-  getDaysOfMonth() {
+  /* getDaysOfMonth() {
     this.daysInThisMonth = new Array();
     this.daysInLastMonth = new Array();
     this.daysInNextMonth = new Array();
@@ -245,9 +247,9 @@ export class UserPage {
         this.daysInNextMonth.push(l);
       }
     }
-  }
+  } */
 
-  goToLastMonth() {
+/*   goToLastMonth() {
     this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
     this.getDaysOfMonth();
   }
@@ -255,13 +257,13 @@ export class UserPage {
   goToNextMonth() {
     this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
     this.getDaysOfMonth();
-  }
+  } */
 
   /* addEvent() {
     this.navCtrl.push(AddEventPage);
   } */
 
-  loadEventThisMonth() {
+  /* loadEventThisMonth() {
     this.eventList = new Array();
     var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
     var endDate = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0);
@@ -334,6 +336,6 @@ export class UserPage {
       ]
     });
     alert.present();
-  }
+  } */
 
 }
