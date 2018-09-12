@@ -29,13 +29,13 @@ export class ServiceCreatorPage {
 
   itemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
   itemDocument: AngularFirestoreDocument<ServiceData>; // read collection
-
+  
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
-
+      
       this.itemsCollection = this.afs.collection("services");
       if(navParams.data != null)
       {
@@ -46,7 +46,6 @@ export class ServiceCreatorPage {
           this.calltype = "editing";
         }
       }
-
 
   }
 
