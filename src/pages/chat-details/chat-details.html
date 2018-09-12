@@ -38,9 +38,7 @@
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-input  type="text" [(ngModel)]="message.message"></ion-input>
-      <button *ngIf="">按住 说话</button>
-
+      <ion-textarea placeholder="Input Messsage Here!" [(ngModel)]="message.message" ></ion-textarea>
       <ion-buttons end>
         <button ion-button icon-only>
           <ion-icon name="more"></ion-icon>

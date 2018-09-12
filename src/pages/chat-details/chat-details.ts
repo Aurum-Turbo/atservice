@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content, List } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { MessageData } from '../../providers/message-data/message-data';
 import { UserData } from '../../providers/user-data/user-data';
@@ -23,7 +23,8 @@ import firebase from 'firebase/app';
   templateUrl: 'chat-details.html',
 })
 export class ChatDetailsPage {
-
+  @ViewChild(Content) contentArea: Content;
+  @ViewChild(List, {read: ElementRef}) chatList: ElementRef;
   chatItem: ChatData;
   itemsCollection: AngularFirestoreCollection<MessageData>; //Firestore collection
   items: Observable<MessageData[]>;
@@ -32,6 +33,7 @@ export class ChatDetailsPage {
   currentUid: String;
   message = new MessageData();
   // postObj: PostData;
+  private mutationObserver: MutationObserver;
   constructor(
     private afs: AngularFirestore,
     public dataService: DataServiceProvider,
@@ -49,6 +51,13 @@ export class ChatDetailsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatDetailsPage');
     this.dataService.loadCurUserData();
+    this.mutationObserver = new MutationObserver((mutations) => {
+    this.contentArea.scrollToBottom();
+  });
+
+  this.mutationObserver.observe(this.chatList.nativeElement, {
+      childList: true
+  });
   }
 
   ionViewWillEnter() {

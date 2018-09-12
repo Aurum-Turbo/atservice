@@ -14,11 +14,11 @@
 
 <ion-content>
   <ion-searchbar></ion-searchbar>
-  <ngx-masonry [useImagesLoaded]="true" [options]="{percentPosition: ture, resize: false, horizontalOrder: true}">
+  <ngx-masonry [useImagesLoaded]="true" [options]="{horizontalOrder: true, itemSelector: '.masonry-item'}" >
     <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item">
     <ion-card>
         <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
-      <ion-card-content>  
+      <ion-card-content> 
         <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
       <ion-item>
         <ion-avatar item-start (click)="onClick('detail', item)">
@@ -29,10 +29,10 @@
         </ion-label>
         <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">
           <i class="icon-heart-outline" ></i>
-          <p>{{item.like}}</p>
-        </button>
-      </ion-item>
-    </ion-card-content>
+            <p>{{item.like}}</p>
+          </button>
+        </ion-item>
+      </ion-card-content> 
     </ion-card>
   </ngxMasonryItem>
   </ngx-masonry>
