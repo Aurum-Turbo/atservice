@@ -17,39 +17,64 @@
   <ion-grid padding-top>
     <ion-row justify-content-center>
       <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-        <ion-row>
-          <ion-input clearInput type="text" placeholder="Type" [(ngModel)]="servItem.type"></ion-input>
-        </ion-row>
+        <ion-item no-lines>
+          <ion-label >Service Type:</ion-label>
+          <ion-select  interface="action-sheet">
+            <ion-option value="1">Escort</ion-option>
+            <ion-option value="2">Transport</ion-option>
+            <ion-option value="{{servItem.sid}}">{{servItem.type}}</ion-option>
+         
+          </ion-select>
+        </ion-item>
         <!--ion-row>
             <ion-input clearInput type="text" placeholder="Please enter the quantity" [(ngModel)]="orderObj.quantity"></ion-input>
         </ion-row-->
-        <ion-row>
-          <ion-input clearInput type="text" placeholder="Description" [(ngModel)]="servItem.description"></ion-input>
-      </ion-row>
-      <ion-row>
-          <ion-input clearInput type="text" placeholder="Duration" [(ngModel)]="servItem.duration"></ion-input>
-      </ion-row>
-      <ion-row>
-          <ion-input clearInput type="text" placeholder="Declaimer" [(ngModel)]="servItem.declaimer"></ion-input>
-      </ion-row>
-      <ion-row>
-          <ion-input clearInput type="text" placeholder="Unit" [(ngModel)]="servItem.unit"></ion-input>
-      </ion-row>
-      <ion-row>
-          <ion-input clearInput type="text" placeholder="Price" [(ngModel)]="servItem.price"></ion-input>
-      </ion-row>
-      <ion-row>
-          <ion-input clearInput type="text" placeholder="Currency" [(ngModel)]="servItem.currency"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-input clearInput type="text" placeholder="Availability" [(ngModel)]="servItem.availability"></ion-input>
-    </ion-row>
-    <ion-row>
-      <ion-input clearInput type="text" placeholder="Location" [(ngModel)]="servItem.location"></ion-input>
-  </ion-row>
-  <ion-row>
-    <ion-input clearInput type="text" placeholder="Tags" [(ngModel)]="servItem.tags"></ion-input>
-  </ion-row>
+        <ion-item no-lines class="txt-ara">
+          <ion-label >Description:</ion-label>
+          <ion-textarea rows="6" clearInput placeholder="Please describe the services you provide.." [(ngModel)]="servItem.description"></ion-textarea>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-label >Duration:</ion-label>
+          <ion-input placeholder="Service Duration.." type="number" [(ngModel)]="servItem.duration"></ion-input>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-label >Unit:</ion-label>
+          <ion-select  interface="action-sheet" [(ngModel)]="servItem.unit">
+            <ion-option>Minuts</ion-option>
+            <ion-option>Hours</ion-option>
+            <ion-option>Days</ion-option>
+            <ion-option>weeks</ion-option>
+            <ion-option>times</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-label >Price:</ion-label>
+          <ion-input clearInput type="number" placeholder="Please give the rate" [(ngModel)]="servItem.price"></ion-input>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-label >Currency:</ion-label>
+          <ion-select  interface="action-sheet" [(ngModel)]="servItem.currency">
+            <ion-option>AUD</ion-option>
+            <ion-option>RMB</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item no-lines class="txt-ara">
+          <ion-label >Declaimer:</ion-label>
+          <ion-textarea rows="4" placeholder="Please give the notice.." [(ngModel)]="servItem.declaimer"></ion-textarea>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-label >Availability:</ion-label>
+          <ion-toggle checked="true" [(ngModel)]="servItem.availability" color="secondary"></ion-toggle>
+        <!-- <ion-input clearInput type="text" placeholder="Availability" ></ion-input> -->
+    </ion-item>
+    <ion-item no-lines>
+        <ion-label >Location:</ion-label>
+      <ion-input clearInput type="text" placeholder="your address.." [(ngModel)]="servItem.location"></ion-input>
+  </ion-item>
+  <ion-item no-lines>
+      <ion-label >Tags:</ion-label>
+    <ion-textarea clearInput  placeholder="tag yourself.." rows="2" [(ngModel)]="servItem.tags"></ion-textarea>
+  </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

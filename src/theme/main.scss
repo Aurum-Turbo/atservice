@@ -617,4 +617,8 @@ $loading-md-spinner-color: theme-colors('textColors', 'primary');
       color: theme-colors('textColors', 'primary') !important;
     }
   }
-
+  .picker-toolbar{
+    .button {
+        color: color($colors,'light') !important;
+    }
+}

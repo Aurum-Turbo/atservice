@@ -1,3 +1,18 @@
 page-service-creator {
-
+    ion-label{
+        width: 30%;
+        color: theme-colors('textColors', 'primary','opacity100') !important;
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+    ion-input, ion-textarea{
+        color: theme-colors('textColors', 'accent','opacity100') !important;
+    }
+    ion-select{
+        width: 100rem !important;
+    }
+    .txt-ara{
+        border-top: solid 2px color($colors,'dark') !important;
+        border-bottom: solid 2px color($colors,'dark') !important;
+    }
 }
