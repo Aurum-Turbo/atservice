@@ -54,53 +54,19 @@
                       <ion-icon name="add">New Service</ion-icon>
                   </button>
               </ion-slide>
-              <ion-slide class="wal_sld">
-               <!--  <h1>$100.00</h1>
-                <div>
-                  <ion-item id="nw_pst" (click)="onClick('service')">
-                    <p>New Service</p>
-                    <ion-icon name="ios-arrow-forward"></ion-icon>
-                  </ion-item>
-                  <ion-grid *ngFor="let item of items | async">
-                    <ion-row (click)="onClick('edit', item)">
-                        <ion-col col-3>
-                          <ion-item class="dat_lt">
-                              <span id="date">{{item.postDate}}</span>
-                              <span id="month">{{item.postMonth}}</span>
-                          </ion-item>
-                        </ion-col>
-                        <ion-col col-3>
-                          <img src="{{item.images[0]}}"/>
-                        </ion-col>
-                        <ion-col col-6>
-                          <ion-item class="cnt_rt">
-                            <div innerHTML = {{item.description}}></div>
-                          </ion-item>
-                        </ion-col>
-                      </ion-row>
-                  </ion-grid>
-                </div>
-                <ion-list>
-                  <ion-item *ngFor="let item of transList">
-                   <p> Transaction Details</p> 
-                   <div class="mny_io"><span>$100</span></div>
-                   <div class="trans_date">Mon 09 Jul 2018</div>
-                   <div class="bal">balance <span>$200.00</span></div>
-                  </ion-item>
-                </ion-list> -->
-              
-                <ion-grid no-padding *ngIf="orderList != null">
+              <ion-slide class="sevs_sld">             
+                <ion-grid *ngFor="let item of oItems | async">
                   <ion-row>
-                    <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 *ngFor="let item of orderList">
+                    <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
                       <ion-card>
                         <ion-card-header>
                           <ion-grid no-padding no-margin>
                             <ion-row>
                               <ion-col>
-                                <h2 item-title float-left>{{item.servedate}}</h2>
+                                <h2 item-title float-left>{{item.service.description}}</h2>
                               </ion-col>
                               <ion-col>
-                                <h2 item-title float-right>{{item.servetime}}</h2>
+                                <h2 item-title float-right>{{item.orderby}}</h2>
                               </ion-col>
                             </ion-row>
                           </ion-grid>
@@ -109,7 +75,7 @@
                           <ion-list>
                             <ion-item-group>
                               <ion-item>
-                                <h2 float-left>{{item.service.title}}</h2>
+                                <h2 float-left>{{item.service.type}}</h2>
                               </ion-item>
                               <ion-item>
                                 <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
@@ -134,11 +100,6 @@
                                   Decline
                                 </button>
                               </ion-col>
-                              <ion-col>
-                                <button ion-button no-padding no-margin button-clear small block (click)="onClick('discard',item)">
-                                  Discard
-                                </button>
-                              </ion-col>
                             </ion-row>
                           </ion-grid> 
               
@@ -146,62 +107,14 @@
                     </ion-col>
                   </ion-row>
                 </ion-grid>
-                  <button ion-item color="secondary"  (click)="onClick('newOrder')">New Order</button> 
+                  <button ion-item color="secondary"  (click)="onClick('order')">New Order</button> 
               </ion-slide>
               <ion-slide class="cal_sld">
-                <!-- <div class="cal_blk">
-                  <div class="calendar-header">
-                    <ion-row class="calendar-month">
-                      <ion-col col-2 (click)="goToLastMonth()"><ion-icon name="arrow-back"></ion-icon></ion-col>
-                      <ion-col col-8>{{currentMonth}} {{currentYear}}</ion-col>
-                      <ion-col col-2 (click)="goToNextMonth()"><ion-icon name="arrow-forward"></ion-icon></ion-col>
-                    </ion-row>
-                  </div>
-                  <div class="calendar-body">
-                    <ion-grid>
-                      <ion-row class="calendar-weekday">
-                        <ion-col>Su</ion-col>
-                        <ion-col>Mo</ion-col>
-                        <ion-col>Tu</ion-col>
-                        <ion-col>We</ion-col>
-                        <ion-col>Th</ion-col>
-                        <ion-col>Fr</ion-col>
-                        <ion-col>Sa</ion-col>
-                      </ion-row>
-                      <ion-row class="calendar-date">
-                        <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" class="last-month" (click)="goToLastMonth()">{{lastDay}}</ion-col>
-                        <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">
-                          <span class="currentDate" *ngIf="currentDate === day; else otherDate">{{day}}</span>
-                          <ng-template #otherDate class="otherDate">
-                            {{day}}<br>
-                            <div class="event-bullet" *ngIf="checkEvent(day)"></div>
-                          </ng-template>
-                        </ion-col>
-                        <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" class="next-month" (click)="goToNextMonth()">{{nextDay}}</ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </div>
-                  <div class="selected-event" *ngIf="isSelected">
-                    <ion-list>
-                      <ion-item *ngFor="let se of selectedEvent">
-                        <ion-buttons end>
-                          <button ion-button clear icon-only (click)="deleteEvent(se)">
-                            <ion-icon name="close"></ion-icon>
-                          </button>
-                        </ion-buttons>
-                        <h2>{{se.title}}</h2>
-                        <h3>{{se.message}}</h3>
-                        <p>Start Date: {{se.startDate}}<br>
-                        Start Date: {{se.endDate}}</p>
-                      </ion-item>
-                    </ion-list>
-                  </div>
-                </div> -->
-                <ion-grid *ngIf="jobList != null">
+                <ion-grid *ngFor="let item of jItems | async">
                   <ion-row justify-content-center>
                     <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
                       <ion-list no-scroll>
-                        <ion-item-group padding-top class="collapsible" *ngFor="let item of jobList;">
+                        <ion-item-group padding-top class="collapsible">
                           <ion-item-divider sticky>        
                             <h2 item-title float-left>{{item.order.servedate}}</h2>
                           </ion-item-divider>

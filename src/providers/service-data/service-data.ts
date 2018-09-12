@@ -20,7 +20,7 @@ export class ServiceData {
   declaimer: string = "";
   provider: string = "";
   unit: string = ""; //单位
-  price: string = "";
+  price: number;
   currency: string = "";
   location: string = "";
   availability: boolean = true;

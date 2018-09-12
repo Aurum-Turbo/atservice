@@ -11,9 +11,12 @@ import { OrderData } from '../order-data/order-data';
 export class JobData {
 
   jid: string; //Job ID 
-  timestamp: string; 
+  timestamp: Date; 
   status: string;
   order: OrderData;
+  acceptedby: string;
+  createAt: any;
+  updateAt: any;
   
   constructor() {
     //console.log('Hello JobDataProvider Provider');

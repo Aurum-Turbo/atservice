@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ServiceData } from '../service-data/service-data';
+import { Timestamp } from 'rxjs';
 
 /*
   Generated class for the OrderDataProvider provider.
@@ -11,25 +12,28 @@ import { ServiceData } from '../service-data/service-data';
 export class OrderData {
 
   oid: string; //order id
-  timestamp: string;
+  timestamp: Date;
   status: string;
   type: string;
   /* Info */
   service: ServiceData;
   /* Pricing */
-  quantity: string;
-  subtotal: string;
+  quantity: number;
+  subtotal: number;
   servedate: string;
   servetime: string;
   servelocation: string;
   note: string;
   /* Parties */
-  orderby: any;
+  provideby: string;
+  orderby: string;
   beneficiary: any;
   email: string;
   phone: string;
   /* for quote and search */
-  tags: string[];
+  //tags: any;
+  createAt: any;
+  updateAt: any;
 
   constructor() {
     //console.log('Hello OrderDataProvider Provider');
