@@ -87,6 +87,9 @@ export class UserPage {
   oItemsCollection: AngularFirestoreCollection<OrderData>; //Firestore collection
   oItems: Observable<OrderData[]>;
 
+  jItemsCollection: AngularFirestoreCollection<JobData>; //Firestore collection
+  jItems: Observable<JobData[]>;
+
 
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
@@ -150,6 +153,15 @@ export class UserPage {
 
           this.oItems = this.oItemsCollection.valueChanges();
 
+          this.jItemsCollection = this.afs.collection("jobs", ref => {
+            return ref.where("acceptedby","==",firebase.auth().currentUser.uid)
+                      .orderBy("updateAt", 'desc');
+          })
+
+          this.jItems = this.jItemsCollection.valueChanges();
+
+          
+
 
           //this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
           //this.currentUser = this.userDocument.valueChanges();
@@ -178,6 +190,14 @@ export class UserPage {
   }
   changeWillSlide($event) {
     this.tabs = $event._snapIndex.toString();
+  }
+
+  toggleGroup(group: any) {
+    group.show = !group.show;
+  }
+
+  isGroupShown(group: any) {
+    return group.show;
   }
   
   onClick(event: string, item: any) {
@@ -221,6 +241,40 @@ export class UserPage {
         this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
       }
     }
+
+    if(event == "accept")
+    {
+      if(item)
+      {
+        this.jItemsCollection = this.afs.collection("jobs");
+
+        this.jItemsCollection.add({
+          "jid": "",
+          "order": item,
+          "status": "created",
+          "timestamp": new Date(),
+          "acceptedby": firebase.auth().currentUser.uid,
+          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(docRef => {
+          this.jItemsCollection.doc(docRef.id).update({
+            "jid": docRef.id,
+            "status": "updated",
+            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+          });
+        });
+
+
+        //this.navCtrl.push(OrderCreatorPage, {"order": item as OrderData});
+      }
+      else
+      {
+        //this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
+      }
+    }
+
+
   }
   
   goProfile(){
