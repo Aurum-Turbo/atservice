@@ -17,36 +17,44 @@
     <ion-grid padding-top>
         <ion-row justify-content-center>
           <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-            <ion-row>
+            <ion-item>
               <ion-input clearInput type="text" placeholder="Please enter the service sid" [(ngModel)]="orderServiceID"></ion-input>
-            </ion-row>
+            </ion-item>
             <!--ion-row>
                 <ion-input clearInput type="text" placeholder="Please enter the quantity" [(ngModel)]="orderObj.quantity"></ion-input>
             </ion-row-->
-            <ion-row>
-              <ion-input clearInput type="text" placeholder="Please enter serve date" [(ngModel)]="orderItem.servedate"></ion-input>
-          </ion-row>
-          <ion-row>
-              <ion-input clearInput type="text" placeholder="Please enter serve time" [(ngModel)]="orderItem.servetime"></ion-input>
-          </ion-row>
-          <ion-row>
-              <ion-input clearInput type="text" placeholder="Please enter serve location" [(ngModel)]="orderItem.servelocation"></ion-input>
-          </ion-row>
-          <ion-row>
-              <ion-input clearInput type="text" placeholder="Please enter special type" [(ngModel)]="orderItem.type"></ion-input>
-          </ion-row>
-          <ion-row>
-            <ion-input clearInput type="text" placeholder="Please enter special quantity" [(ngModel)]="orderItem.quantity"></ion-input>
-        </ion-row>
-        <ion-row>
-            <ion-input clearInput type="text" placeholder="Please enter special note" [(ngModel)]="orderItem.note"></ion-input>
-        </ion-row>
-          <ion-row>
+            <ion-item no-lines>
+                <ion-label>Service Date:</ion-label>
+              <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="Please Choose.."></ion-datetime>
+          </ion-item>
+          <ion-item no-lines>
+            <ion-label>Service Time:</ion-label>
+              <ion-datetime placeholder="Please Choose.." [(ngModel)]="orderItem.servetime" displayFormat="HH:mm" ></ion-datetime>
+          </ion-item>
+          <ion-item no-lines>
+                <ion-label>Location:</ion-label>
+              <ion-input clearInput type="text" placeholder="Please enter location" [(ngModel)]="orderItem.servelocation"></ion-input>
+          </ion-item>
+          <!-- <ion-item no-lines>
+                <ion-label>Type</ion-label>
+              <ion-input clearInput type="text" placeholder="Please enter service type" [(ngModel)]="orderItem.type"></ion-input>
+          </ion-item> -->
+          <ion-item no-lines>
+                <ion-label>Quantity:</ion-label>
+            <ion-input clearInput type="number" placeholder="Please enter quantity" [(ngModel)]="orderItem.quantity"></ion-input>
+        </ion-item>
+        <ion-item no-lines class="txt-ara">
+                <ion-label>Note:</ion-label>
+            <ion-textarea rows="3" clearInput  placeholder="Please enter special note" [(ngModel)]="orderItem.note"></ion-textarea>
+        </ion-item>
+          <ion-item no-lines>
+                <ion-label>Email:</ion-label>
               <ion-input clearInput type="email" placeholder="Please enter email" [(ngModel)]="orderItem.email"></ion-input>
-          </ion-row>
-          <ion-row>
+          </ion-item>
+          <ion-item no-lines>
+                <ion-label>Phone:</ion-label>
               <ion-input clearInput type="phone" placeholder="Please enter phone" [(ngModel)]="orderItem.phone"></ion-input>
-          </ion-row>
+          </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>

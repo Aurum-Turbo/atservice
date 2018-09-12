@@ -1,6 +1,19 @@
 page-order-creator {
-    ion-input{
-        color: theme-colors('textColors', 'secondary','opacity100')
+    ion-label{
+        width: 30%;
+        color: theme-colors('textColors', 'primary','opacity100') !important;
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+    ion-input, ion-textarea{
+        color: theme-colors('textColors', 'accent','opacity100') !important;
+    }
+    ion-datetime{
+        color: color($colors,'light') !important;
 
+    }
+    .txt-ara{
+        border-top: solid 2px color($colors,'dark') !important;
+        border-bottom: solid 2px color($colors,'dark') !important;
     }
 }
