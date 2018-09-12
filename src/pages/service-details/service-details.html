@@ -38,6 +38,16 @@
         
         <!-- <button ion-button clear item-end><i class="icon-thumb-up"></i></button> -->
       </ion-item-divider>
+      <ion-grid *ngFor="let item of sItems | async">
+          <ion-row (click)="onClick('service', item)">
+              <ion-col>
+                <ion-item class="cnt_rt">
+                  <h2>{{item.description + ' ' + item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-item-divider></ion-item-divider>
       <ion-item>
           <h2>Comments</h2>
       </ion-item>
