@@ -46,7 +46,9 @@ export class HomePage {
     this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
     this.items = this.itemsCollection.valueChanges();
 
-    
+    this.items.subscribe(snapshot => {
+      console.log("loaded items: ", snapshot);
+    })
   }
 
   onClick(event: string, item: any) {
@@ -71,8 +73,8 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    /*setTimeout(() => {
-      let elem = document.querySelector('.grid');
+    //setTimeout(() => {}, 1000);
+      /*let elem = document.querySelector('.grid');
       imagesLoaded(elem, function() {
           // all images loaded
           //  instance.utils.debug("images loaded done, instantiating packery");

@@ -16,6 +16,8 @@ export class PostData {
   description: string = ""; //description will be display on the service details
   author: string = "";
   nickname: string = "";
+  coverWidth: number = 0;
+  coverHeight: number = 0;
   avatar: any;
   /* Social Media*/
   tags: string = ""; //for searching

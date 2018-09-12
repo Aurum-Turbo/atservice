@@ -14,10 +14,10 @@
 
 <ion-content>
   <ion-searchbar></ion-searchbar>
-  <ngx-masonry [useImagesLoaded]="true" [options]="{horizontalOrder: true, itemSelector: '.masonry-item'}" >
+  <ngx-masonry [useImagesLoaded]="false" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
     <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item">
     <ion-card>
-        <img (click)="onClick('detail',item)" src="{{item.images[0]}}"/> 
+        <img (click)="onClick('detail',item)" src="{{item.images[0]}}" width="{{item.coverWidth}}" height="{{item.coverHeight}}"/> 
       <ion-card-content> 
         <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
       <ion-item>

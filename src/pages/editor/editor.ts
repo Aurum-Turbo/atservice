@@ -84,6 +84,8 @@ export class EditorPage {
         "description": this.postObj.description,
         "author":this.dataService.userDataObj.uid,
         "nickname": this.dataService.userDataObj.nickname,
+        "coverWidth": (this.postObj.coverWidth == 0)?190:this.postObj.coverWidth,
+        "coverHeight": (this.postObj.coverHeight == 0)?300:this.postObj.coverHeight,
         "avatar": this.dataService.userDataObj.avatar,
         "tags": "",
         "rank": 0,
@@ -136,11 +138,50 @@ export class EditorPage {
       this.task = this.afStorage.upload(path, event.target.files[0]);
       this.uploadProgress = this.task.percentageChanges();
 
+      if(this.postObj.images.length == 0)
+      {
+        var reader = new FileReader();
+        var img = new Image();
+        var _this = this;
+
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+          img.src = reader.result.toString();
+          img.onload = function () {
+            console.log(img.height + " / " + img.width);
+            _this.postObj.coverWidth = 190;
+            _this.postObj.coverHeight = Math.round((190/img.width)*img.height);
+            console.log("cover height: ", _this.postObj.coverHeight);
+            /*_this.itemsCollection.doc(_this.postObj.pid).update({
+              "status": "updated",
+              "coverWidth": _this.postObj.coverWidth,
+              "coverHeight": _this.postObj.coverHeight,
+              "description": _this.postObj.description,
+              "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+            });*/
+          }
+        }
+
+      }
+
       this.task.task.then(snapshot => {
         if(snapshot.state == "success")
         {
           this.ref.getDownloadURL().subscribe(
-            snapshot => {this.postObj.images.push(snapshot);}
+            snapshot => {
+              this.postObj.images.push(snapshot);
+
+              if(this.postObj.pid != "")
+              {
+                this.itemsCollection.doc(this.postObj.pid).update({
+                  "status": "updated",
+                  "images": this.postObj.images,
+                  "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+                })
+                .catch(err => {console.log(err);});
+              }
+            }
           );
         }
       });
@@ -156,24 +197,32 @@ export class EditorPage {
     {
       var index = this.postObj.images.indexOf(item);
       //delete the URL in the images
-      if(index > -1)
+      if(index > 0)
       {
         this.postObj.images.splice(index,1);
-      }
 
-      this.afStorage.ref(item).delete().subscribe(result => { //delete the image in fire storage
-
-        this.itemsCollection.doc(this.postObj.pid).update({
-          "status": "updated",
-          "images": this.postObj.images,
-          "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+        console.log("discard item: ", item);
+        this.afStorage.storage.refFromURL(item).delete().then(result => { //delete the image in fire storage
+          this.itemsCollection.doc(this.postObj.pid).update({
+            "status": "updated",
+            "images": this.postObj.images,
+            "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+          })
+          .catch(err => {console.log(err);});
         })
         .catch(err => {console.log(err);});
-      });
+      }
     }
 
     if(event == "discard" && item)
     {
+      item.images.forEach(image => {
+        this.afStorage.storage.refFromURL(image).delete().then(result => {
+          console.log("delete image: ", image);
+        })
+        .catch(err => {console.log(err);});
+      });
+
       this.itemsCollection.doc(this.postObj.pid).delete().then(result => {
         console.log("delete success");
         this.calltype ="deleting";
