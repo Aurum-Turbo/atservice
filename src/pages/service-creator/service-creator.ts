@@ -57,7 +57,7 @@ export class ServiceCreatorPage {
   ionViewWillLeave() {
 
 
-    if(this.calltype == "creating" && this.servItem.type != "" && this.servItem.description != "" && this.servItem.price != "")
+    if(this.calltype == "creating" && this.servItem.type != "" && this.servItem.description != "")
     {
       console.log("updated sid: ", this.servItem);
       this.itemsCollection.add({

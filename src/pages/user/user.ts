@@ -21,6 +21,7 @@ import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
 import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
+import { OrderCreatorPage } from '../order-creator/order-creator';
 
 
 /**
@@ -83,6 +84,9 @@ export class UserPage {
   sItemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
   sItems: Observable<ServiceData[]>;
 
+  oItemsCollection: AngularFirestoreCollection<OrderData>; //Firestore collection
+  oItems: Observable<OrderData[]>;
+
 
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
@@ -138,6 +142,15 @@ export class UserPage {
           })
 
           this.sItems = this.sItemsCollection.valueChanges();
+
+          this.oItemsCollection = this.afs.collection("orders", ref => {
+            return ref.where("service.provider","==",firebase.auth().currentUser.uid)
+                      .orderBy("updateAt", 'desc');
+          })
+
+          this.oItems = this.oItemsCollection.valueChanges();
+
+
           //this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
           //this.currentUser = this.userDocument.valueChanges();
           //this.userDocument.valueChanges().subscribe(snapshot => {
@@ -194,6 +207,18 @@ export class UserPage {
       else
       {
         this.navCtrl.push(ServiceCreatorPage, {"service": new ServiceData()});
+      }
+    }
+
+    if(event == "order")
+    {
+      if(item)
+      {
+        this.navCtrl.push(OrderCreatorPage, {"order": item as OrderData});
+      }
+      else
+      {
+        this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
       }
     }
   }
