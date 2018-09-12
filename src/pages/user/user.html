@@ -41,29 +41,20 @@
             </ion-segment>
           <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
               <ion-slide class="sevs-sld">
-                  <ion-grid *ngFor="let item of items | async">
-                      <ion-row (click)="onClick('edit', item)">
-                          <ion-col col-3>
-                            <ion-item class="dat_lt">
-                                <span id="date">{{item.postDate}}</span>
-                                <span id="month">{{item.postMonth}}</span>
-                            </ion-item>
-                          </ion-col>
-                          <ion-col col-3>
-                            <img src="{{item.images[0]}}"/>
-                          </ion-col>
-                          <ion-col col-6>
+                  <ion-grid *ngFor="let item of sItems | async">
+                      <ion-row (click)="onClick('service', item)">
+                          <ion-col>
                             <ion-item class="cnt_rt">
-                              <div innerHTML = {{item.description}}></div>
+                              <h2>{{item.description + ' ' + item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2>
                             </ion-item>
                           </ion-col>
                         </ion-row>
                     </ion-grid>
-                    <button ion-item id="nw_pst" (click)="onClick('new')" color="secondary">
-                      <ion-icon name="add">New Post</ion-icon>
+                    <button ion-item id="nw_pst" (click)="onClick('service')" color="secondary">
+                      <ion-icon name="add">New Service</ion-icon>
                   </button>
               </ion-slide>
-              <ion-slide class="wal_sld" >
+              <ion-slide class="wal_sld">
                <!--  <h1>$100.00</h1>
                 <div>
                   <ion-item id="nw_pst" (click)="onClick('service')">
@@ -97,9 +88,6 @@
                    <div class="bal">balance <span>$200.00</span></div>
                   </ion-item>
                 </ion-list> -->
-                <ion-refresher (ionRefresh)="doRefresh($event)">
-                  <ion-refresher-content></ion-refresher-content>
-                </ion-refresher>
               
                 <ion-grid no-padding *ngIf="orderList != null">
                   <ion-row>
