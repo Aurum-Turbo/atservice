@@ -1,5 +1,5 @@
 page-user {
-
+// personal information
     ion-avatar{
             
         img{
@@ -26,9 +26,9 @@ page-user {
         text-align: center;
     }
     
-   
-    .wal_sld{
-        /* h1{
+//    segment slider
+    /* .wal_sld{
+        h1{
             color: #fcd736;
             margin-top: 20px !important;
            }
@@ -54,9 +54,11 @@ page-user {
                     color : #fcd736;
                 }
             }
-        } */
-        
-    }
+        } 
+    }*/
+    ion-card{
+        // background: color($colors,'light') !important;
+    }   
     ion-grid{
         ion-row{ 
             .dat_lt{
@@ -81,18 +83,13 @@ page-user {
     
         }
     }
-    #nw_pst{
-        border: 1px solid #424242;
+    .nw_pst{
+        margin: 1rem auto;
         border-radius: 5px;
-        margin: 10px 0px;
-        p{
-            float: left;
-        }
-        ion-icon{
-            float: right;
-            color: #424242;
-        }
     }
+  /*   ion-fab{
+        position: absolute;
+    } */
     // Calendar css
     .cal_blk{
         margin:20px auto 0px;
@@ -167,5 +164,8 @@ page-user {
               border-bottom: solid 1px #1a732d;
             } */
           }
+    }
+    .pst-grd{
+        max-height: 100px;
     }
 }

@@ -41,18 +41,20 @@
             </ion-segment>
           <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
               <ion-slide class="sevs-sld">
-                  <ion-grid *ngFor="let item of sItems | async">
-                      <ion-row (click)="onClick('service', item)">
-                          <ion-col>
-                            <ion-item class="cnt_rt">
-                              <h2>{{item.description + ' ' + item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2>
-                            </ion-item>
-                          </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                    <button ion-item id="nw_pst" (click)="onClick('service')" color="secondary">
-                      <ion-icon name="add">New Service</ion-icon>
-                  </button>
+                 <button ion-button class="nw_pst" (click)="onClick('service')" color="secondary">
+                  <i class="icon-plus">New Service</i>
+               </button>
+                  <ion-card *ngFor="let item of sItems | async" (click)="onClick('service', item)">
+                      <ion-card-head>Service Name</ion-card-head>
+                           <ion-list>
+                             <ion-item>
+                                <h2>{{item.description}}</h2>
+                             </ion-item>
+                             <ion-item>
+                                {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
+                             </ion-item>
+                           </ion-list>                            
+                  </ion-card>
               </ion-slide>
               <ion-slide class="sevs_sld">             
                 <ion-grid *ngFor="let item of oItems | async">
@@ -183,8 +185,11 @@
                 </ion-grid>
               </ion-slide>
               <ion-slide class="pst_sld">
-              
-                    <ion-grid *ngFor="let item of items | async">
+                
+                <button ion-item class="nw_pst" (click)="onClick('new')" color="secondary">
+                  <i class="icon-plus">New Post</i>
+              </button>
+                    <ion-grid *ngFor="let item of items | async" class="pst-grd">
                       <ion-row (click)="onClick('edit', item)">
                           <ion-col col-3>
                             <ion-item class="dat_lt">
@@ -202,9 +207,6 @@
                           </ion-col>
                         </ion-row>
                     </ion-grid>
-                    <button ion-item id="nw_pst" (click)="onClick('new')" color="secondary">
-                      <ion-icon name="add">New Post</ion-icon>
-                  </button>
               </ion-slide>
             </ion-slides>
         </ion-item>
