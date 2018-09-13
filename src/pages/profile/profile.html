@@ -23,10 +23,19 @@
             <p>Change your avatar</p>
     </button>
     <ion-item>
-        <ion-label class="sys_font">Name</ion-label>
-        <ion-input class="usr_font" [(ngModel)]="userDataObj.nickname">{{userDataObj.nickname}}</ion-input>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" placeholder=" Your nickname.." clearInput [(ngModel)]="userDataObj.nickname">{{userDataObj.nickname}}</ion-input>
     </ion-item>
-    <ion-item (click)="onClick('gender')">
+    <ion-item>
+      <ion-label> Gender</ion-label>
+      <ion-select  interface="action-sheet" [(ngModel)]="userDataObj.gender" placeholder="Please Choose..">
+          <ion-option value="1">Male</ion-option>
+          <ion-option value="2">Female</ion-option>  
+          <ion-option value="3">Don't wanna share</ion-option>  
+        </ion-select>
+    </ion-item>
+
+  <!--   <ion-item (click)="onClick('gender')">
         <span class="sys_font">Gender</span>
         <span float-right class="usr_font">{{userDataObj.gender | uppercase}}</span>
     </ion-item>
@@ -42,18 +51,18 @@
               Don't want to share
             </ion-segment-button>
     </ion-segment>
+    </ion-item> -->
+    <ion-item>
+        <ion-label>Location</ion-label>
+        <ion-input clearInput type="text" [(ngModel)]="userDataObj.location" placeholder="Your Address.."></ion-input>
     </ion-item>
     <button ion-item>
-        <span class="sys_font">Location</span>
-        <span class="usr_font">{{userDataObj.location}}</span>
-    </button>
-    <button ion-item>
-        <ion-label class="sys_font">Birthday</ion-label>
-        <ion-datetime class="usr_font" displayFormat="MM/DD/YYYY" [(ngModel)]="userDataObj.birthday">{{userDataObj.birthday}}</ion-datetime>
+        <ion-label >Birthday</ion-label>
+        <ion-datetime  displayFormat="MM/DD/YYYY" [(ngModel)]="userDataObj.birthday">{{userDataObj.birthday}}</ion-datetime>
     </button>
     <ion-item class="txt_ara">
         <ion-label class="sys_font">About Me</ion-label>
-        <ion-textarea rows="5" maxlength="150" class="usr_font" type="text" [(ngModel)]="userDataObj.brief">
+        <ion-textarea rows="5" maxlength="150" class="usr_font" placeholder="Please introduce yourself.." [(ngModel)]="userDataObj.brief">
           <div [innerHtml]="userDataObj.brief"></div>
         </ion-textarea>
     </ion-item>

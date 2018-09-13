@@ -1,31 +1,55 @@
 page-user {
 // personal information
-    ion-avatar{
-            
-        img{
-            margin: 0 auto;
-            min-width: 60px !important;
-            min-height: 60px !important;
-        }
+
+[background-size] {
+    @include darkening-blend-mode;
+    width: 100%;
+    height: 250px;
+    display: table;
+    position: relative;
+    z-index: 999;
+    [social] {
+        @include social;
+        color: color($colors,'secondary') !important;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9;
     }
-    .username{
-        text-align: center !important;
-        button{
-            margin-top: 20px !important;
-        }
-    }
-    .starrank{
-        margin-top: 10px;
+    .title {
+        display: table-cell;
         text-align: center;
-        color: #fcd736 ;
-        ion-icon{
-            color: #fcd736 !important;
+        vertical-align: middle;
+        [parallax-title] {
+            position: relative;
+            z-index: 9;
+            margin-top: 0;
+        }
+        [parallax-subtitle] {
+            margin-bottom: 0;
+            position: relative;
+            z-index: 9;
         }
     }
-    .sgn_btn{
-        text-align: center;
-    }
-    
+}
+// segment button
+ion-segment{
+    margin:0 auto;
+    width: 98%;
+}
+
+.nw_pst{
+    margin:0 auto;
+    border-radius: 5px;
+}
+
+/* ion-slide{
+    position: relative !important;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+ */
 //    segment slider
     /* .wal_sld{
         h1{
@@ -56,10 +80,8 @@ page-user {
             }
         } 
     }*/
-    ion-card{
-        // background: color($colors,'light') !important;
-    }   
-    ion-grid{
+ 
+    /* ion-grid{
         ion-row{ 
             .dat_lt{
                 padding-left: 0px;
@@ -82,16 +104,10 @@ page-user {
             }
     
         }
-    }
-    .nw_pst{
-        margin: 1rem auto;
-        border-radius: 5px;
-    }
-  /*   ion-fab{
-        position: absolute;
     } */
+
     // Calendar css
-    .cal_blk{
+    /* .cal_blk{
         margin:20px auto 0px;
         padding: 0 1px;
         max-width: 600px;
@@ -159,13 +175,55 @@ page-user {
               border-bottom: solid 1px #fcd736;
               background-color: #fcd736;
             }
-            /* .calendar-date {
+            .calendar-date {
               border-top: solid 1px #1a732d;
               border-bottom: solid 1px #1a732d;
-            } */
+            } 
           }
-    }
-    .pst-grd{
+    } */
+   /*  .pst-grd{
         max-height: 100px;
+    } */
+    ion-card {
+        position: relative;
+        height: 130px;
+        margin:5px auto !important;
+       /*  [card-img] {
+            width: 130px;
+            height: 130px;
+            position: relative;
+            margin-right: 10px;
+        } */
+        ion-thumbnail{
+            width:130px;
+            position: relative;
+            margin-right: 10px;
+        }
+        ion-card-content{
+            white-space: normal;
+            overflow: hidden !important;
+            display: -webkit-box !important;
+            max-height: 70% !important;
+            #date{
+                position: absolute;
+                right: 2.5rem;
+                bottom: 1rem;
+            }
+        }
+        .bld{
+            font-weight: bold;
+        }
+       /*  [card-title] {
+            line-height: normal !important;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+        [card-subtitle] {
+            margin: 0;
+        } */
+        /* [card-body-text] {
+            padding-top: 20px;
+            margin-bottom: 25px;
+        } */
     }
 }

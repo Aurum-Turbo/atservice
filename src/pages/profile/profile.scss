@@ -11,14 +11,16 @@ page-profile {
         p{
             color: #eee;
         }
+        ion-label{
+            width: 30%;
+            color: theme-colors('textColors', 'primary','opacity100') !important;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+        ion-input, ion-textarea, ion-select{
+            color: theme-colors('textColors', 'accent','opacity100') !important;
+        }
 
-        .sys_font{
-            color: #eee;
-            width: 100px;
-        }
-        .usr_font{
-            color: #fcd736;
-        }
         
         ion-datetime{
             display: inline-block;

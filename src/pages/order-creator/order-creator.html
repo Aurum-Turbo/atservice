@@ -35,10 +35,13 @@
                 <ion-label>Location:</ion-label>
               <ion-input clearInput type="text" placeholder="Please enter location" [(ngModel)]="orderItem.servelocation"></ion-input>
           </ion-item>
-          <!-- <ion-item no-lines>
-                <ion-label>Type</ion-label>
-              <ion-input clearInput type="text" placeholder="Please enter service type" [(ngModel)]="orderItem.type"></ion-input>
-          </ion-item> -->
+          <ion-item no-lines>
+              <ion-label >Order Type:</ion-label>
+              <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type">
+                <ion-option value="1">Escort</ion-option>
+                <ion-option value="2">Transport</ion-option>  
+              </ion-select>
+            </ion-item>
           <ion-item no-lines>
                 <ion-label>Quantity:</ion-label>
             <ion-input clearInput type="number" placeholder="Please enter quantity" [(ngModel)]="orderItem.quantity"></ion-input>

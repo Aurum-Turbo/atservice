@@ -14,206 +14,232 @@
 
 
 <ion-content>
-    <ion-list>
-        <ion-item no-lines>
+   <!--  <ion-card>
+        <ion-item no-lines> -->
             <!--div *ngIf="currentUser | async"-->
-          <ion-avatar>
-            <img src="{{(currentUser | async)?.avatar}}"/>        
-          </ion-avatar>
-        <!--/div-->
-          <ion-item class="username" no-lines>
+  <div background-size [ngStyle]="{'background-image': 'url('+ (currentUser | async)?.avatar +')'}">
+
+        <!-- <img src="{{(currentUser | async)?.avatar}}"/>         -->
+   
+    <div class="title">
+      <h1 parallax-title (click)="goProfile()">{{(currentUser | async)?.nickname}}</h1>
+      <h2 parallax-subtitle class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{(currentUser | async)?.star[i]}}"></i></ion-icon>
+        <span span-small>{{(currentUser | async)?.rate}}</span></h2>     
+    </div>
+    <div social (click)="onClick('signout')">Sign out</div>
+  </div>
+  <!--/div-->
+         <!--  <ion-item class="username" no-lines>
             <button ion-button (click)="goProfile()" color="secondary" >{{(currentUser | async)?.nickname}}</button>
           </ion-item>
           <p class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{(currentUser | async)?.star[i]}}"></i></ion-icon>
           <span span-small>{{(currentUser | async)?.rate}}</span>
-          </p>
-          <div class="sgn_btn">
-            <button color="secondary" ion-button (click)="onClick('signout')">Sign out</button>
-          </div>
-        </ion-item>
-        <ion-item no-lines>
-            <ion-segment  [(ngModel)]="tabs" color="secondary">
-                <ion-segment-button (click)="selectTab(0)" value="0">Services</ion-segment-button>
-                <ion-segment-button (click)="selectTab(1)" value="1">Order</ion-segment-button>
-                <ion-segment-button (click)="selectTab(2)" value="2">Job</ion-segment-button>
-                <ion-segment-button (click)="selectTab(3)" value="3">Posts</ion-segment-button>
-                <div id="slide" class="slide"></div>
-            </ion-segment>
-          <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
-              <ion-slide class="sevs-sld">
-                 <button ion-button class="nw_pst" (click)="onClick('service')" color="secondary">
-                  <i class="icon-plus">New Service</i>
-               </button>
-                  <ion-card *ngFor="let item of sItems | async" (click)="onClick('service', item)">
-                      <ion-card-head>Service Name</ion-card-head>
-                           <ion-list>
-                             <ion-item>
-                                <h2>{{item.description}}</h2>
-                             </ion-item>
-                             <ion-item>
-                                {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
-                             </ion-item>
-                           </ion-list>                            
-                  </ion-card>
-              </ion-slide>
-              <ion-slide class="sevs_sld">             
-                <ion-grid *ngFor="let item of oItems | async">
-                  <ion-row>
-                    <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-                      <ion-card>
-                        <ion-card-header>
-                          <ion-grid no-padding no-margin>
-                            <ion-row>
-                              <ion-col>
-                                <h2 item-title float-left>{{item.service.description}}</h2>
-                              </ion-col>
-                              <ion-col>
-                                <h2 item-title float-right>{{item.orderby}}</h2>
-                              </ion-col>
-                            </ion-row>
-                          </ion-grid>
-                        </ion-card-header>
-                        <ion-card-content no-padding no-margin>
-                          <ion-list>
-                            <ion-item-group>
-                              <ion-item>
-                                <h2 float-left>{{item.service.type}}</h2>
+          </p> -->
+        <!-- </ion-item> -->
+        <div>
+          <ion-segment  [(ngModel)]="tabs" color="secondary">
+              <ion-segment-button (click)="selectTab(0)" value="0">Services</ion-segment-button>
+              <ion-segment-button (click)="selectTab(1)" value="1">Order</ion-segment-button>
+              <ion-segment-button (click)="selectTab(2)" value="2">Job</ion-segment-button>
+              <ion-segment-button (click)="selectTab(3)" value="3">Posts</ion-segment-button>
+              <div id="slide" class="slide"></div>
+          </ion-segment>
+        <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
+            <ion-slide class="sevs-sld">
+                <ion-card *ngFor="let item of sItems | async" (click)="onClick('service', item)" >
+                    <ion-card-header color="secondary"><h2 float-left>Service Name</h2><h2 float-right class="bld">{{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2></ion-card-header>
+                            <ion-card-content color="secondary">{{item.description}}</ion-card-content>
+                </ion-card>
+            </ion-slide>
+            <ion-slide class="sevs_sld">             
+              <ion-grid *ngFor="let item of oItems | async">
+                <ion-row>
+                  <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+                    <ion-card>
+                      <ion-card-header>
+                              <h2 item-title float-left>{{item.service.description}}</h2>
+                              <h2 item-title float-right>{{item.orderby}}</h2>
+                      </ion-card-header>
+                      <ion-card-content no-padding no-margin>
+                        <ion-list>
+                          <ion-item-group>
+                            <ion-item>
+                              <h2 float-left>{{item.service.type}}</h2>
+                            </ion-item>
+                            <ion-item>
+                              <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
+                              <h3 item-subtitle text-wrap>{{item.servelocation}}</h3>
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
+                                <h3 item-subtitle text-wrap>{{item.note}}</h3>
                               </ion-item>
+                          </ion-item-group>
+                        </ion-list>
+                      </ion-card-content>
+                      <ion-grid transparent no-padding no-margin style="border-top:2px solid black">
+                          <ion-row no-padding no-margin>
+                            <ion-col>
+                              <button ion-button no-padding no-margin button-clear small block (click)="onClick('accept',item)">
+                                Accept
+                              </button>
+                            </ion-col>
+                            <ion-col>
+                              <button ion-button no-padding no-margin button-clear small block (click)="onClick('decline',item)">
+                                Decline
+                              </button>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid> 
+            
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+                <button ion-item color="secondary"  (click)="onClick('order')">New Order</button> 
+            </ion-slide>
+            <ion-slide class="cal_sld">
+              <ion-grid *ngFor="let item of jItems | async">
+                <ion-row justify-content-center>
+                  <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+                    <ion-list no-scroll>
+                      <ion-item-group padding-top class="collapsible">
+                        <ion-item-divider sticky>        
+                          <h2 item-title float-left>{{item.order.servedate}}</h2>
+                        </ion-item-divider>
+                        <ion-item-sliding style="border-bottom:1px solid black" class="collapsible-header" *ngIf="item.status != 'delete' && item.status != 'cancel'">
+                          <ion-item [attr.status]="item.status | lowercase" no-margin no-padding no-lines detail-none (click)="toggleGroup(item)">
+                            <ion-icon no-padding no-margin item-left name="arrow-down" *ngIf="!isGroupShown(item)"></ion-icon>
+                            <ion-icon no-padding no-margin item-left name="arrow-forward" *ngIf="isGroupShown(item)"></ion-icon>
+                            <h2 subitem-title item-left>{{item.order.servetime}}</h2>
+                            <h2 subitem-subtitle text-wrap>{{item.order.service | uppercase}}</h2>  
+                          </ion-item>
+                              
+                          <ion-item no-margin no-lines [hidden]="isGroupShown(item) || item.status == 'discard'">
+                            <ion-card>
                               <ion-item>
+                                <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
+                                <h3 item-subtitle text-wrap>{{item.order.note}}</h3>
+                              </ion-item>
+                              
+                              <ion-item no-margin>
                                 <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
-                                <h3 item-subtitle text-wrap>{{item.servelocation}}</h3>
+                                <h3 item-subtitle text-wrap>{{item.order.servelocation}}</h3>
                               </ion-item>
-                              <ion-item>
-                                  <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
-                                  <h3 item-subtitle text-wrap>{{item.note}}</h3>
-                                </ion-item>
-                            </ion-item-group>
-                          </ion-list>
+                  
+                              <ion-item no-margin>
+                                  <ion-icon item-start icon-small><i class="icon-email-outline"></i></ion-icon>
+                                  <h3 item-subtitle text-wrap>{{item.order.email}}</h3>
+                              </ion-item>
+                  
+                              <ion-item no-margin>
+                                  <ion-icon item-start icon-small><i class="icon-phone"></i></ion-icon>
+                                  <h3 item-subtitle text-wrap>{{item.order.phone}}</h3>
+                              </ion-item>
+                              
+                              <ion-grid no-margin no-padding style="border-top:2px solid black">  
+                                <ion-row justify-content-center>
+                                  <ion-col></ion-col>
+                                  <ion-col>
+                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear small block *ngIf="item.status == 'created'" (click)="onClick('ready',item)">
+                                      Ready
+                                    </button>
+                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'ready'" (click)="onClick('proceed',item)">
+                                      Proceed
+                                    </button>
+                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'proceed'" (click)="onClick('complete',item)">
+                                      Complete
+                                    </button>
+                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'complete'" (click)="onClick('discard',item)">
+                                      Discard
+                                    </button>
+                                  </ion-col>
+                                  <ion-col></ion-col>
+                                </ion-row> 
+                              </ion-grid>
+                            </ion-card>      
+                          </ion-item>
+            
+                          <ion-item-options>
+                            <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status == 'complete'">Delete</button>
+                            <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status != 'complete'">Cancel</button>
+                          </ion-item-options>
+                        </ion-item-sliding>
+                      </ion-item-group>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+            <ion-slide class="pst_sld">
+           <!--  <ion-grid no-padding >*ngIf="data != null"
+                <ion-row card-background-page>
+                  <ion-col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 > -->
+                    <div>
+                      <ion-card text-left (click)="onClick('edit', item)" *ngFor="let item of items | async"><!-- (click)="onEvent('onItemClick', item.title, $event)" -->
+                        <ion-thumbnail item-start float-left>
+                          <img [src]="item.images[0]" />
+                        </ion-thumbnail>
+                        <!--Card-content-->
+                        <ion-card-content>
+                         <!--  <ion-card-title no-padding>
+                            <h2 card-title>{{item.title}}</h2>
+                          </ion-card-title>
+                          <h3 card-subtitle>{{item.description}}</h3>
+                          <h3 card-subtitle>{{item.shortDescription}}</h3> -->
+                          <div card-body-text innerHTML = {{item.description}}></div>
+                          <div id="date">{{item.postDate | date:"MM-dd"}}</div>
+                          <!---Social share-->
+                          <!-- div float-right social>
+                            <ion-icon>
+                              <i icon-small ng-if="group.iconLike" class="icon {{item.iconLike}}" (click)="onEvent('onLike', item, $event)"></i>
+                            </ion-icon>
+                            <ion-icon>
+                              <i icon-small ng-if="item.iconFavorite" class="icon {{item.iconFavorite}}" (click)="onEvent('onFavorite', item, $event)"></i>
+                            </ion-icon>
+                            <ion-icon>
+                              <i icon-small ng-if="item.iconShare" class="icon {{item.iconShare}}" (click)="onEvent('onShare', item, $event)"></i>
+                            </ion-icon>
+                          </div> -->
                         </ion-card-content>
-                        <ion-grid transparent no-padding no-margin style="border-top:2px solid black">
-                            <ion-row no-padding no-margin>
-                              <ion-col>
-                                <button ion-button no-padding no-margin button-clear small block (click)="onClick('accept',item)">
-                                  Accept
-                                </button>
-                              </ion-col>
-                              <ion-col>
-                                <button ion-button no-padding no-margin button-clear small block (click)="onClick('decline',item)">
-                                  Decline
-                                </button>
-                              </ion-col>
-                            </ion-row>
-                          </ion-grid> 
-              
                       </ion-card>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                  <button ion-item color="secondary"  (click)="onClick('order')">New Order</button> 
-              </ion-slide>
-              <ion-slide class="cal_sld">
-                <ion-grid *ngFor="let item of jItems | async">
-                  <ion-row justify-content-center>
-                    <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-                      <ion-list no-scroll>
-                        <ion-item-group padding-top class="collapsible">
-                          <ion-item-divider sticky>        
-                            <h2 item-title float-left>{{item.order.servedate}}</h2>
-                          </ion-item-divider>
-                          <ion-item-sliding style="border-bottom:1px solid black" class="collapsible-header" *ngIf="item.status != 'delete' && item.status != 'cancel'">
-                            <ion-item [attr.status]="item.status | lowercase" no-margin no-padding no-lines detail-none (click)="toggleGroup(item)">
-                              <ion-icon no-padding no-margin item-left name="arrow-down" *ngIf="!isGroupShown(item)"></ion-icon>
-                              <ion-icon no-padding no-margin item-left name="arrow-forward" *ngIf="isGroupShown(item)"></ion-icon>
-                              <h2 subitem-title item-left>{{item.order.servetime}}</h2>
-                              <h2 subitem-subtitle text-wrap>{{item.order.service.title | uppercase}}</h2>  
-                            </ion-item>
-                                
-                            <ion-item no-margin no-lines [hidden]="isGroupShown(item) || item.status == 'discard'">
-                              <ion-card>
-                                <ion-item>
-                                  <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
-                                  <h3 item-subtitle text-wrap>{{item.order.note}}</h3>
-                                </ion-item>
-                                
-                                <ion-item no-margin>
-                                  <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
-                                  <h3 item-subtitle text-wrap>{{item.order.servelocation}}</h3>
-                                </ion-item>
-                    
-                                <ion-item no-margin>
-                                    <ion-icon item-start icon-small><i class="icon-email-outline"></i></ion-icon>
-                                    <h3 item-subtitle text-wrap>{{item.order.email}}</h3>
-                                </ion-item>
-                    
-                                <ion-item no-margin>
-                                    <ion-icon item-start icon-small><i class="icon-phone"></i></ion-icon>
-                                    <h3 item-subtitle text-wrap>{{item.order.phone}}</h3>
-                                </ion-item>
-                                
-                                <ion-grid no-margin no-padding style="border-top:2px solid black">  
-                                  <ion-row justify-content-center>
-                                    <ion-col></ion-col>
-                                    <ion-col>
-                                      <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear small block *ngIf="item.status == 'created'" (click)="onClick('ready',item)">
-                                        Ready
-                                      </button>
-                                      <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'ready'" (click)="onClick('proceed',item)">
-                                        Proceed
-                                      </button>
-                                      <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'proceed'" (click)="onClick('complete',item)">
-                                        Complete
-                                      </button>
-                                      <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'complete'" (click)="onClick('discard',item)">
-                                        Discard
-                                      </button>
-                                    </ion-col>
-                                    <ion-col></ion-col>
-                                  </ion-row> 
-                                </ion-grid>
-                              </ion-card>      
-                            </ion-item>
-              
-                            <ion-item-options>
-                              <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status == 'complete'">Delete</button>
-                              <button ion-button no-margin no-padding button-clear block (click)="onClick('discard', item)" *ngIf="item.status != 'complete'">Cancel</button>
-                            </ion-item-options>
-                          </ion-item-sliding>
-                        </ion-item-group>
-                      </ion-list>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-slide>
-              <ion-slide class="pst_sld">
-                
-                <button ion-item class="nw_pst" (click)="onClick('new')" color="secondary">
-                  <i class="icon-plus">New Post</i>
-              </button>
-                    <ion-grid *ngFor="let item of items | async" class="pst-grd">
-                      <ion-row (click)="onClick('edit', item)">
-                          <ion-col col-3>
-                            <ion-item class="dat_lt">
-                                <span id="date">{{item.postDate}}</span>
-                                <span id="month">{{item.postMonth}}</span>
-                            </ion-item>
-                          </ion-col>
-                          <ion-col col-3>
-                            <img src="{{item.images[0]}}"/>
-                          </ion-col>
-                          <ion-col col-6>
-                            <ion-item class="cnt_rt">
-                              <div innerHTML = {{item.description}}></div>
-                            </ion-item>
-                          </ion-col>
-                        </ion-row>
-                    </ion-grid>
-              </ion-slide>
-            </ion-slides>
-        </ion-item>
-      </ion-list>
-      <!--  <ion-fab>
-          <button button-ion-fab ion-fab (click)="onClick('new')">
-              <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-fab> -->
+            <!--     </ion-col>
+              </ion-row>
+            </ion-grid> -->
+                <!-- <ion-grid *ngFor="let item of items | async" class="pst-grd">
+                  <ion-row (click)="onClick('edit', item)">
+                      <ion-col col-3>
+                        <ion-item class="dat_lt">
+                            <span id="date">{{item.postDate}}</span>
+                            <span id="month">{{item.postMonth}}</span>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col col-3>
+                        <img src="{{item.images[0]}}"/>
+                      </ion-col>
+                      <ion-col col-6>
+                        <ion-item class="cnt_rt">
+                          <div innerHTML = {{item.description}}></div>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                </ion-grid> -->
+                    </div>
+            </ion-slide>
+          </ion-slides>
+  <!-- </ion-list> -->
+  <!--  <ion-fab>
+      <button button-ion-fab ion-fab >
+          <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab> -->
+        </div>
+        <ion-fab #fab bottom right>
+            <button button-ion-fab ion-fab><i class="icon-arrow-left"></i></button>   
+              <ion-fab-list side="left">
+                  <button ion-fab button-ion-fab (click)="onClick('service')"><i class="icon-currency-usd"></i></button>
+                  <button ion-fab button-ion-fab (click)="onClick('new')"><i class="icon-camera"></i></button>
+                </ion-fab-list>        
+          </ion-fab>
 </ion-content>
+  
