@@ -142,7 +142,7 @@ export class EditorPage {
       {
         var reader = new FileReader();
         var img = new Image();
-        var _this = this;
+        var that = this;
 
         reader.readAsDataURL(file);
 
@@ -150,9 +150,9 @@ export class EditorPage {
           img.src = reader.result.toString();
           img.onload = function () {
             console.log(img.height + " / " + img.width);
-            _this.postObj.coverWidth = 190;
-            _this.postObj.coverHeight = Math.round((190/img.width)*img.height);
-            console.log("cover height: ", _this.postObj.coverHeight);
+            that.postObj.coverWidth = 190;
+            that.postObj.coverHeight = Math.round((190/img.width)*img.height);
+            console.log("cover height: ", that.postObj.coverHeight);
             /*_this.itemsCollection.doc(_this.postObj.pid).update({
               "status": "updated",
               "coverWidth": _this.postObj.coverWidth,
