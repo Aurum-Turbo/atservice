@@ -46,7 +46,8 @@
         <ion-row>
           <quill-editor placeholder="Please insert the description ..." [(ngModel)]="postObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
-        <button ion-button block default-button (click)="onClick('discard',postObj)">Discard</button>
+        <button ion-button default-button (click)="onClick('discard',postObj)" class="btn">Discard</button>
+        <button ion-button default-button class="btn">Save</button>
       </ion-col>
     </ion-row>
   </ion-grid>
