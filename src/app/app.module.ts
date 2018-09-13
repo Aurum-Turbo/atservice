@@ -40,6 +40,7 @@ import { AppSettings } from '../providers/app-setting';
 import { PostData } from '../providers/post-data/post-data';
 import { ChatDetailsPage } from '../pages/chat-details/chat-details';
 import { ChatData } from '../providers/chat-data/chat-data';
+import { ImageData } from '../providers/image-data/image-data';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { ChatData } from '../providers/chat-data/chat-data';
     UserData,
     LoadingServiceProvider, 
     PostData,
-    ChatData
+    ChatData,
+    ImageData
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -28,7 +28,7 @@
               <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
               <ion-scroll scrollX="true">
-                  <img *ngFor="let item of postObj.images" [src]="item" height="200px" (click)="onClick('discardImage',item)"/>
+                  <img *ngFor="let item of postObj.images" [src]="item.imgsrc" height="200px" (click)="onClick('discardImage',item)"/>
                   <button ion-button class="add_btn" clear (click)="imageInput.click()"><i class="icon-plus"></i></button>
               </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->

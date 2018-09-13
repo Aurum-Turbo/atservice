@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserData } from '../user-data/user-data';
+import { ImageData } from '../image-data/image-data';
 
 /*
   Generated class for the PostDataProvider provider.
@@ -12,12 +13,10 @@ export class PostData {
 
   pid: string = ""; //service id
   status: string = ""; //created, submitted, activated, suspended, discard 
-  images: string[];
+  images: ImageData[];
   description: string = ""; //description will be display on the service details
   author: string = "";
   nickname: string = "";
-  coverWidth: number = 0;
-  coverHeight: number = 0;
   avatar: any;
   /* Social Media*/
   tags: string = ""; //for searching
