@@ -17,12 +17,6 @@
     <ion-grid padding-top>
         <ion-row justify-content-center>
           <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-            <ion-item>
-              <ion-input clearInput type="text" placeholder="Please enter the service sid" [(ngModel)]="orderServiceID"></ion-input>
-            </ion-item>
-            <!--ion-row>
-                <ion-input clearInput type="text" placeholder="Please enter the quantity" [(ngModel)]="orderObj.quantity"></ion-input>
-            </ion-row-->
             <ion-item no-lines>
                 <ion-label>Service Date:</ion-label>
               <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="Please Choose.."></ion-datetime>
@@ -38,8 +32,8 @@
           <ion-item no-lines>
               <ion-label >Order Type:</ion-label>
               <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type">
-                <ion-option value="1">Escort</ion-option>
-                <ion-option value="2">Transport</ion-option>  
+                <ion-option value="Escort">Escort</ion-option>
+                <ion-option value="Transport">Transport</ion-option>  
               </ion-select>
             </ion-item>
           <ion-item no-lines>
@@ -58,6 +52,9 @@
                 <ion-label>Phone:</ion-label>
               <ion-input clearInput type="phone" placeholder="Please enter phone" [(ngModel)]="orderItem.phone"></ion-input>
           </ion-item>
+
+          <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn">Discard</button>
+        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn">Send</button>
           </ion-col>
         </ion-row>
       </ion-grid>

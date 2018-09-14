@@ -13,7 +13,8 @@ export class PostData {
 
   pid: string = ""; //service id
   status: string = ""; //created, submitted, activated, suspended, discard 
-  images: ImageData[];
+  images: string[] = [];
+  imgHeights: number[] = [];
   description: string = ""; //description will be display on the service details
   author: string = "";
   nickname: string = "";

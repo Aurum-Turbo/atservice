@@ -103,9 +103,7 @@ export class UserPage {
               private afs: AngularFirestore,
               public dataService: DataServiceProvider,
               public navCtrl: NavController, 
-              public navParams: NavParams, 
-              private alertCtrl: AlertController,
-              private calendar: Calendar) {          
+              public navParams: NavParams) {          
   }
   
   ionViewDidLoad() {
@@ -244,7 +242,7 @@ export class UserPage {
 
     if(event == "accept")
     {
-      if(item)
+      if(item.oid != "")
       {
         this.jItemsCollection = this.afs.collection("jobs");
 
@@ -263,15 +261,78 @@ export class UserPage {
             "status": "updated",
             "updateAt": firebase.firestore.FieldValue.serverTimestamp()
           });
+
+          this.oItemsCollection.doc(item.oid).delete().then(result => {
+            console.log("order: " + item.oid + " has converted to job successfully!");
+            //need to send orderby a message
+          });
         });
-
-
         //this.navCtrl.push(OrderCreatorPage, {"order": item as OrderData});
       }
       else
       {
         //this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
       }
+    }
+
+    if(event == "decline")
+    {
+      if(item.oid != "")
+      {
+        this.oItemsCollection.doc(item.oid).delete().then(result => {
+          console.log("order: " + item.oid + " has discard successfully!");
+
+          //need to send orderby a message
+        });
+      }
+    }
+
+    if(event == "ready")
+    {
+      this.jItemsCollection.doc(item.jid).update({
+          "status": "ready",
+          "timestamp": new Date(),
+          "acceptedby": firebase.auth().currentUser.uid,
+          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .catch(err => {console.log(err)});
+    }
+
+    if(event == "proceed")
+    {
+      this.jItemsCollection.doc(item.jid).update({
+          "status": "proceed",
+          "timestamp": new Date(),
+          "acceptedby": firebase.auth().currentUser.uid,
+          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .catch(err => {console.log(err)});
+    }
+
+    if(event == "complete")
+    {
+      this.jItemsCollection.doc(item.jid).update({
+          "status": "complete",
+          "timestamp": new Date(),
+          "acceptedby": firebase.auth().currentUser.uid,
+          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .catch(err => {console.log(err)});
+    }
+
+    if(event == "discard")
+    {
+      this.jItemsCollection.doc(item.jid).update({
+        "status": "discard",
+        "timestamp": new Date(),
+        "acceptedby": firebase.auth().currentUser.uid,
+        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .catch(err => {console.log(err)});
     }
 
 

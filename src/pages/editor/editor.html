@@ -28,7 +28,7 @@
               <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
               <ion-scroll scrollX="true">
-                  <img *ngFor="let item of postObj.images" [src]="item.imgsrc" height="200px" (click)="onClick('discardImage',item)"/>
+                  <img *ngFor="let item of postObj.images" [src]="item" height="200px" (click)="onClick('discardImage',item)"/>
                   <button ion-button class="add_btn" clear (click)="imageInput.click()"><i class="icon-plus"></i></button>
               </ion-scroll>
                 <!-- src={{serviceObj.coverimage}} -->
@@ -46,11 +46,17 @@
         <ion-row>
           <quill-editor placeholder="Please insert the description ..." [(ngModel)]="postObj.description" [modules]="{toolbar:false}"></quill-editor>
         </ion-row>
-        <button ion-button default-button (click)="onClick('discard',postObj)" class="btn">Discard</button>
-        <button ion-button default-button class="btn">Save</button>
+        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn">Discard</button>
+        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('save')" class="btn">Save</button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div>
+    <h2>{{uploadProgress | async}}</h2>
+  </div>
+  
+  
 
 </ion-content>
 <!-- ['bold', 'italic', 'underline', 'strike','blockquote', 'code-block',{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }, 'clean',{ 'color': [] }, { 'background': [] }, { 'header': [1, 2, 3, 4, 5, 6, false] }, 'link', 'image', 'video'] -->
