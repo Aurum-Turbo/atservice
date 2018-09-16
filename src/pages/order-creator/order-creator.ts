@@ -62,20 +62,16 @@ export class OrderCreatorPage {
   }
 
   ionViewWillLeave() {
+  }
+    
 
-    if(this.orderServiceID != "")
+  onClick(event: string)
+  {
+    if(event == "send")
     {
-      this.sItemsCollection = this.afs.collection("services", ref => {
-        return ref.where("sid","==",this.orderServiceID);
-      });
-
-      this.sItemsCollection.valueChanges().subscribe(snapshot => {
-        console.log("get service: ", snapshot);
-        this.orderItem.service = snapshot[0];
-
-        this.orderItem.subtotal = this.orderItem.service.price * this.orderItem.quantity;
-        console.log("subtotal: ", this.orderItem.subtotal);
-        if(this.calltype == "creating" && this.orderItem.service != null && this.orderItem.orderby != "" && this.orderItem.servelocation != "")
+      if(this.orderItem.service && this.orderItem.servedate != "" && this.orderItem.orderby != "")
+      {
+        if(this.orderItem.oid == "")
         {
           this.oItemsCollection.add({
             "oid": "",
@@ -90,8 +86,8 @@ export class OrderCreatorPage {
             "servelocation": this.orderItem.servelocation,
             "note": this.orderItem.note,
             "provideby": this.orderItem.service.provider,
-            "orderby": firebase.auth().currentUser.uid,
-            "beneficiary": firebase.auth().currentUser.uid,
+            "orderby": this.orderItem.orderby,
+            "beneficiary": this.orderItem.orderby,
             "email": this.orderItem.email,
             "phone": this.orderItem.phone,
             //"tags": "",
@@ -104,12 +100,12 @@ export class OrderCreatorPage {
               "status": "updated",
               "updateAt": firebase.firestore.FieldValue.serverTimestamp()
             });
-          })
-          .catch(error => console.log(error));
+
+            this.navCtrl.pop();
+          });
 
         }
-        
-        if(this.calltype == "editing" && this.orderItem.servedate != "")
+        else
         {
           this.oItemsCollection.doc(this.orderItem.oid).update({
             "status": "updated",
@@ -122,12 +118,14 @@ export class OrderCreatorPage {
             "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
           });
         }
-
-      });
+      }
     }
 
-    
-    
+    if(event == "discard")
+    {
+      this.navCtrl.pop();
+    }
+
   }
 
 }

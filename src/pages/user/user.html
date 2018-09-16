@@ -78,7 +78,7 @@
                         </ion-list>
                       </ion-card-content>
                       <ion-grid transparent no-padding no-margin style="border-top:2px solid black">
-                          <ion-row no-padding no-margin>
+                          <ion-row>
                             <ion-col>
                               <button ion-button no-padding no-margin button-clear small block (click)="onClick('accept',item)">
                                 Accept
@@ -97,8 +97,8 @@
               </ion-grid>
             </ion-slide>
             <ion-slide class="cal_sld">
-              <ion-grid *ngFor="let item of jItems | async">
-                <ion-row justify-content-center>
+              <ion-grid *ngFor="let item of jItems | async" >
+                <ion-row justify-content-center *ngIf="item.status != 'discard'">
                   <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
                     <ion-list no-scroll>
                       <ion-item-group padding-top class="collapsible">
@@ -110,12 +110,14 @@
                             <ion-icon no-padding no-margin item-left name="arrow-down" *ngIf="!isGroupShown(item)"></ion-icon>
                             <ion-icon no-padding no-margin item-left name="arrow-forward" *ngIf="isGroupShown(item)"></ion-icon>
                             <h2 subitem-title item-left>{{item.order.servetime}}</h2>
-                            <h2 subitem-subtitle text-wrap>{{item.order.service | uppercase}}</h2>  
+                            <h2 subitem-subtitle text-wrap>{{item.order.service.description | uppercase}}</h2>  
                           </ion-item>
                               
                           <ion-item no-margin no-lines [hidden]="isGroupShown(item) || item.status == 'discard'">
                             <ion-card>
+                              <ion-card-content>
                               <ion-item>
+                                
                                 <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
                                 <h3 item-subtitle text-wrap>{{item.order.note}}</h3>
                               </ion-item>
@@ -134,12 +136,12 @@
                                   <ion-icon item-start icon-small><i class="icon-phone"></i></ion-icon>
                                   <h3 item-subtitle text-wrap>{{item.order.phone}}</h3>
                               </ion-item>
-                              
+                            </ion-card-content>
                               <ion-grid no-margin no-padding style="border-top:2px solid black">  
                                 <ion-row justify-content-center>
                                   <ion-col></ion-col>
                                   <ion-col>
-                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear small block *ngIf="item.status == 'created'" (click)="onClick('ready',item)">
+                                    <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear small block *ngIf="item.status == 'updated'" (click)="onClick('ready',item)">
                                       Ready
                                     </button>
                                     <button [attr.status]="item.status | lowercase" ion-button no-margin no-padding button-clear block *ngIf="item.status == 'ready'" (click)="onClick('proceed',item)">
@@ -186,7 +188,7 @@
                           <h3 card-subtitle>{{item.description}}</h3>
                           <h3 card-subtitle>{{item.shortDescription}}</h3> -->
                           <div card-body-text innerHTML = {{item.description}}></div>
-                          <div id="date">{{item.postDate | date:"MM-dd"}}</div>
+                          <div id="date">{{item.updateAt.toDate() | date:"short"}}</div>
                           <!---Social share-->
                           <!-- div float-right social>
                             <ion-icon>

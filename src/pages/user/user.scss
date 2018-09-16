@@ -186,7 +186,7 @@ ion-segment{
     } */
     ion-card {
         position: relative;
-        height: 130px;
+        min-height: 130px !important;
         margin:5px auto !important;
        /*  [card-img] {
             width: 130px;

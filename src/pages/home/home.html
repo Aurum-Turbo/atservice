@@ -17,7 +17,7 @@
   <ngx-masonry [useImagesLoaded]="false" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
     <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item">
     <ion-card>
-        <img (click)="onClick('detail',item)" src="{{item.images[0]}}" width="{{item.coverWidth}}" height="{{item.coverHeight}}"/> 
+        <img (click)="onClick('detail',item)" src="{{item.images[0]}}" height="{{item.imgHeights[0]}}"/> 
       <ion-card-content> 
         <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
       <ion-item>

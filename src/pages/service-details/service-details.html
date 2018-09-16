@@ -16,8 +16,8 @@
 <ion-content>
   <div id="wrapper">
     <ion-slides #slider>
-      <ion-slide *ngFor="let i of [0,1,2,3,4,5]">
-        <img src="{{postObj.images[i]}}"/>
+      <ion-slide *ngFor="let item of postObj.images">
+        <img src="{{item}}"/>
       </ion-slide>
     </ion-slides> 
   </div>
@@ -61,7 +61,7 @@
         <ion-input placeholder="message here" [(ngModel)]="message.message">
         </ion-input>
         </ion-item><ion-item>
-        <button ion-button (click)="onClick()">Send</button>
+        <button ion-button (click)="onClick('chat')">Send</button>
       </ion-item>
     </ion-list>
 </ion-content>

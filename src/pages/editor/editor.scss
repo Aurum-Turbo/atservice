@@ -1,4 +1,15 @@
 page-editor {
+
+  .loader{
+    background: theme-colors('textColors','primary') !important;
+    border-radius:100px;
+    height:5px;
+    p{
+      text-align:center;
+      color:white !important;
+      text-align:center;
+      }
+    }
     ion-row {
         ion-img {
             // position: relative !important;

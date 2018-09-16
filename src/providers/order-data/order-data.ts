@@ -11,25 +11,25 @@ import { Timestamp } from 'rxjs';
 @Injectable()
 export class OrderData {
 
-  oid: string; //order id
+  oid: string = ""; //order id
   timestamp: Date;
-  status: string;
-  type: string;
+  status: string = "";
+  type: string = "";
   /* Info */
   service: ServiceData;
   /* Pricing */
-  quantity: number;
-  subtotal: number;
-  servedate: string;
-  servetime: string;
-  servelocation: string;
-  note: string;
+  quantity: number = 0;
+  subtotal: number = 0;
+  servedate: string = "";
+  servetime: string = "";
+  servelocation: string = "";
+  note: string = "";
   /* Parties */
-  provideby: string;
-  orderby: string;
-  beneficiary: any;
-  email: string;
-  phone: string;
+  provideby: string = "";
+  orderby: string = "";
+  beneficiary: string = "";
+  email: string = "";
+  phone: string = "";
   /* for quote and search */
   //tags: any;
   createAt: any;
