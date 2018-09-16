@@ -45,10 +45,6 @@ export class HomePage {
   ionViewWillEnter(){
     this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
     this.items = this.itemsCollection.valueChanges();
-
-    this.items.subscribe(snapshot => {
-      console.log("loaded items: ", snapshot);
-    })
   }
 
   onClick(event: string, item: any) {

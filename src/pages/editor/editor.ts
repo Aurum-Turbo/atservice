@@ -172,7 +172,7 @@ export class EditorPage {
       //build up the post
       //update the database
       this.disableBtns = true;
-      if(this.calltype == "creating" && this.postObj.images.length > 0 && this.postObj.description != null)
+      if(this.calltype == "creating" && this.postObj.images.length > 0 && this.postObj.description != "")
       {
         var currentDate = new Date();
         this.itemsCollection.add({
@@ -211,25 +211,26 @@ export class EditorPage {
               if(!image.includes("https"))
               {
                 var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
-                this.ref = this.afStorage.ref(remotePath);
-                this.task = this.afStorage.ref(remotePath).putString(image,'data_url');  //.upload(item.remotePath, item.localFile);
-                this.uploadProgress = this.task.percentageChanges();
-
-                this.task.then(snapshot => {
+                this.afStorage.ref(remotePath).putString(image,'data_url')
+                .then(snapshot => {
                   if(snapshot.state == "success")
                   {
-                    this.ref.getDownloadURL().subscribe(
-                      snapshot => {
-                        var imgIndex = this.postObj.images.indexOf(image);
-                        this.postObj.images.splice(imgIndex, 1, snapshot);
+                    snapshot.ref.getDownloadURL().then(
+                      remoteURL => { 
+                        var imgIndex  = this.postObj.images.indexOf(image);
+                        this.postObj.images[imgIndex] = remoteURL;
+                        //console.log("imgIndex: ", imgIndex, " URL: ", remoteURL);
+
                         //update database once complete the upload
                         this.itemsCollection.doc(this.postObj.pid).update({
                           "pid": docRef.id,
                           "status": "updated",
                           "images": this.postObj.images,
                           "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                      });
+                        })
+                        .catch(err=>{console.log(err)});
+                      })
+                      .catch(err=>{console.log(err)});
                   }
                 })
                 .catch(err => {console.log(err);});
@@ -251,17 +252,14 @@ export class EditorPage {
             if(!image.includes("https"))
             {
               var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
-              this.ref = this.afStorage.ref(remotePath);
-              this.task = this.afStorage.ref(remotePath).putString(image,'data_url');  //.upload(item.remotePath, item.localFile);
-              this.uploadProgress = this.task.percentageChanges();
-
-              this.task.then(snapshot => {
+              this.afStorage.ref(remotePath).putString(image,'data_url')  //.upload(item.remotePath, item.localFile);
+              .then(snapshot => {
                 if(snapshot.state == "success")
                 {
-                  this.ref.getDownloadURL().subscribe(
-                    snapshot => {
+                  snapshot.ref.getDownloadURL().then(
+                    remoteURL => {
                       var imgIndex = this.postObj.images.indexOf(image);
-                      this.postObj.images.splice(imgIndex, 1, snapshot);
+                      this.postObj.images[imgIndex] = remoteURL;
                       //update database once complete the upload
                       this.itemsCollection.doc(this.postObj.pid).update({
                         "status": "updated",
