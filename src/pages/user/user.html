@@ -47,8 +47,8 @@
         <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
             <ion-slide class="sevs-sld">
                 <ion-card *ngFor="let item of sItems | async" (click)="onClick('service', item)" >
-                    <ion-card-header color="secondary"><h2 float-left>Service Name</h2><h2 float-right class="bld">{{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2></ion-card-header>
-                            <ion-card-content color="secondary">{{item.description}}</ion-card-content>
+                    <ion-card-header><h2 float-left>Service Name</h2><h2 float-right class="bld">{{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2></ion-card-header>
+                            <ion-card-content>{{item.description}}</ion-card-content>
                 </ion-card>
             </ion-slide>
             <ion-slide class="sevs_sld">             
@@ -57,8 +57,8 @@
                   <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
                     <ion-card>
                       <ion-card-header>
-                              <h2 item-title float-left>{{item.service.description}}</h2>
-                              <h2 item-title float-right>{{item.orderby}}</h2>
+                              <h2 float-left>{{item.service.description}}</h2>
+                              <h2 float-right>{{item.orderby}}</h2>
                       </ion-card-header>
                       <ion-card-content no-padding no-margin>
                         <ion-list>
@@ -91,12 +91,10 @@
                             </ion-col>
                           </ion-row>
                         </ion-grid> 
-            
                     </ion-card>
                   </ion-col>
                 </ion-row>
               </ion-grid>
-                <button ion-item color="secondary"  (click)="onClick('order')">New Order</button> 
             </ion-slide>
             <ion-slide class="cal_sld">
               <ion-grid *ngFor="let item of jItems | async">
