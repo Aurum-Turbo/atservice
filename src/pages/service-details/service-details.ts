@@ -52,12 +52,10 @@ export class ServiceDetailsPage {
     console.log("get post: ", this.postObj);
     console.log("Date: ", this.date);
   }
-  ngAfterViewInit() {
-    this.slider.autoHeight = true;
-}
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiceDetailsPage');
-    
+    this.slider.autoHeight = true;
   }
 
   ionViewWillEnter() {
