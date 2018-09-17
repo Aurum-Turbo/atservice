@@ -15,7 +15,7 @@
 
 <ion-content>
   <div id="wrapper">
-    <ion-slides #slider>
+    <ion-slides #slider pager *ngIf="postObj.images.length == postObj.imgHeights.length">
       <ion-slide *ngFor="let item of postObj.images">
         <img src="{{item}}"/>
       </ion-slide>
