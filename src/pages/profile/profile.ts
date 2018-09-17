@@ -28,11 +28,12 @@ export class ProfilePage {
 
   userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; 
-  
+  genders: string[] = ['Male','Female','Dont wanna share'];
   constructor(
     private afs: AngularFirestore,
     public navCtrl: NavController, public navParams: NavParams) {
     //this.userDataObj.avatar = "assets/imgs/avatar.png";
+    this.userDataObj.gender = "Female";
   }
 
   ionViewDidLoad() {

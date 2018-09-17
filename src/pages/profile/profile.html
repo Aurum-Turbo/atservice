@@ -14,57 +14,61 @@
 
 
 <ion-content padding>
-  <ion-list>
-      <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
-    <button ion-item (click)="imageInput.click()">
-        <ion-avatar item-start>
-            <img src="{{userDataObj.avatar}}"/>
-          </ion-avatar>
-            <p>Change your avatar</p>
-    </button>
-    <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input type="text" placeholder=" Your nickname.." clearInput [(ngModel)]="userDataObj.nickname">{{userDataObj.nickname}}</ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label> Gender</ion-label>
-      <ion-select  interface="action-sheet" [(ngModel)]="userDataObj.gender" placeholder="Please Choose..">
-          <ion-option value="1">Male</ion-option>
-          <ion-option value="2">Female</ion-option>  
-          <ion-option value="3">Don't wanna share</ion-option>  
-        </ion-select>
-    </ion-item>
+    <ion-grid padding-top>
+        <ion-row justify-content-center>
+          <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+             <ion-list>
+                 <input #imageInput type="file" accept="image/*" style="display:none" (change)="onSelect($event)"/>
+               <button ion-item (click)="imageInput.click()">
+                   <ion-avatar item-start>
+                       <img src="{{userDataObj.avatar}}"/>
+                     </ion-avatar>
+                       <ion-label>Change your avatar</ion-label>
+               </button>
+               <ion-item>
+                   <ion-label>Name:</ion-label>
+                   <ion-input type="text" placeholder=" Your nickname.." clearInput [(ngModel)]="userDataObj.nickname">{{userDataObj.nickname}}</ion-input>
+               </ion-item>
+               <ion-item>
+                 <ion-label> Gender:</ion-label>
+                 <ion-select  interface="action-sheet" [(ngModel)]="userDataObj.gender">
+                     <ion-option *ngFor="let g of genders" value="{{g}}">{{g}}</ion-option>
+                   </ion-select>
+               </ion-item>
 
-  <!--   <ion-item (click)="onClick('gender')">
-        <span class="sys_font">Gender</span>
-        <span float-right class="usr_font">{{userDataObj.gender | uppercase}}</span>
-    </ion-item>
-    <ion-item [hidden]="isGender">
-    <ion-segment class="accent" style="margin-top: 20px;" [(ngModel)]="userDataObj.gender">
-            <ion-segment-button value="male">
-              Male
-            </ion-segment-button>
-            <ion-segment-button value="female">
-              Female
-            </ion-segment-button>
-            <ion-segment-button value="undefined">
-              Don't want to share
-            </ion-segment-button>
-    </ion-segment>
-    </ion-item> -->
-    <ion-item>
-        <ion-label>Location</ion-label>
-        <ion-input clearInput type="text" [(ngModel)]="userDataObj.location" placeholder="Your Address.."></ion-input>
-    </ion-item>
-    <button ion-item>
-        <ion-label >Birthday</ion-label>
-        <ion-datetime  displayFormat="MM/DD/YYYY" [(ngModel)]="userDataObj.birthday">{{userDataObj.birthday}}</ion-datetime>
-    </button>
-    <ion-item class="txt_ara">
-        <ion-label class="sys_font">About Me</ion-label>
-        <ion-textarea rows="5" maxlength="150" class="usr_font" placeholder="Please introduce yourself.." [(ngModel)]="userDataObj.brief">
-          <div [innerHtml]="userDataObj.brief"></div>
-        </ion-textarea>
-    </ion-item>
-  </ion-list>
+             <!--   <ion-item (click)="onClick('gender')">
+                   <span class="sys_font">Gender</span>
+                   <span float-right class="usr_font">{{userDataObj.gender | uppercase}}</span>
+               </ion-item>
+               <ion-item [hidden]="isGender">
+               <ion-segment class="accent" style="margin-top: 20px;" [(ngModel)]="userDataObj.gender">
+                       <ion-segment-button value="male">
+                         Male
+                       </ion-segment-button>
+                       <ion-segment-button value="female">
+                         Female
+                       </ion-segment-button>
+                       <ion-segment-button value="undefined">
+                         Don't want to share
+                       </ion-segment-button>
+               </ion-segment>
+               </ion-item> -->
+               <ion-item>
+                   <ion-label>Location:</ion-label>
+                   <ion-input clearInput type="text" [(ngModel)]="userDataObj.location" placeholder="Your Address.."></ion-input>
+               </ion-item>
+               <button ion-item>
+                   <ion-label >Birthday:</ion-label>
+                   <ion-datetime  displayFormat="MM/DD/YYYY" [(ngModel)]="userDataObj.birthday">{{userDataObj.birthday}}</ion-datetime>
+               </button>
+               <ion-item class="txt_ara">
+                   <ion-label class="sys_font">About Me:</ion-label>
+                   <ion-textarea rows="5" maxlength="150" class="usr_font" placeholder="Please introduce yourself.." [(ngModel)]="userDataObj.brief">
+                     <div [innerHtml]="userDataObj.brief"></div>
+                   </ion-textarea>
+               </ion-item>
+             </ion-list>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 </ion-content>

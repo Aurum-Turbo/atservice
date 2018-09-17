@@ -30,7 +30,7 @@ export class ChatDetailsPage {
   items: Observable<MessageData[]>;
   userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; 
-  currentUid: String;
+  currentUid: string;
   message = new MessageData();
   // postObj: PostData;
   private mutationObserver: MutationObserver;

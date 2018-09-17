@@ -16,6 +16,8 @@ page-profile {
             color: theme-colors('textColors', 'primary','opacity100') !important;
             font-size: 1.6rem;
             font-weight: bold;
+            -webkit-flex: none!important; 
+            flex: none!important; 
         }
         ion-input, ion-textarea, ion-select{
             color: theme-colors('textColors', 'accent','opacity100') !important;

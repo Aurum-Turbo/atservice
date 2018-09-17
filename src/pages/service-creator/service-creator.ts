@@ -31,7 +31,7 @@ export class ServiceCreatorPage {
   itemDocument: AngularFirestoreDocument<ServiceData>; // read collection
   types: string[] = ['Escort', 'Transport', 'House Clean'];
   units: string[] = ['Minutes','Hours','Days','Weeks','Months'];
-  currencys: string[] = ['AMD','RMB','USD'];
+  currencys: string[] = ['AUD','RMB','USD'];
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,

@@ -21,6 +21,7 @@ page-user {
         text-align: center;
         vertical-align: middle;
         [parallax-title] {
+            color: color($colors,'secondary') !important;
             position: relative;
             z-index: 9;
             margin-top: 0;
