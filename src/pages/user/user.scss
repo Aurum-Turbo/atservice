@@ -186,7 +186,7 @@ ion-segment{
     } */
     ion-card {
         position: relative;
-        min-height: 130px !important;
+        width: 98% !important;
         margin:5px auto !important;
        /*  [card-img] {
             width: 130px;
@@ -194,20 +194,29 @@ ion-segment{
             position: relative;
             margin-right: 10px;
         } */
+     
         ion-card-header{
             color: color($colors,'secondary') !important;
         }
         ion-thumbnail{
-            width:130px;
-            position: relative;
+            max-width: 130px !important;
+            max-height: 130px !important;
             margin-right: 10px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover ;
+            }
         }
         ion-card-content{
             color: color($colors,'secondary') !important;
-            white-space: normal;
-            overflow: hidden !important;
-            display: -webkit-box !important;
-            max-height: 70% !important;
+        
+                white-space: normal;
+                overflow: hidden !important;
+                display: -webkit-box !important;
+                max-height: 80% !important;
+                max-width: 96% ;
+
             #date{
                 position: absolute;
                 right: 2.5rem;
@@ -229,5 +238,8 @@ ion-segment{
             padding-top: 20px;
             margin-bottom: 25px;
         } */
+    }
+    #pst-cd{
+        height: 150px !important;
     }
 }

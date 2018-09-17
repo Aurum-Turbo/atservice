@@ -236,7 +236,7 @@ export class EditorPage {
                 .catch(err => {console.log(err);});
               }
             });
-            this.navCtrl.pop();
+            // this.navCtrl.pop();
           }
         })
         .catch(error => console.log(error));

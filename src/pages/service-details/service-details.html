@@ -15,7 +15,7 @@
 
 <ion-content>
   <div id="wrapper">
-    <ion-slides #slider>
+    <ion-slides #slider loop="true" pager="true">
       <ion-slide *ngFor="let item of postObj.images">
         <img src="{{item}}"/>
       </ion-slide>
@@ -35,18 +35,18 @@
           <button ion-button clear float-right><i class="icon-heart"></i></button>
       </ion-item>
       <ion-item-divider>
-        
-        <!-- <button ion-button clear item-end><i class="icon-thumb-up"></i></button> -->
+
       </ion-item-divider>
-      <ion-grid *ngFor="let item of sItems | async">
-          <ion-row (click)="onClick('service', item)">
-              <ion-col>
-                <ion-item class="cnt_rt">
-                  <h2>{{item.description + ' ' + item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</h2>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-        </ion-grid>
+      <ion-list >
+        <ion-item>
+          <h2>Service I Provide..</h2>
+        </ion-item>
+          <ion-item-group  *ngFor="let item of sItems | async">
+                <button ion-item class="cnt_rt" (click)="onClick('service', item)" color="light">
+                  <h2><a float-left>{{item.description }} </a><a float-right ion-text style="font-weight: bold">{{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}</a></h2>
+                </button>
+            </ion-item-group>
+        </ion-list>
         <ion-item-divider></ion-item-divider>
       <ion-item>
           <h2>Comments</h2>

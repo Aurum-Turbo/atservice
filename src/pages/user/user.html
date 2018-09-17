@@ -52,10 +52,10 @@
                 </ion-card>
             </ion-slide>
             <ion-slide class="sevs_sld">             
-              <ion-grid *ngFor="let item of oItems | async">
+             <!--  <ion-grid *ngFor="let item of oItems | async">
                 <ion-row>
-                  <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-                    <ion-card>
+                  <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4> -->
+                    <ion-card *ngFor="let item of oItems | async">
                       <ion-card-header>
                               <h2 float-left>{{item.service.description}}</h2>
                               <h2 float-right>{{item.orderby}}</h2>
@@ -64,11 +64,20 @@
                         <ion-list>
                           <ion-item-group>
                             <ion-item>
+                              <ion-icon item-start icon-small><i class=" icon-human-male-female"></i></ion-icon>
                               <h2 float-left>{{item.service.type}}</h2>
                             </ion-item>
                             <ion-item>
                               <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
                               <h3 item-subtitle text-wrap>{{item.servelocation}}</h3>
+                            </ion-item>
+                            <ion-item>
+                              <ion-icon item-start icon-small><i class=" icon-calendar-check"></i></ion-icon>
+                              <h3 item-subtitle text-wrap>{{item.servedate}}</h3>
+                            </ion-item>
+                            <ion-item>
+                              <ion-icon item-start icon-small><i class=" icon-alarm-check "></i></ion-icon>
+                              <h3 item-subtitle text-wrap>{{item.servetime}}</h3>
                             </ion-item>
                             <ion-item>
                                 <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
@@ -92,9 +101,9 @@
                           </ion-row>
                         </ion-grid> 
                     </ion-card>
-                  </ion-col>
+                 <!--  </ion-col>
                 </ion-row>
-              </ion-grid>
+              </ion-grid> -->
             </ion-slide>
             <ion-slide class="cal_sld">
               <ion-grid *ngFor="let item of jItems | async" >
@@ -176,18 +185,18 @@
                 <ion-row card-background-page>
                   <ion-col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 > -->
                     <div>
-                      <ion-card text-left (click)="onClick('edit', item)" *ngFor="let item of items | async"><!-- (click)="onEvent('onItemClick', item.title, $event)" -->
-                        <ion-thumbnail item-start float-left>
-                          <img [src]="item.images[0]" />
-                        </ion-thumbnail>
+                      <ion-card text-left (click)="onClick('edit', item)" *ngFor="let item of items | async" id="pst-cd"><!-- (click)="onEvent('onItemClick', item.title, $event)" -->
                         <!--Card-content-->
                         <ion-card-content>
+                            <ion-thumbnail item-start>
+                              <img  [src]="item.images[0]">
+                            </ion-thumbnail>
                          <!--  <ion-card-title no-padding>
                             <h2 card-title>{{item.title}}</h2>
                           </ion-card-title>
                           <h3 card-subtitle>{{item.description}}</h3>
                           <h3 card-subtitle>{{item.shortDescription}}</h3> -->
-                          <div card-body-text innerHTML = {{item.description}}></div>
+                          <div innerHTML = {{item.description}}></div>
                           <div id="date">{{item.updateAt.toDate() | date:"short"}}</div>
                           <!---Social share-->
                           <!-- div float-right social>
