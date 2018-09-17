@@ -10,6 +10,7 @@ import firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
+import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
 
 /**
  * Generated class for the OrderCreatorPage page.
@@ -35,7 +36,7 @@ export class OrderCreatorPage {
 
   oItemsCollection: AngularFirestoreCollection<OrderData>; //Firestore collection
   oItemDocument: AngularFirestoreDocument<OrderData>; // read collection
-
+  types: string[] = ['Escort','Transport', 'House clean'];
 
   constructor(
     private afs: AngularFirestore,
@@ -54,6 +55,7 @@ export class OrderCreatorPage {
         this.calltype = "editing";
       }
     }  
+    this.orderItem.type = "Escort"
 
   }
 

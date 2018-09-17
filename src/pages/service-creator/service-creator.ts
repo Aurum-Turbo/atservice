@@ -29,13 +29,15 @@ export class ServiceCreatorPage {
 
   itemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
   itemDocument: AngularFirestoreDocument<ServiceData>; // read collection
-  
+  types: string[] = ['Escort', 'Transport', 'House Clean'];
+  units: string[] = ['Minutes','Hours','Days','Weeks','Months'];
+  currencys: string[] = ['AMD','RMB','USD'];
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
-      
+     
       this.itemsCollection = this.afs.collection("services");
       if(navParams.data != null)
       {
@@ -46,7 +48,9 @@ export class ServiceCreatorPage {
           this.calltype = "editing";
         }
       }
-
+      this.servItem.type = "Escort";
+      this.servItem.unit = "Minutes";
+      this.servItem.currency = "AUD";
   }
 
   ionViewDidLoad() {
@@ -99,7 +103,6 @@ export class ServiceCreatorPage {
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
       }); 
     }
-
   }
-
+  
 }

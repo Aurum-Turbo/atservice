@@ -4,15 +4,18 @@ page-service-creator {
         color: theme-colors('textColors', 'primary','opacity100') !important;
         font-size: 1.6rem;
         font-weight: bold;
+        -webkit-flex: none!important; 
+        flex: none!important; 
     }
     ion-input, ion-textarea, ion-select{
         color: theme-colors('textColors', 'accent','opacity100') !important;
     }
     ion-select{
-        width: 100rem !important;
+        max-width: 100% !important;
     }
     .txt-ara{
         border-top: solid 2px color($colors,'dark') !important;
         border-bottom: solid 2px color($colors,'dark') !important;
     }
+  
 }

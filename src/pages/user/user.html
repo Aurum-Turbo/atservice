@@ -57,8 +57,7 @@
                   <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4> -->
                     <ion-card *ngFor="let item of oItems | async">
                       <ion-card-header>
-                              <h2 float-left>{{item.service.description}}</h2>
-                              <h2 float-right>{{item.orderby}}</h2>
+                              <h2><a ion-text float-left>{{item.service.description}}</a><a ion-text float-right>{{item.orderby}}</a></h2>
                       </ion-card-header>
                       <ion-card-content no-padding no-margin>
                         <ion-list>

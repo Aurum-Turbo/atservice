@@ -4,13 +4,15 @@ page-order-creator {
         color: theme-colors('textColors', 'primary','opacity100') !important;
         font-size: 1.6rem;
         font-weight: bold;
+        -webkit-flex: none!important; 
+        flex: none!important; 
     }
-    ion-input, ion-textarea,ion-select{
+    ion-input, ion-textarea,ion-select, ion-datetime{
         color: theme-colors('textColors', 'accent','opacity100') !important;
     }
-    ion-datetime{
-        color: color($colors,'light') !important;
-
+  
+    ion-select{
+        max-width: 100% !important;
     }
     .txt-ara{
         border-top: solid 2px color($colors,'dark') !important;

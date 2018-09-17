@@ -20,8 +20,7 @@
         <ion-item no-lines>
           <ion-label >Service Type:</ion-label>
           <ion-select  interface="action-sheet" [(ngModel)]="servItem.type">
-            <ion-option value="Escort">Escort</ion-option>
-            <ion-option value="Transport">Transport</ion-option>  
+            <ion-option *ngFor="let t of types" value="{{t}}">{{t}}</ion-option>
           </ion-select>
         </ion-item>
         <!--ion-row>
@@ -37,12 +36,8 @@
       </ion-item>
       <ion-item no-lines>
           <ion-label >Unit:</ion-label>
-          <ion-select  interface="action-sheet" [(ngModel)]="servItem.unit">
-            <ion-option>Minuts</ion-option>
-            <ion-option>Hours</ion-option>
-            <ion-option>Days</ion-option>
-            <ion-option>weeks</ion-option>
-            <ion-option>times</ion-option>
+          <ion-select  interface="action-sheet" [(ngModel)]="servItem.unit" >
+            <ion-option *ngFor="let u of units" value="{{u}}">{{u}}</ion-option>
           </ion-select>
       </ion-item>
       <ion-item no-lines>
@@ -51,7 +46,7 @@
       </ion-item>
       <ion-item no-lines>
           <ion-label >Currency:</ion-label>
-          <ion-select  interface="action-sheet" [(ngModel)]="servItem.currency">
+          <ion-select  interface="action-sheet" [(ngModel)]="servItem.currency" >
             <ion-option>AUD</ion-option>
             <ion-option>RMB</ion-option>
           </ion-select>
@@ -61,7 +56,7 @@
           <ion-textarea rows="4" placeholder="Please give the notice.." [(ngModel)]="servItem.declaimer"></ion-textarea>
       </ion-item>
       <ion-item no-lines>
-          <ion-label >Availability:</ion-label>
+          <ion-label >Available:</ion-label>
           <ion-toggle checked="true" [(ngModel)]="servItem.availability" color="secondary"></ion-toggle>
         <!-- <ion-input clearInput type="text" placeholder="Availability" ></ion-input> -->
     </ion-item>
@@ -73,6 +68,8 @@
       <ion-label >Tags:</ion-label>
     <ion-textarea clearInput  placeholder="tag yourself.." rows="2" [(ngModel)]="servItem.tags"></ion-textarea>
   </ion-item>
+  <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn" float-right>Discard</button>
+  <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn" float-right>Send</button>
       </ion-col>
     </ion-row>
   </ion-grid>

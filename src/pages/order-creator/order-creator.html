@@ -31,9 +31,8 @@
           </ion-item>
           <ion-item no-lines>
               <ion-label >Order Type:</ion-label>
-              <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type">
-                <ion-option value="Escort">Escort</ion-option>
-                <ion-option value="Transport">Transport</ion-option>  
+              <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type" >
+                <ion-option *ngFor="let t of types" value="{{t}}">{{t}}</ion-option>
               </ion-select>
             </ion-item>
           <ion-item no-lines>
@@ -53,8 +52,8 @@
               <ion-input clearInput type="phone" placeholder="Please enter phone" [(ngModel)]="orderItem.phone"></ion-input>
           </ion-item>
 
-          <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn">Discard</button>
-        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn">Send</button>
+          <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn" float-right>Discard</button>
+        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn" float-right>Send</button>
           </ion-col>
         </ion-row>
       </ion-grid>
