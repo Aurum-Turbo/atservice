@@ -41,7 +41,8 @@ import { PostData } from '../providers/post-data/post-data';
 import { ChatDetailsPage } from '../pages/chat-details/chat-details';
 import { ChatData } from '../providers/chat-data/chat-data';
 import { ImageData } from '../providers/image-data/image-data';
-
+import { GeoServiceProvider } from '../providers/geo-service/geo-service';
+import { Geolocation } from '@ionic-native/geolocation';
 @NgModule({
   declarations: [
     MyApp,
@@ -104,7 +105,9 @@ import { ImageData } from '../providers/image-data/image-data';
     LoadingServiceProvider, 
     PostData,
     ChatData,
-    ImageData
+    ImageData,
+    Geolocation,
+    GeoServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

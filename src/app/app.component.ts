@@ -4,8 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 
-import { DataServiceProvider } from '../providers/data-service/data-service';
+
 import { TabsPage } from '../pages/tabs/tabs';
+
+import { DataServiceProvider } from '../providers/data-service/data-service';
+import { GeoServiceProvider } from '../providers/geo-service/geo-service';
+
 @Component({  
   templateUrl: 'app.html'
 })
@@ -13,6 +17,7 @@ export class MyApp {
   rootPage:any;
 
   constructor(
+    public geoService: GeoServiceProvider,
     public dataService: DataServiceProvider,
     public localStorage: Storage,
     platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -27,6 +32,9 @@ export class MyApp {
     localStorage.ready().then(() => {
       this.rootPage = TabsPage;
     });
+
+    this.geoService.geoInit();
+
   }
 }
 
