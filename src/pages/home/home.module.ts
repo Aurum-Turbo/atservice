@@ -5,11 +5,11 @@ import { HomePage } from './home';
 
 @NgModule({
   declarations: [
-    HomePage,
+    HomePage
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
-    NgxMasonryModule,
+    NgxMasonryModule
   ],
 })
 export class HomePageModule {}

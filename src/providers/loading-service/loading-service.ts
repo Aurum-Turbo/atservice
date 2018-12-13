@@ -13,19 +13,10 @@ export class LoadingServiceProvider {
 
   loading: any;
 
+
   constructor(private loadingCtrl: LoadingController) {
     console.log('Hello LoadingServiceProvider Provider');
   }
 
-  show() {
-    this.loading = this.loadingCtrl.create({
-      content: 'loading...'
-    });
-    this.loading.present();
-  }
-
-  hide() {
-    this.loading.dismiss();
-  }
-
+ 
 }

@@ -15,6 +15,7 @@ export class PostData {
   status: string = ""; //created, submitted, activated, suspended, discard 
   images: string[] = [];
   imgHeights: number[] = [];
+  // cardHeights: number[] = []
   description: string = ""; //description will be display on the service details
   author: string = "";
   nickname: string = "";

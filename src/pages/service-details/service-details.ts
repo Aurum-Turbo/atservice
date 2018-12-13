@@ -55,7 +55,7 @@ export class ServiceDetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiceDetailsPage');
-    this.slider.autoHeight = true;
+      this.slider.autoHeight = true;
   }
 
   ionViewWillEnter() {

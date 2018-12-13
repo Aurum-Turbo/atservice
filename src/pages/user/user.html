@@ -56,8 +56,45 @@
                          <!--  <ion-grid *ngFor="let item of oItems | async">
                             <ion-row>
                               <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4> -->
-                                <ion-card *ngFor="let item of oItems | async">
-                                  <ion-card-header>
+                                <ion-list *ngFor="let item of oItems | async">
+                                  <ion-item-group no-margin no-padding no-lines background-size>
+                                      <h1 item-title>{{item.service.description}}</h1>
+                                      <ion-item>
+                                        <ion-icon item-start icon-small><i class=" icon-human-male-female"></i></ion-icon>
+                                        <h2 float-left>{{item.service.type}}</h2>
+                                      </ion-item>
+                                      <ion-item>
+                                        <ion-icon item-start icon-small><i class="icon-map-marker-radius"></i></ion-icon>
+                                        <h3 item-subtitle text-wrap>{{item.servelocation}}</h3>
+                                      </ion-item>
+                                      <ion-item>
+                                        <ion-icon item-start icon-small><i class=" icon-calendar-check"></i></ion-icon>
+                                        <h3 item-subtitle text-wrap>{{item.servedate}}</h3>
+                                      </ion-item>
+                                      <ion-item>
+                                        <ion-icon item-start icon-small><i class=" icon-alarm-check "></i></ion-icon>
+                                        <h3 item-subtitle text-wrap>{{item.servetime}}</h3>
+                                      </ion-item>
+                                      <ion-item>
+                                          <ion-icon item-start icon-small><i class="icon-clipboard-outline"></i></ion-icon>
+                                          <h3 item-subtitle text-wrap>{{item.note}}</h3>
+                                        </ion-item>
+                                      <!--     <button ion-button float-right default-button>
+                                             Accept
+                                        </button>   -->               
+                                  </ion-item-group>
+                                </ion-list>
+                                
+                                
+                                <ion-card >
+
+                                   <!--  <div class="collapsible-header">
+                                        <ion-item no-margin no-padding no-lines background-size
+                                        [ngStyle]="{'background-image': 'url(' + group.backgroundImage + ')'}">
+                                          
+                                        </ion-item>
+                                      </div> -->
+                                <!--   <ion-card-header>
                                           <h2><a ion-text float-left>{{item.service.description}}</a><a ion-text float-right>{{item.orderby}}</a></h2>
                                   </ion-card-header>
                                   <ion-card-content no-padding no-margin>
@@ -85,16 +122,16 @@
                                           </ion-item>
                                       </ion-item-group>
                                     </ion-list>
-                                  </ion-card-content>
-                                  <ion-grid transparent no-padding no-margin style="border-top:2px solid black">
+                                  </ion-card-content> -->
+                                  <ion-grid  no-padding no-margin >
                                       <ion-row>
-                                        <ion-col>
-                                          <button ion-button no-padding no-margin button-clear small block (click)="onClick('accept',item)">
+                                        <ion-col transparent>
+                                          <button id="dftbtn" ion-button default-button (click)="onClick('accept',item)">
                                             Accept
                                           </button>
                                         </ion-col>
                                         <ion-col>
-                                          <button ion-button no-padding no-margin button-clear small block (click)="onClick('decline',item)">
+                                          <button id="dftbtn" ion-button default-button (click)="onClick('decline',item)">
                                             Decline
                                           </button>
                                         </ion-col>
@@ -189,7 +226,7 @@
                                     <!--Card-content-->
                                     <ion-card-content>
                                         <ion-thumbnail item-start>
-                                          <img  [src]="item.images[0]">
+                                          <img  [lazyLoad]="item.images[0]">
                                         </ion-thumbnail>
                                      <!--  <ion-card-title no-padding>
                                         <h2 card-title>{{item.title}}</h2>

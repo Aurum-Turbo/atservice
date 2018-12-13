@@ -9,21 +9,21 @@
   <ion-navbar>
     <ion-title>home</ion-title>
   </ion-navbar>
-
+  
 </ion-header>
 
-<ion-content>
-  <ion-searchbar></ion-searchbar>
+<ion-content [ngClass]="{'blurefct':exb}"  #container>
+    <ion-searchbar></ion-searchbar>
   <ion-list>
-    <ngx-masonry [useImagesLoaded]="false" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
-      <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item">
-      <ion-card>
-          <img (click)="onClick('detail',item)" src="{{item.images[0]}}" height="{{item.imgHeights[0]}}"/> 
+    <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
+      <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item" >
+      <ion-card  >
+          <img (click)="onClick('detail',item)" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
         <ion-card-content> 
           <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
         <ion-item>
           <ion-avatar item-start (click)="onClick('detail', item)">
-            <img src="{{item.avatar}}"/>
+            <img [lazyLoad]="item.avatar"/>
           </ion-avatar>
           <ion-label item-end (click)="onClick('detail', item)">
             {{item.nickname}}
@@ -38,4 +38,5 @@
     </ngxMasonryItem>
     </ngx-masonry>
   </ion-list>
+  <!-- <button (click)="extBlur()">去模糊</button> -->
 </ion-content>

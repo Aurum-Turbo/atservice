@@ -26,7 +26,6 @@ export class TabsPage {
   tab1Root: any = HomePage;
   tab2Root: any = MessagePage;
   tab3Root: any = UserPage;
-  // tab4Root: any = MessagePage;
   mySelectedIndex: number;
 
   constructor(

@@ -93,7 +93,7 @@ export class EditorPage {
         img.onload = function () {
           console.log(img.height + " / " + img.width);
           that.postObj.images.push(img.src);
-          that.postObj.imgHeights.push(Math.round(190/img.width*img.height));
+          that.postObj.imgHeights.push(Math.round(screen.width/img.width*img.height));
           //that.uploadImageList.push(curImage);
         }
       };

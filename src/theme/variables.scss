@@ -386,5 +386,16 @@ ion-item-divider{
   $toggle-ios-handle-background-color: black !important;
 } */
 
+.blurefct{
+  filter:blur(10px);
+}
+// 图片fade in 效果
+img.ng-lazyloaded {
+  animation: fadein 1s;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 // 引入 main.scss
 @import "main";

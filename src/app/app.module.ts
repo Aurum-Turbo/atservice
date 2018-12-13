@@ -10,6 +10,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 
 import { NgxMasonryModule } from 'ngx-masonry';
 
@@ -41,6 +42,8 @@ import { PostData } from '../providers/post-data/post-data';
 import { ChatDetailsPage } from '../pages/chat-details/chat-details';
 import { ChatData } from '../providers/chat-data/chat-data';
 import { ImageData } from '../providers/image-data/image-data';
+import { AlertServiceProvider } from '../providers/alert-service/alert-service';
+
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { ImageData } from '../providers/image-data/image-data';
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
-    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true' })
+    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true' }),
+    LazyLoadImageModule.forRoot({
+      preset: intersectionObserverPreset
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -104,7 +110,8 @@ import { ImageData } from '../providers/image-data/image-data';
     LoadingServiceProvider, 
     PostData,
     ChatData,
-    ImageData
+    ImageData,
+    AlertServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
