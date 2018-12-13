@@ -87,4 +87,9 @@
     <plugin name="cordova-plugin-geolocation" spec="~4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="NOTICE: You are agreeing to share your location" />
     </plugin>
+    <plugin name="cordova-plugin-nativegeocoder" spec="~3.1.3" />
+    <plugin name="cordova-plugin-googlemaps" spec="https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyCztVEjSL6pB_RhJqchYzRgDtIwIiKhcGo" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyCztVEjSL6pB_RhJqchYzRgDtIwIiKhcGo" />
+    </plugin>
 </widget>

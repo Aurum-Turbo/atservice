@@ -26,6 +26,7 @@ export class PostData {
   like: number = 0;
   follow: string[];
   comments: any[];
+  postLocation: any;
   postDate: string = "";
   postMonth: string = "";
   createAt: any;

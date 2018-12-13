@@ -8,8 +8,14 @@ import { Observable } from 'rxjs/Observable';
 import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
+import * as geofirex from 'geofirex';
 
 import { ServiceDetailsPage } from '../service-details/service-details';
+import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
+import { GeoFirePoint, GeoFireCollectionRef, GeoQueryDocument } from 'geofirex';
+import { AppSettings } from '../../providers/app-setting';
+
+
 
 /**
  * Generated class for the HomePage page.
@@ -26,14 +32,17 @@ export class HomePage {
   //for posts
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>; // read collection
+  geoPostsArray: Observable<GeoQueryDocument[]>;
 
   iconlike: string = "icon-heart-outline";
+
+  geo = geofirex.init(firebase);
   // Masonry: any;
   // msnry: any;
   // imagesLoaded: any;
   constructor(
     private afs: AngularFirestore,
-    //public dataService: DataServiceProvider,
+    private geoService: GeoServiceProvider,
     public navCtrl: NavController, 
     public navParams: NavParams) { 
   }
@@ -43,8 +52,28 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
-    this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
-    this.items = this.itemsCollection.valueChanges();
+    //get location 
+    if(!this.geoService.curLocation)
+    {
+      this.geoService.geoCurLocation().then(pos => {
+        console.log("have already get the current location");
+        this.geoQuery(this.geoService.curLocation);
+      })
+      .catch(err => {console.log(err);});
+    }
+    else
+    {
+      this.geoQuery(this.geoService.curLocation);
+    }
+
+    //quote post in distance by 40km (which will arrived by 1 hr)
+    
+    //pull out the post posted by users who is in the range. 
+
+
+
+    //this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
+    //this.items = this.itemsCollection.valueChanges();
   }
 
   onClick(event: string, item: any) {
@@ -82,5 +111,15 @@ export class HomePage {
           });
         });
       }, 1000);*/
+  }
+
+  geoQuery(pos: geofirex.GeoFirePoint) {
+
+      const posts = this.geo.collection('posts');
+      //const center = this.geo.point(pos.latitude, pos.longitude);
+      const radius = 40; //40km
+      const field = 'postLocation';
+
+      this.geoPostsArray = posts.within(pos, radius, field);
   }
 }

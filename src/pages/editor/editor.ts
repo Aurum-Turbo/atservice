@@ -13,9 +13,11 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { UserData } from '../../providers/user-data/user-data';
+import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
+//import { GESTURE_PRIORITY_TOGGLE } from 'ionic-angular/umd/gestures/gesture-controller';
 
 //import { QuillModule } from 'ngx-quill';
-
+import geofirex from 'geofirex';
 
 /**
  * Generated class for the EditorPage page.
@@ -54,6 +56,7 @@ export class EditorPage {
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
+    private geoService: GeoServiceProvider,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
@@ -190,6 +193,7 @@ export class EditorPage {
           "like": 0,
           "follow": [],
           "comments": [],
+          "postLocation": this.geoService.curLocation.data,
           "postDate": currentDate.getDate().toString(),
           "postMonth": (currentDate.getMonth()+1).toString(),
           "createAt": firebase.firestore.FieldValue.serverTimestamp(),

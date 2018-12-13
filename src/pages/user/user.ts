@@ -22,6 +22,7 @@ import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
 import { OrderCreatorPage } from '../order-creator/order-creator';
+import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
 
 
 /**
@@ -93,7 +94,8 @@ export class UserPage {
 
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
-
+  userAddressArray: string[];
+  selectedUserLocation: string = "";
 
   //userDataObj = new UserData();
 
@@ -101,6 +103,7 @@ export class UserPage {
 
   constructor(
               private afs: AngularFirestore,
+              private geoService: GeoServiceProvider,
               public dataService: DataServiceProvider,
               public navCtrl: NavController, 
               public navParams: NavParams) {          
@@ -130,6 +133,19 @@ export class UserPage {
           this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
           
           this.dataService.loadCurUserData();
+
+          if(this.geoService.curLocation)
+          {
+            this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
+              this.userAddressArray = addresses;
+              this.selectedUserLocation = addresses[0];
+              //console.log("addresses: ", this.userAddressArray);
+            })
+            .catch(err => {console.log(err);});
+          }
+
+
+
           this.itemsCollection = this.afs.collection("posts", ref => {
             return ref.where("author","==",firebase.auth().currentUser.uid)
                       .orderBy("updateAt", 'desc');
@@ -341,6 +357,12 @@ export class UserPage {
   goProfile(){
     this.navCtrl.push(ProfilePage)
   }
+
+  onChange() {
+    console.log("selected option: ", this.selectedUserLocation);
+    
+  }
+
   /* getDaysOfMonth() {
     this.daysInThisMonth = new Array();
     this.daysInLastMonth = new Array();

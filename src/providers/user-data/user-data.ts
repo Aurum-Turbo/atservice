@@ -17,7 +17,7 @@ export class UserData {
   nickname: string = "";
   gender: string = "";
   birthday: string = "";
-  location: string = "";
+  location: any;
   brief: string = "";
   rate: number = 5; //the service level
   star: string[] = ["","icon-star","icon-star","icon-star","icon-star","icon-star"];

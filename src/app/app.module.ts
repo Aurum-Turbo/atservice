@@ -43,6 +43,8 @@ import { ChatData } from '../providers/chat-data/chat-data';
 import { ImageData } from '../providers/image-data/image-data';
 import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -71,6 +73,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
+    //firebase.initializeApp(AppSettings.FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true' })
   ],
   bootstrap: [IonicApp],
@@ -107,6 +110,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     ChatData,
     ImageData,
     Geolocation,
+    NativeGeocoder,
     GeoServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
