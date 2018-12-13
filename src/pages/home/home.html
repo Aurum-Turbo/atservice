@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<!--<script src="cordova.js"></script>-->
 <ion-header>
 
   <ion-navbar>
@@ -16,7 +17,7 @@
     <ion-searchbar></ion-searchbar>
   <ion-list>
     <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
-      <ngxMasonryItem *ngFor="let item of items | async" class="masonry-item" >
+      <ngxMasonryItem *ngFor="let item of geoPostsArray | async" class="masonry-item" >
       <ion-card  >
           <img (click)="onClick('detail',item)" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
         <ion-card-content> 

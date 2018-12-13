@@ -44,6 +44,9 @@ import { ChatData } from '../providers/chat-data/chat-data';
 import { ImageData } from '../providers/image-data/image-data';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 
+import { GeoServiceProvider } from '../providers/geo-service/geo-service';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 
 @NgModule({
   declarations: [
@@ -111,7 +114,10 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
     PostData,
     ChatData,
     ImageData,
-    AlertServiceProvider
+    AlertServiceProvider,
+    Geolocation,
+    NativeGeocoder,
+    GeoServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

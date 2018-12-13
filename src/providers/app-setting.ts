@@ -15,6 +15,6 @@ export const AppSettings = Object.freeze({
         messagingSenderId: "149340274232"
     },
     "MAP_KEY":{
-       "apiKey":"AIzaSyCB7jsMv0hjwkVRan7vZZ9hDlI-dQNZRV8"
+       "apiKey":"AIzaSyCztVEjSL6pB_RhJqchYzRgDtIwIiKhcGo"
     }
  });

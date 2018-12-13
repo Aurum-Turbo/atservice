@@ -10,11 +10,17 @@ import { Observable } from 'rxjs/Observable';
 import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
+import * as geofirex from 'geofirex';
 
 import { ServiceDetailsPage } from '../service-details/service-details';
 // import { observable } from 'rxjs';
 import { Container } from '@angular/compiler/src/i18n/i18n_ast';
 import { containerEnd } from '@angular/core/src/render3/instructions';
+import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
+import { GeoFirePoint, GeoFireCollectionRef, GeoQueryDocument } from 'geofirex';
+import { AppSettings } from '../../providers/app-setting';
+
+
 
 /**
  * Generated class for the HomePage page.
@@ -34,8 +40,11 @@ export class HomePage {
   
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>; // read collection
+  geoPostsArray: Observable<GeoQueryDocument[]>;
 
   iconlike: string = "icon-heart-outline";
+
+  geo = geofirex.init(firebase);
   // Masonry: any;
   // msnry: any;
   // imagesLoaded: any;
@@ -44,6 +53,7 @@ export class HomePage {
     private afs: AngularFirestore,
     // public dataService: DataServiceProvider,
     public loadingCtrl: LoadingController,
+    private geoService: GeoServiceProvider,
     public navCtrl: NavController, 
     public navParams: NavParams,
     public alertServiceProvider: AlertServiceProvider,
@@ -54,63 +64,45 @@ export class HomePage {
   ionViewDidLoad() {
      this.presentConfirm();
      console.log('ionViewDidLoad HomePage');
-     
-    }
-    
-    ionViewWillEnter(){
-      this.itemsCollection = this.afs.collection("posts", ref => {return ref.orderBy("updateAt",'desc')});
-      this.items = this.itemsCollection.valueChanges();
-    }
-    /* presentLoadingDefault(){
-      let loading = this.loadingCtrl.create({
-        content:'Please wait...'
-      });
-      console.log(loading);
-      loading.present();
-      setTimeout(() => {
-        loading.dismiss();
-      }, 5000);
-    } */
-    
-    onClick(event: string, item: any) {
-      if(event == "detail")
-      {
-        this.navCtrl.push(ServiceDetailsPage, {"post": item as PostData});
-      }
-      
-      if(event == "like")
-      {
-        
-        let updateLike = (<PostData>item).likeList;
-        if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
-        {
-          updateLike.push(firebase.auth().currentUser.uid);
-          this.itemsCollection.doc((<PostData>item).pid).update({
-            "likeList": updateLike,
-            "like": updateLike.length
-          });
-        }
-      }
-    }
-    
-    ionViewDidEnter() {
-      let item:any;
-      console.log(this.content.contentHeight)
+  }
 
-      //setTimeout(() => {}, 1000);
-      /*let elem = document.querySelector('.grid');
-      imagesLoaded(elem, function() {
-          // all images loaded
-          //  instance.utils.debug("images loaded done, instantiating packery");
-          console.log('imagesloaded called');
-          this.msnry = new Masonry (elem, {
-            // options
-            itemSelector: '.grid-item',
-            percentPosition: true,  
-          });
+  ionViewWillEnter(){
+    //get location 
+    if(!this.geoService.curLocation)
+    {
+      this.geoService.geoCurLocation().then(pos => {
+        console.log("have already get the current location");
+        this.geoQuery(this.geoService.curLocation);
+      })
+      .catch(err => {console.log(err);});
+    }
+    else
+    {
+      this.geoQuery(this.geoService.curLocation);
+    }
+  }
+   
+  onClick(event: string, item: any) {
+    if(event == "detail")
+    {
+      this.navCtrl.push(ServiceDetailsPage, {"post": item as PostData});
+    }
+      
+    if(event == "like")
+    {
+        
+      let updateLike = (<PostData>item).likeList;
+      if(updateLike.indexOf(firebase.auth().currentUser.uid) < 0)
+      {
+        updateLike.push(firebase.auth().currentUser.uid);
+        this.itemsCollection.doc((<PostData>item).pid).update({
+          "likeList": updateLike,
+          "like": updateLike.length
         });
-      }, 1000);*/
-    };
+      }
+    }
+  }
+
   presentConfirm() {
       let alert = this.alertCtrl.create({
         title: '未满18岁请退出此网站',
@@ -133,11 +125,20 @@ export class HomePage {
         enableBackdropDismiss: false // 点窗口其它地方确定弹窗不会消失
       });
       alert.present();
-    }
+  }
     // 点确定毛玻璃效果消失
-   extBlur(){
+  extBlur(){
      this.exb = false;
      this.content.scrollTo(0,40);
-   }       
-   
+  }       
+
+  geoQuery(pos: geofirex.GeoFirePoint) {
+
+      const posts = this.geo.collection('posts');
+      //const center = this.geo.point(pos.latitude, pos.longitude);
+      const radius = 40; //40km
+      const field = 'postLocation';
+
+      this.geoPostsArray = posts.within(pos, radius, field);
+  }
 }
