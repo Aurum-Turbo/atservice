@@ -8,20 +8,24 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>home</ion-title>
+    <ion-title uppercase>home</ion-title>
   </ion-navbar>
   
 </ion-header>
 
 <ion-content [ngClass]="{'blurefct':exb}"  #container>
-    <ion-searchbar></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
     <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
-      <ngxMasonryItem *ngFor="let item of geoPostsArray | async" class="masonry-item" >
+      <ngxMasonryItem *ngFor="let item of items" class="masonry-item" >
       <ion-card  >
           <img (click)="onClick('detail',item)" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
         <ion-card-content> 
           <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
+
+          <div><ion-label item-end>
+            {{item.queryMetadata.distance.toFixed(2)}} KM
+          </ion-label></div>
         <ion-item>
           <ion-avatar item-start (click)="onClick('detail', item)">
             <img [lazyLoad]="item.avatar"/>
@@ -29,6 +33,9 @@
           <ion-label item-end (click)="onClick('detail', item)">
             {{item.nickname}}
           </ion-label>
+
+          
+
           <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">
             <i class="icon-heart-outline" ></i>
             <span>{{item.like}}</span>

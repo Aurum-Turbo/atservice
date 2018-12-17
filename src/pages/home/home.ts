@@ -9,6 +9,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+
 import firebase from 'firebase/app';
 import * as geofirex from 'geofirex';
 
@@ -19,6 +21,7 @@ import { containerEnd } from '@angular/core/src/render3/instructions';
 import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
 import { GeoFirePoint, GeoFireCollectionRef, GeoQueryDocument } from 'geofirex';
 import { AppSettings } from '../../providers/app-setting';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -35,11 +38,17 @@ import { AppSettings } from '../../providers/app-setting';
 })
 export class HomePage {
   @ViewChild(Content) content: Content;
+  //@Input() data: any;
+  //@Input() events: any;
   exb= true;
   //for posts
+
+  //for search
+  searchTerm: string = "";
+  searchControl: FormControl;
   
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
-  items: Observable<PostData[]>; // read collection
+  items: GeoQueryDocument[]; // read collection
   geoPostsArray: Observable<GeoQueryDocument[]>;
 
   iconlike: string = "icon-heart-outline";
@@ -59,11 +68,25 @@ export class HomePage {
     public alertServiceProvider: AlertServiceProvider,
     public alertCtrl: AlertController
     ) {  
+      this.searchControl = new FormControl();
   }
 
   ionViewDidLoad() {
      this.presentConfirm();
+
+     this.setFilteredItems();
+
      console.log('ionViewDidLoad HomePage');
+  }
+
+  setFilteredItems() {
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+      this.geoPostsArray.subscribe(results => {
+        this.items = results.filter( item => {
+          return item.description.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+        });
+      });
+    });
   }
 
   ionViewWillEnter(){
@@ -140,5 +163,12 @@ export class HomePage {
       const field = 'postLocation';
 
       this.geoPostsArray = posts.within(pos, radius, field);
+      
+      if(!this.items)
+      {
+        this.geoPostsArray.subscribe(results => {
+          this.items = results;
+        });
+      }
   }
 }
