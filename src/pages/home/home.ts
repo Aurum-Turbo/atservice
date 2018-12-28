@@ -45,6 +45,7 @@ export class HomePage {
   iconlike: string = "icon-heart-outline";
 
   geo = geofirex.init(firebase);
+  // isClicked = false;
   // Masonry: any;
   // msnry: any;
   // imagesLoaded: any;
@@ -64,10 +65,12 @@ export class HomePage {
   ionViewDidLoad() {
      this.presentConfirm();
      console.log('ionViewDidLoad HomePage');
+    //  console.log(this.isClicked);
   }
 
   ionViewWillEnter(){
     //get location 
+
     if(!this.geoService.curLocation)
     {
       this.geoService.geoCurLocation().then(pos => {
@@ -81,7 +84,7 @@ export class HomePage {
       this.geoQuery(this.geoService.curLocation);
     }
   }
-   
+
   onClick(event: string, item: any) {
     if(event == "detail")
     {
@@ -129,7 +132,6 @@ export class HomePage {
     // 点确定毛玻璃效果消失
   extBlur(){
      this.exb = false;
-     this.content.scrollTo(0,40);
   }       
 
   geoQuery(pos: geofirex.GeoFirePoint) {
@@ -141,4 +143,8 @@ export class HomePage {
 
       this.geoPostsArray = posts.within(pos, radius, field);
   }
+ /*  beenRead(){
+    this.isClicked = true;
+    console.log(this.isClicked);
+  } */
 }

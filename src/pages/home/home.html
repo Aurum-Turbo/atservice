@@ -18,15 +18,15 @@
   <ion-list>
     <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
       <ngxMasonryItem *ngFor="let item of geoPostsArray | async" class="masonry-item" >
-      <ion-card  >
-          <img (click)="onClick('detail',item)" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
+      <ion-card>
+          <img (click)="onClick('detail',item )" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
         <ion-card-content> 
-          <div (click)="onClick('detail',item)" [innerHtml]="item.description"></div>
+          <div (click)="onClick('detail',item)"  [innerHtml]="item.description"></div>
         <ion-item>
           <ion-avatar item-start (click)="onClick('detail', item)">
             <img [lazyLoad]="item.avatar"/>
           </ion-avatar>
-          <ion-label item-end (click)="onClick('detail', item)">
+          <ion-label item-end color="secondary" (click)="onClick('detail', item)">
             {{item.nickname}}
           </ion-label>
           <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">

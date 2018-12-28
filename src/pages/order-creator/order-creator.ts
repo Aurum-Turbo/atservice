@@ -37,14 +37,13 @@ export class OrderCreatorPage {
   oItemsCollection: AngularFirestoreCollection<OrderData>; //Firestore collection
   oItemDocument: AngularFirestoreDocument<OrderData>; // read collection
   types: string[] = ['Escort','Transport', 'House clean'];
-
+  servYear: Date = new Date();
+  sYearrange: any[] = [this.servYear.getFullYear(), this.servYear.getFullYear()+1];
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
-
-
     this.oItemsCollection = this.afs.collection("orders");
     if(navParams.data != null)
     {
@@ -56,10 +55,10 @@ export class OrderCreatorPage {
       }
     }  
     this.orderItem.type = "Escort"
-
   }
 
   ionViewDidLoad() {
+    console.log(this.servYear)
     console.log('ionViewDidLoad OrderCreatorPage');
   }
 
@@ -129,5 +128,5 @@ export class OrderCreatorPage {
     }
 
   }
-
 }
+

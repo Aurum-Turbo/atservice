@@ -168,6 +168,14 @@ ion-header {
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+$card-ios-text-color:(#f2e8c6);
+$card-md-text-color:(#f2e8c6);
+$card-wp-text-color:(#f2e8c6);
+
+$item-ios-paragraph-text-color:(#f2e8c6);
+$item-md-paragraph-text-color:(#f2e8c6);
+$item-wp-paragraph-text-color:(#f2e8c6);
+
 
 
 
@@ -386,16 +394,6 @@ ion-item-divider{
   $toggle-ios-handle-background-color: black !important;
 } */
 
-.blurefct{
-  filter:blur(10px);
-}
-// 图片fade in 效果
-img.ng-lazyloaded {
-  animation: fadein 1s;
-}
-@keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
 // 引入 main.scss
 @import "main";
+
