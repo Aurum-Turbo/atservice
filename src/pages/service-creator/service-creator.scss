@@ -13,6 +13,10 @@ page-service-creator {
     ion-select{
         max-width: 100% !important;
     }
+    ion-segment{
+        margin:0 auto;
+        width: 98%;
+    }
    /*  .txt-ara{
         border-top: solid 2px color($colors,'dark') !important;
         border-bottom: solid 2px color($colors,'dark') !important;
