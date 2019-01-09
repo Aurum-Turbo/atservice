@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 /**
  * Generated class for the JobPage page.
@@ -19,7 +18,6 @@ export class JobPage {
   jobList = [];
 
   constructor(
-    public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 

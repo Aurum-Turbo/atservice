@@ -13,7 +13,6 @@ import { PostData } from '../../providers/post-data/post-data';
 import { OrderData } from '../../providers/order-data/order-data';
 import { JobData } from '../../providers/job-data/job-data';
 import { ServiceData } from '../../providers/service-data/service-data';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
@@ -38,15 +37,15 @@ import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
   templateUrl: 'user.html',
 })
 export class UserPage {
-  
+
 
   public star: Observable<string[]>;
   public mark: number;
-  
-  public transList= [];
+
+  public transList = [];
   public posList = [];
-  public jobList =[];
-  public orderList =[];
+  public jobList = [];
+  public orderList = [];
   oid: string; //order id
   timestamp: string;
   status: string;
@@ -78,7 +77,7 @@ export class UserPage {
   eventList: any;
   selectedEvent: any;
   isSelected: any; */
-  
+
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
 
@@ -102,101 +101,73 @@ export class UserPage {
   //postDate: Date;
 
   constructor(
-              private afs: AngularFirestore,
-              private geoService: GeoServiceProvider,
-              public dataService: DataServiceProvider,
-              public navCtrl: NavController, 
-              public navParams: NavParams) {          
+    private afs: AngularFirestore,
+    private geoService: GeoServiceProvider,
+    //public dataService: DataServiceProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams) {
+    //this.currentUser = new UserData();        
   }
-  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
     //this.userDataObj = this.dataService.userDataObj;
   }
 
-  ionViewWillEnter() {
-   /*  this.date = new Date();
-    this.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    this.getDaysOfMonth();
-    this.loadEventThisMonth(); */
-
-    //check user login status
-    //console.log("page name: ", this.navCtrl.getActive().name);
-
-    if(this.navCtrl.getActive().name == "UserPage")
-    {
-      firebase.auth().onAuthStateChanged(user => {
-        if(user)
-        {
-
-          //load Current User Profile, Posts, and Services
-          this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
-          
-          this.dataService.loadCurUserData();
-
-          if(this.geoService.curLocation)
-          {
-            this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
-              this.userAddressArray = addresses;
-              this.selectedUserLocation = addresses[0];
-              //console.log("addresses: ", this.userAddressArray);
-            })
-            .catch(err => {console.log(err);});
-          }
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged((user: firebase.User) => {
+      if (user) {
+        this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges()
 
 
-
-          this.itemsCollection = this.afs.collection("posts", ref => {
-            return ref.where("author","==",firebase.auth().currentUser.uid)
-                      .orderBy("updateAt", 'desc');
-          });
-
-          this.items = this.itemsCollection.valueChanges();
-
-          this.sItemsCollection = this.afs.collection("services", ref => {
-            return ref.where("provider","==",firebase.auth().currentUser.uid)
-                      .orderBy("updateAt", 'desc');
+        if (this.geoService.curLocation) {
+          this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
+            this.userAddressArray = addresses;
+            this.selectedUserLocation = addresses[0];
+            //console.log("addresses: ", this.userAddressArray);
           })
-
-          this.sItems = this.sItemsCollection.valueChanges();
-
-          this.oItemsCollection = this.afs.collection("orders", ref => {
-            return ref.where("service.provider","==",firebase.auth().currentUser.uid)
-                      .orderBy("updateAt", 'desc');
-          })
-
-          this.oItems = this.oItemsCollection.valueChanges();
-
-          this.jItemsCollection = this.afs.collection("jobs", ref => {
-            return ref.where("acceptedby","==",firebase.auth().currentUser.uid)
-                      .orderBy("updateAt", 'desc');
-          })
-
-          this.jItems = this.jItemsCollection.valueChanges();
-
-          
-
-
-          //this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
-          //this.currentUser = this.userDocument.valueChanges();
-          //this.userDocument.valueChanges().subscribe(snapshot => {
-          //  this.userObj = snapshot;
-          //});
-
-          //load services
-
-
-
+            .catch(err => { console.log(err); });
         }
-        else
-        {
-          this.navCtrl.setRoot(LoginPage, {"from": UserPage});
-          console.log("user is not logged in");
-        }
-      });
-    }
+
+
+
+        this.itemsCollection = this.afs.collection("posts", ref => {
+          return ref.where("author", "==", firebase.auth().currentUser.uid)
+            .orderBy("updateAt", 'desc');
+        });
+
+        this.items = this.itemsCollection.valueChanges();
+
+        this.sItemsCollection = this.afs.collection("services", ref => {
+          return ref.where("provider", "==", firebase.auth().currentUser.uid)
+            .orderBy("updateAt", 'desc');
+        })
+
+        this.sItems = this.sItemsCollection.valueChanges();
+
+        this.oItemsCollection = this.afs.collection("orders", ref => {
+          return ref.where("service.provider", "==", firebase.auth().currentUser.uid)
+            .orderBy("updateAt", 'desc');
+        })
+
+        this.oItems = this.oItemsCollection.valueChanges();
+
+        this.jItemsCollection = this.afs.collection("jobs", ref => {
+          return ref.where("acceptedby", "==", firebase.auth().currentUser.uid)
+            .orderBy("updateAt", 'desc');
+        })
+
+        this.jItems = this.jItemsCollection.valueChanges();
+
+      }
+      else {
+        this.navCtrl.setRoot(LoginPage, { "from": UserPage });
+      }
+    });
   }
-  
+
+
+
   @ViewChild('pageSlider') pageSlider: Slides;
   tabs: any = '0';
   selectTab(index) {
@@ -213,53 +184,43 @@ export class UserPage {
   isGroupShown(group: any) {
     return group.show;
   }
-  
+
   onClick(event: string, item: any) {
-    if(event == "new")
-    {
+    if (event == "new") {
       //console.log("set author: ", this.userObj.nickname);
-      this.navCtrl.push(EditorPage, {"post": new PostData()});
+      this.navCtrl.push(EditorPage, { "post": new PostData() });
     }
 
-    if(event == "edit")
-    {
-      this.navCtrl.push(EditorPage, {"post": item as PostData});
+    if (event == "edit") {
+      this.navCtrl.push(EditorPage, { "post": item as PostData });
     }
 
-    if(event == "signout")
-    {
+    if (event == "signout") {
       firebase.auth().signOut();
-      //this.navCtrl.push(LoginPage);
+      //this.navCtrl.parent.parent.setRoot(LoginPage);
+      //this.navCtrl.popToRoot();
     }
 
-    if(event == "service")
-    {
-      if(item)
-      {
-        this.navCtrl.push(ServiceCreatorPage, {"service": item as ServiceData});
+    if (event == "service") {
+      if (item) {
+        this.navCtrl.push(ServiceCreatorPage, { "service": item as ServiceData });
       }
-      else
-      {
-        this.navCtrl.push(ServiceCreatorPage, {"service": new ServiceData()});
-      }
-    }
-
-    if(event == "order")
-    {
-      if(item)
-      {
-        this.navCtrl.push(OrderCreatorPage, {"order": item as OrderData});
-      }
-      else
-      {
-        this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
+      else {
+        this.navCtrl.push(ServiceCreatorPage, { "service": new ServiceData() });
       }
     }
 
-    if(event == "accept")
-    {
-      if(item.oid != "")
-      {
+    if (event == "order") {
+      if (item) {
+        this.navCtrl.push(OrderCreatorPage, { "order": item as OrderData });
+      }
+      else {
+        this.navCtrl.push(OrderCreatorPage, { "order": new OrderData() });
+      }
+    }
+
+    if (event == "accept") {
+      if (item.oid != "") {
         this.jItemsCollection = this.afs.collection("jobs");
 
         this.jItemsCollection.add({
@@ -271,30 +232,27 @@ export class UserPage {
           "createAt": firebase.firestore.FieldValue.serverTimestamp(),
           "updateAt": firebase.firestore.FieldValue.serverTimestamp()
         })
-        .then(docRef => {
-          this.jItemsCollection.doc(docRef.id).update({
-            "jid": docRef.id,
-            "status": "updated",
-            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-          });
+          .then(docRef => {
+            this.jItemsCollection.doc(docRef.id).update({
+              "jid": docRef.id,
+              "status": "updated",
+              "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+            });
 
-          this.oItemsCollection.doc(item.oid).delete().then(result => {
-            console.log("order: " + item.oid + " has converted to job successfully!");
-            //need to send orderby a message
+            this.oItemsCollection.doc(item.oid).delete().then(result => {
+              console.log("order: " + item.oid + " has converted to job successfully!");
+              //need to send orderby a message
+            });
           });
-        });
         //this.navCtrl.push(OrderCreatorPage, {"order": item as OrderData});
       }
-      else
-      {
+      else {
         //this.navCtrl.push(OrderCreatorPage, {"order": new OrderData()});
       }
     }
 
-    if(event == "decline")
-    {
-      if(item.oid != "")
-      {
+    if (event == "decline") {
+      if (item.oid != "") {
         this.oItemsCollection.doc(item.oid).delete().then(result => {
           console.log("order: " + item.oid + " has discard successfully!");
 
@@ -303,44 +261,40 @@ export class UserPage {
       }
     }
 
-    if(event == "ready")
-    {
+    if (event == "ready") {
       this.jItemsCollection.doc(item.jid).update({
-          "status": "ready",
-          "timestamp": new Date(),
-          "acceptedby": firebase.auth().currentUser.uid,
-          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
-          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+        "status": "ready",
+        "timestamp": new Date(),
+        "acceptedby": firebase.auth().currentUser.uid,
+        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
-      .catch(err => {console.log(err)});
+        .catch(err => { console.log(err) });
     }
 
-    if(event == "proceed")
-    {
+    if (event == "proceed") {
       this.jItemsCollection.doc(item.jid).update({
-          "status": "proceed",
-          "timestamp": new Date(),
-          "acceptedby": firebase.auth().currentUser.uid,
-          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
-          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+        "status": "proceed",
+        "timestamp": new Date(),
+        "acceptedby": firebase.auth().currentUser.uid,
+        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
-      .catch(err => {console.log(err)});
+        .catch(err => { console.log(err) });
     }
 
-    if(event == "complete")
-    {
+    if (event == "complete") {
       this.jItemsCollection.doc(item.jid).update({
-          "status": "complete",
-          "timestamp": new Date(),
-          "acceptedby": firebase.auth().currentUser.uid,
-          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
-          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+        "status": "complete",
+        "timestamp": new Date(),
+        "acceptedby": firebase.auth().currentUser.uid,
+        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
-      .catch(err => {console.log(err)});
+        .catch(err => { console.log(err) });
     }
 
-    if(event == "discard")
-    {
+    if (event == "discard") {
       this.jItemsCollection.doc(item.jid).update({
         "status": "discard",
         "timestamp": new Date(),
@@ -348,19 +302,19 @@ export class UserPage {
         "createAt": firebase.firestore.FieldValue.serverTimestamp(),
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
-      .catch(err => {console.log(err)});
+        .catch(err => { console.log(err) });
     }
 
 
   }
-  
-  goProfile(){
+
+  goProfile() {
     this.navCtrl.push(ProfilePage)
   }
 
   onChange() {
     console.log("selected option: ", this.selectedUserLocation);
-    
+
   }
 
   /* getDaysOfMonth() {
@@ -399,15 +353,15 @@ export class UserPage {
     }
   } */
 
-/*   goToLastMonth() {
-    this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
-    this.getDaysOfMonth();
-  }
-
-  goToNextMonth() {
-    this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
-    this.getDaysOfMonth();
-  } */
+  /*   goToLastMonth() {
+      this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
+      this.getDaysOfMonth();
+    }
+  
+    goToNextMonth() {
+      this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
+      this.getDaysOfMonth();
+    } */
 
   /* addEvent() {
     this.navCtrl.push(AddEventPage);

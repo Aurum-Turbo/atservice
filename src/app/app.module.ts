@@ -21,13 +21,13 @@ import { HomePage } from '../pages/home/home';
 import { UserPage } from '../pages/user/user';
 import { ProfilePage } from '../pages/profile/profile';
 import { MessagePage } from '../pages/message/message';
+import { ChatPage } from '../pages/chat/chat';
 import { JobPage } from '../pages/job/job';
 import { ServicePage } from '../pages/service/service';
 import { ServiceCreatorPage } from '../pages/service-creator/service-creator';
 import { OrderPage } from '../pages/order/order';
 import { EditorPage } from '../pages/editor/editor';
 import { QuillModule } from 'ngx-quill';
-import { DataServiceProvider } from '../providers/data-service/data-service';
 import { ServiceData } from '../providers/service-data/service-data';
 import { OrderData } from '../providers/order-data/order-data';
 import { OrderCreatorPage } from '../pages/order-creator/order-creator';
@@ -39,7 +39,6 @@ import { UserData } from '../providers/user-data/user-data';
 import { LoadingServiceProvider } from '../providers/loading-service/loading-service';
 import { AppSettings } from '../providers/app-setting';
 import { PostData } from '../providers/post-data/post-data';
-import { ChatDetailsPage } from '../pages/chat-details/chat-details';
 import { ChatData } from '../providers/chat-data/chat-data';
 import { ImageData } from '../providers/image-data/image-data';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
@@ -47,6 +46,7 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 
 @NgModule({
   declarations: [
@@ -57,14 +57,14 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
     UserPage,
     ProfilePage,
     MessagePage,
+    ChatPage,
     JobPage,
     ServicePage,
     ServiceCreatorPage,
     OrderPage,
     EditorPage,
     OrderCreatorPage,
-    ServiceDetailsPage,
-    ChatDetailsPage
+    ServiceDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -90,20 +90,19 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
     UserPage,
     ProfilePage,
     MessagePage,
+    ChatPage,
     JobPage,
     ServicePage,
     ServiceCreatorPage,
     OrderPage,
     EditorPage,
     OrderCreatorPage,
-    ServiceDetailsPage,
-    ChatDetailsPage
+    ServiceDetailsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataServiceProvider,
     ServiceData,
     OrderData,
     JobData,
@@ -117,7 +116,8 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
     AlertServiceProvider,
     Geolocation,
     NativeGeocoder,
-    GeoServiceProvider
+    GeoServiceProvider,
+    ChatServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

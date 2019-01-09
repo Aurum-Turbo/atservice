@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserData } from '../user-data/user-data';
 
 /*
   Generated class for the MessageDataProvider provider.
@@ -12,11 +13,9 @@ export class MessageData {
 
   //define message fields
   mid: string = "";
-  time: any;
-  sender: string = "";
-  snickname: string = "";
-  savatar: any;
-  receiver: string = "";
+  cid: string = ""; //chat id
+  sender: UserData;
+  //senderid: string = "";
   message: string = "";
   status: string = "";
 

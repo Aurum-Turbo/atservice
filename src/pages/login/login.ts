@@ -8,7 +8,6 @@ import { UserPage } from '../user/user';
 
 
 import { UserData } from '../../providers/user-data/user-data';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 //import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
@@ -37,7 +36,7 @@ export class LoginPage {
   
   userType: string = "user";
 
-  itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+  //itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
 
   //form group
   validation_messages = {
@@ -56,12 +55,10 @@ export class LoginPage {
 
   constructor(
     private afs: AngularFirestore,
-    public dataService: DataServiceProvider,
-    //private authService: AuthServiceProvider,
     private fb: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
 
-    this.itemsCollection = this.afs.collection("users");
+    //this.itemsCollection = this.afs.collection("users");
       
     this.loginForm = this.fb.group({
       email: ['',Validators.compose([
@@ -108,7 +105,10 @@ export class LoginPage {
       firebase.auth().onAuthStateChanged(user => {
         if(user)
         {
-          this.navCtrl.setRoot(this.navParams.get("from"));
+          this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(userInfo => {
+            console.log("login Page NavParam: ", this.navParams.get("from"));
+            this.navCtrl.setRoot(this.navParams.get("from"), {"user": userInfo});
+          });
           console.log("user is logged in");
         }
         else
@@ -137,8 +137,11 @@ export class LoginPage {
       firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
       .then(response => {
         //this.navCtrl.setRoot(UserPage);
-        this.dataService.loadCurUserData();
-        this.navCtrl.setRoot(this.navParams.get("from"));
+        //this.dataService.loadCurUserData();
+        this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(
+          userInfo => {this.navCtrl.setRoot(this.navParams.get("from"), {"user": userInfo});}
+        );
+        
       })
       .catch(error => {
         // handle error by showing alert
@@ -171,7 +174,7 @@ export class LoginPage {
       });*/
       var userObj = new UserData();
       userObj.setRate();
-      this.itemsCollection.doc(firebase.auth().currentUser.uid).set({
+      this.afs.collection('users').doc(firebase.auth().currentUser.uid).set({
         uid: firebase.auth().currentUser.uid,
         type: this.userType,
         status: "created",

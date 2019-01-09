@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { PostData } from '../../providers/post-data/post-data';
 import { ImageData } from '../../providers/image-data/image-data';
 
@@ -57,7 +56,6 @@ export class EditorPage {
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     private geoService: GeoServiceProvider,
-    public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
       this.itemsCollection = this.afs.collection("posts");
@@ -74,7 +72,7 @@ export class EditorPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditorPage');
-    this.dataService.loadCurUserData();
+    //this.dataService.loadCurUserData();
   }
 
 
@@ -178,7 +176,7 @@ export class EditorPage {
       if(this.calltype == "creating" && this.postObj.images.length > 0 && this.postObj.description != "")
       {
         var currentDate = new Date();
-        this.itemsCollection.add({
+        /*this.itemsCollection.add({
           "pid": "",
           "status": "created",
           "images": this.postObj.images,
@@ -243,7 +241,7 @@ export class EditorPage {
             // this.navCtrl.pop();
           }
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error)); */
       }
 
       if(this.calltype == "editing" && this.postObj.images.length > 0 && this.postObj.description != null)

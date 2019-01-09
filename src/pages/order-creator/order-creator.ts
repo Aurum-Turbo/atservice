@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrderData } from '../../providers/order-data/order-data';
 import { ServiceData } from '../../providers/service-data/service-data';
 
-import { DataServiceProvider } from '../../providers/data-service/data-service';
-
 import firebase from 'firebase/app';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -41,7 +39,6 @@ export class OrderCreatorPage {
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
-    public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditorPage } from '../editor/editor';
 import { ServiceData } from '../../providers/service-data/service-data';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { ServiceDetailsPage } from '../service-details/service-details';
 
 /**
@@ -22,7 +21,6 @@ export class ServicePage {
   serviceList = [];
 
   constructor(
-    public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 

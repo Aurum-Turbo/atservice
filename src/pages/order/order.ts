@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrderCreatorPage } from '../order-creator/order-creator';
-
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { JobData } from '../../providers/job-data/job-data';
 
 /**
@@ -22,7 +20,6 @@ export class OrderPage {
   orderList = [];
 
   constructor(
-    public dataService: DataServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 
