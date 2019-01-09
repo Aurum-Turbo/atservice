@@ -74,7 +74,6 @@ export class HomePage {
 
   ionViewDidLoad() {
      this.presentConfirm();
-
      this.setFilteredItems();
 
      console.log('ionViewDidLoad HomePage');
