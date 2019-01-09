@@ -16,6 +16,14 @@ page-user {
         right: 20px;
         z-index: 9;
     }
+    [location]{
+        width: 100%;
+        color: color($colors,'secondary') !important;
+        position: absolute;
+        bottom: 10px;
+        left: 20px;
+        z-index: 9;
+    }
     .title {
         display: table-cell;
         text-align: center;

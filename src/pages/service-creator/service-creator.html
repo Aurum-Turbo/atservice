@@ -36,48 +36,46 @@
             <ion-input placeholder="Service Duration.." type="number" [(ngModel)]="servItem.duration"></ion-input>
           </ion-item>
             <ion-segment [(ngModel)]="servItem.unit" color="secondary">
-              <ion-segment-button value="Minutes">
-                Minutes
+              <ion-segment-button *ngFor="let u of units" value="{{u}}">
+                {{u}}
               </ion-segment-button>
-              <ion-segment-button value="Hours">
-                Hours
-              </ion-segment-button>
-              <ion-segment-button value="Days">
-                Days
-              </ion-segment-button>  
             </ion-segment>
-           <!--  <ion-label >Unit:</ion-label>
-            <ion-select  interface="action-sheet" [(ngModel)]="servItem.unit" >
-              <ion-option >{{u}}</ion-option>
-            </ion-select> -->
         <ion-item no-lines>
             <ion-label >Price:</ion-label>
             <ion-input type="number" placeholder="Please give the rate" [(ngModel)]="servItem.price"></ion-input>
         </ion-item>
-        <ion-item no-lines>
+        <ion-segment [(ngModel)]="servItem.currency" color="secondary">
+            <ion-segment-button *ngFor="let c of currencys" value="{{c}}">
+              {{c}}
+            </ion-segment-button>
+          </ion-segment>
+        <!-- <ion-item no-lines>
             <ion-label >Currency:</ion-label>
             <ion-select  interface="action-sheet" [(ngModel)]="servItem.currency" >
               <ion-option>AUD</ion-option>
               <ion-option>RMB</ion-option>
             </ion-select>
+        </ion-item> -->
+        <ion-item-group>
+
+          <ion-item no-lines box-shadow margin-top class="txt-ara">
+              <ion-label >Declaimer:</ion-label>
+              <ion-textarea rows="4" placeholder="Please give the notice.." [(ngModel)]="servItem.declaimer"></ion-textarea>
+          </ion-item>
+          <ion-item no-lines>
+              <ion-label >Available:</ion-label>
+              <ion-toggle checked="true" [(ngModel)]="servItem.availability" color="secondary"></ion-toggle>
+            <!-- <ion-input clearInput type="text" placeholder="Availability" ></ion-input> -->
         </ion-item>
-        <ion-item no-lines box-shadow margin-bottom class="txt-ara">
-            <ion-label >Declaimer:</ion-label>
-            <ion-textarea rows="4" placeholder="Please give the notice.." [(ngModel)]="servItem.declaimer"></ion-textarea>
-        </ion-item>
-        <ion-item no-lines box-shadow margin-bottom>
-            <ion-label >Available:</ion-label>
-            <ion-toggle checked="true" [(ngModel)]="servItem.availability" color="secondary"></ion-toggle>
-          <!-- <ion-input clearInput type="text" placeholder="Availability" ></ion-input> -->
+        <ion-item no-lines >
+            <ion-label >Location:</ion-label>
+          <ion-input clearInput type="text" placeholder="your address.." [(ngModel)]="servItem.location"></ion-input>
       </ion-item>
-      <ion-item no-lines box-shadow margin-bottom>
-          <ion-label >Location:</ion-label>
-        <ion-input clearInput type="text" placeholder="your address.." [(ngModel)]="servItem.location"></ion-input>
-    </ion-item>
-    <ion-item no-lines box-shadow margin-bottom>
-        <ion-label >Tags:</ion-label>
-      <ion-textarea clearInput  placeholder="tag yourself.." rows="2" [(ngModel)]="servItem.tags"></ion-textarea>
-    </ion-item>
+      <ion-item no-lines>
+          <ion-label >Tags:</ion-label>
+        <ion-textarea clearInput  placeholder="tag yourself.." rows="2" [(ngModel)]="servItem.tags"></ion-textarea>
+      </ion-item>
+        </ion-item-group>
     <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn" float-right>Discard</button>
     <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn" float-right>Send</button>
         </ion-col>
