@@ -7,39 +7,42 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>message</ion-title>
+    <ion-title>{{(chatData.chatWith)?.nickname}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let item of chatList" (click)="onClick(item)">
-      <ion-row>
-
-        <ion-col col-2>
-          <ion-row>
-            <ion-avatar item-start>
-              <img src="{{item.cavatar}}">
-            </ion-avatar>
-          </ion-row>
-        </ion-col>
-        <ion-col col-10>
-          <ion-row>
-            <ion-col col-8>
-              <div class="msg-nm">{{item.ctitle}}</div>
-            </ion-col>
-            <ion-col col-4>
-              <div class="msg-tm">{{item.cntime.toDate() | date: "short"}}</div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <div class="msg-ctn">{{item.cnmessage}}</div>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+  <ion-list no-lines clear>
+    <div *ngIf="mesgs">
+    <ion-item *ngFor="let item of mesgs | async">
+      <ion-avatar item-end *ngIf="item.sender.uid === chatData.chatWith.uid">
+        <img src="{{item.sender.avatar}}">
+      </ion-avatar>
+      <ion-avatar item-start *ngIf="item.sender.uid === chatData.chatOwner.uid">
+        <img src="{{item.sender.avatar}}">
+      </ion-avatar>
+      <!-- <p>{{item.snickname}}<p> -->
+      <!-- <span>{{item.time}}</span> -->
+      <div [class]="item.sender.uid === chatData.chatWith.uid?  'msg-ctn msg-right' : 'msg-ctn msg-left'">     
+        <h2>{{item.message}}</h2>
+        <h2>{{(item.updateAt)?.toDate() | date: "short"}}</h2> 
+      </div>
     </ion-item>
+    </div>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+        <ion-input type="text" placeholder="Type a message" [(ngModel)]="mesgTyping" name="message"></ion-input>
+      </ion-col>
+      <ion-col col-2 (click)="sendMessage()">
+        <ion-icon name="paper-plane"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

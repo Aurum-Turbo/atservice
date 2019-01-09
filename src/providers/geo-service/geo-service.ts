@@ -71,7 +71,7 @@ export class GeoServiceProvider {
       this.geoLocation.getCurrentPosition().then(resp => {
         console.log("cur Latitude: ", resp.coords.latitude, "cur longtitude: ", resp.coords.longitude);
         this.curLocation = this.geo.point(resp.coords.latitude, resp.coords.longitude);
-        resolve(new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude));
+        resolve(this.curLocation);
       })
       .catch(err => {console.log(err);});
     })

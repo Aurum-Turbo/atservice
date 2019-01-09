@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { LoginPage } from '../login/login';
 import { MessageData } from '../../providers/message-data/message-data';
 import { UserData } from '../../providers/user-data/user-data';
 import { ChatData } from '../../providers/chat-data/chat-data';
@@ -10,7 +9,12 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
-import { ChatDetailsPage } from '../chat-details/chat-details';
+import { ServiceDetailsPage } from '../service-details/service-details';
+import { LoginPage } from '../login/login';
+import { ChatPage } from '../chat/chat';
+import { TabsPage } from '../tabs/tabs';
+
+import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 
 /**
  * Generated class for the MessagePage page.
@@ -25,94 +29,84 @@ import { ChatDetailsPage } from '../chat-details/chat-details';
   templateUrl: 'message.html',
 })
 export class MessagePage {
+  
+  chatsCollection: AngularFirestoreCollection<ChatData>; //Firestore collection
+  UserCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+  mesgCollection: AngularFirestoreCollection<MessageData>; //Firestore collection
+  mesgs: Observable<MessageData[]>;
 
-  msgList: MessageData[] = [];
-  senderList: string[] = [];
+  chatData: ChatData;
+  mesgTyping: string = "";
 
-  chatList: ChatData[] = [];
-  chatItem = new ChatData();
-  chatNameList: string[] = [];
-
-
-  itemsCollection: AngularFirestoreCollection<MessageData>; //Firestore collection
-  items: Observable<MessageData[]>;
 
   //colDocument: AngularFirestoreDocument<AngularFirestoreCollection>;
 
   constructor(
     private afs: AngularFirestore,
+    public chatService: ChatServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
+
+      this.chatData = new ChatData();
+      this.chatData = this.navParams.get('ChatData');
+      this.UserCollection = this.afs.collection('users');
+      this.chatsCollection = this.afs.collection('chats');
+
+      
+      
+  }
+
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged((user: firebase.User) => {
+      if (user) {
+
+        switch (this.navParams.get('from')) {
+          /*case ServiceDetailsPage: {
+            this.chatData = this.navParams.get('ChatData');
+            break;
+          }*/
+
+          case ChatPage: {
+            
+            //this.userProfile = this.navParams.get('user');
+            console.log("Message chatData: ", this.navParams.get('ChatData'));
+            //this.chatWith = this.chatService.getChatWithProfile(this.chatData.members);
+            //this.chatSender = this.chatService.getSenderProfile(this.chatData.members);
+            this.chatData = this.navParams.get('ChatData');
+            this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
+            break;
+          }
+
+          default: {
+            //this.mesgs = this.mesgCollection.valueChanges();
+            //this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
+            console.log("return! wrong way!");
+            //this.navCtrl.popToRoot();
+            break;
+          }
+        }
+      }
+      else
+      {
+        this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
+      }
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagePage');
+
   }
 
-  ionViewWillEnter() {
-    if(this.navCtrl.getActive().name == "MessagePage")
-    {
-      firebase.auth().onAuthStateChanged(user => {
-        if(user)
-        {
-          console.log("user is logged in: ", user);
-          //get update senderlist
-          this.afs.collection('messages').doc(firebase.auth().currentUser.uid).collection<MessageData>('chat').valueChanges().subscribe(snapshot => {
-            snapshot.forEach(item => {
+  
 
-              var sIndex = this.chatNameList.indexOf(item.sender);
-              var rIndex = this.chatNameList.indexOf(item.receiver);
+  sendMessage() {
+    //console.log("this message cid: ", result);
 
-              if(item.sender == firebase.auth().currentUser.uid)
-              {
-                if(rIndex > -1)
-                {
-                  if(item.time > this.chatList[rIndex].cntime)
-                  {
-                    this.chatList[rIndex].cnmessage = item.message;
-                    this.chatList[rIndex].cntime = item.time;
-                  }
-                }
-              }
-
-              if(item.receiver == firebase.auth().currentUser.uid)
-              {
-                if(sIndex > -1)
-                {
-                  if(item.time > this.chatList[sIndex].cntime)
-                  {
-                    this.chatList[sIndex].cnmessage = item.message;
-                    this.chatList[sIndex].cntime = item.time;
-                  }
-                }
-                else
-                {
-                  this.chatItem.cid = item.sender;
-                  this.chatItem.cavatar = item.savatar;
-                  this.chatItem.cnmessage = item.message;
-                  this.chatItem.cntime = item.time;
-                  this.chatItem.ctitle = item.snickname;
-
-                  this.chatList.push(this.chatItem);
-                  this.chatNameList.push(item.sender);
-                }
-              }
-            });
-          });
-        }
-        else
-        {
-          this.navCtrl.setRoot(LoginPage, {"from": MessagePage});
-          console.log("user is not logged in");
-        }
-      });
-    }
-  }
-
-  onClick(item: ChatData) {
-    if(item)
-    {
-      this.navCtrl.push(ChatDetailsPage,{"sender": item});
-    }
+      if(this.mesgTyping.length > 0)
+      {
+        this.chatService.newMessage(this.chatData, this.mesgTyping);
+      }
+    
   }
 
 }

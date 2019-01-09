@@ -7,7 +7,6 @@ import { Storage } from '@ionic/storage';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { DataServiceProvider } from '../providers/data-service/data-service';
 import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 
 import { AppSettings } from '../providers/app-setting';
@@ -20,7 +19,6 @@ export class MyApp {
 
   constructor(
     public geoService: GeoServiceProvider,
-    public dataService: DataServiceProvider,
     public localStorage: Storage,
     platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 

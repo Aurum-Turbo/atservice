@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { HomePage} from '../home/home';
 import { LoginPage } from '../login/login';
 import { UserPage } from '../user/user';
-import { MessagePage } from '../message/message';
+import { ChatPage } from '../chat/chat';
 import { ServiceDetailsPage } from '../service-details/service-details';
 
 import firebase from 'firebase/app';
@@ -24,7 +24,7 @@ import firebase from 'firebase/app';
 export class TabsPage {
 
   tab1Root: any = HomePage;
-  tab2Root: any = MessagePage;
+  tab2Root: any = ChatPage;
   tab3Root: any = UserPage;
   mySelectedIndex: number;
 

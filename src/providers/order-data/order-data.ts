@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ServiceData } from '../service-data/service-data';
-import { Timestamp } from 'rxjs';
 
 /*
   Generated class for the OrderDataProvider provider.

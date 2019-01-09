@@ -9,9 +9,11 @@ import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { OrderCreatorPage } from '../order-creator/order-creator';
+import { LoginPage } from '../../pages/login/login';
+import { ChatPage } from '../../pages/chat/chat';
 import { OrderData } from '../../providers/order-data/order-data';
+import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 
 /**
  * Generated class for the ServiceDetailsPage page.
@@ -27,6 +29,7 @@ import { OrderData } from '../../providers/order-data/order-data';
 })
 export class ServiceDetailsPage {
   @ViewChild('slider') slider: Slides;
+
   date: Date = new Date();
   postObj: PostData;
   message = new MessageData();
@@ -39,7 +42,7 @@ export class ServiceDetailsPage {
 
   constructor(
     private afs: AngularFirestore,
-    public dataService: DataServiceProvider,
+    public chatService: ChatServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
     if(navParams.data != null)
     {
@@ -60,7 +63,7 @@ export class ServiceDetailsPage {
 
   ionViewWillEnter() {
 
-    this.dataService.loadCurUserData();
+    //this.dataService.loadCurUserData();
     this.sItemsCollection = this.afs.collection("services", ref => {
       return ref.where("provider", "==", this.postObj.author);
     });
@@ -72,33 +75,30 @@ export class ServiceDetailsPage {
 
     //console.log("message: ", this.message.message);
     if(event == "chat")
-    {
-      if(this.message.message)
-      {
-        this.message.receiver = this.postObj.author;
-        this.message.sender = firebase.auth().currentUser.uid;
-        this.message.time = new Date();
+    {     
+      firebase.auth().onAuthStateChanged((user: firebase.User) => {
+        if (user) {
+          if(firebase.auth().currentUser.uid != this.postObj.author)
+          {
+            var memberList = new Array<string>();
+            memberList.push(this.postObj.author);
+            memberList.push(firebase.auth().currentUser.uid);
+            this.navCtrl.parent.select(1);
+            this.navCtrl.setRoot(ChatPage, {"from": ServiceDetailsPage, "chatMemberList": memberList});
 
-        this.itemsCollection.doc(this.message.receiver)
-        .collection('chat').add({
-          "mid": "",
-          "time": this.message.time,
-          "sender": this.message.sender,
-          "snickname": this.dataService.userDataObj.nickname,
-          "savatar": this.dataService.userDataObj.avatar,
-          "receiver": this.message.receiver,
-          "message": this.message.message,
-          "status": "new",
-          "sendAt": firebase.firestore.FieldValue.serverTimestamp()
-        }).then(docRef => {
-          this.itemsCollection.doc(this.message.receiver)
-          .collection('chat').doc(docRef.id).update({
-            "mid": docRef.id,
-            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-          });
-        })
-        .catch(error => console.log(error));
-      }
+          }
+          else
+          {
+            console.log("Post is posted by user himself");
+          }
+        }
+        else
+        {
+          console.log("user is not logged in!");
+          this.navCtrl.setRoot(LoginPage, { "from": ServiceDetailsPage });
+        }
+      });
+      
     }
 
     if(event == "service" && item)

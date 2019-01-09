@@ -1,0 +1,29 @@
+page-chat {
+    ion-avatar{
+        img{
+            border-radius: 5px !important;
+            min-width: 50px !important;
+            min-height: 50px !important;
+        }
+    }
+    ion-row{
+        color: theme-colors('textColors', 'secondary', 'opacity60');
+        align-items: center;
+        .msg-nm{
+            float: left;
+            font-weight: bold;
+            color: theme-colors('textColors', 'accent', 'opacity100');
+        }
+        .msg-tm{
+           float: right;
+        }
+        .msg-ctn{
+            width: 80%;
+            float: left;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+    }   
+
+}
