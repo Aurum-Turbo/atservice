@@ -31,14 +31,15 @@
         <ion-card-content no-padding>
             <img (click)="onClick('detail',item )" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
             <p border margin card-body-text padding-bottom text-wrap [innerHtml]="item.description" (click)="onClick('detail',item)"></p>
-            <div><ion-label item-end>
-              {{item.queryMetadata.distance.toFixed(2)}} KM away
-            </ion-label></div>
             <ion-item no-padding margin-bottom>
-            <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">
-            <i class="icon-heart-outline" ></i>
-            <span>{{item.like}}</span>
-            </button>
+              <ion-label color="secondary" margin-left>
+                <i class="icon-map-marker-radius"></i>
+                {{item.queryMetadata.distance.toFixed(2)}} KM
+              </ion-label>
+                <button ion-button icon-start clear item-end (click)="onClick('like', item)" color="secondary">
+                <i class="icon-heart-outline" ></i>
+                <span>{{item.like}}</span>
+                </button>
             </ion-item>
         </ion-card-content>
       </ion-card>
