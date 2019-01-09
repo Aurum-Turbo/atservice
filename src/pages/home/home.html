@@ -17,7 +17,7 @@
   <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
     <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
-      <ngxMasonryItem *ngFor="let item of geoPostsArray | async" class="masonry-item" >
+      <ngxMasonryItem *ngFor="let item of items" class="masonry-item" >
       <ion-card>
         <ion-card-header>
           <ion-item no-padding>
