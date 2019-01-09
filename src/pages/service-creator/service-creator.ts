@@ -6,7 +6,6 @@ import firebase from 'firebase/app';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
-import { WheelSelector } from '@ionic-native/wheel-selector';
 /**
  * Generated class for the ServiceCreatorPage page.
  *
@@ -31,7 +30,6 @@ export class ServiceCreatorPage {
   units: string[] = ['Minutes','Hours', 'Weeks'];
   currencys: string[] = ['AUD','RMB','USD'];
   constructor(
-    private selector: WheelSelector,
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     public navCtrl: NavController, public navParams: NavParams) {
