@@ -91,4 +91,5 @@
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyCztVEjSL6pB_RhJqchYzRgDtIwIiKhcGo" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyCztVEjSL6pB_RhJqchYzRgDtIwIiKhcGo" />
     </plugin>
+    <plugin name="cordova-wheel-selector-plugin" spec="1.1.1" />
 </widget>

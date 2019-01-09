@@ -19,7 +19,7 @@
           <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
             <ion-item no-lines>
                 <ion-label>Service Date:</ion-label>
-              <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="Please Choose.."></ion-datetime>
+              <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="Please Choose.." yearValues="{{sYearrange}} "></ion-datetime>
           </ion-item>
           <ion-item no-lines>
             <ion-label>Service Time:</ion-label>

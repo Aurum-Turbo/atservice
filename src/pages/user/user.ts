@@ -107,6 +107,7 @@ export class UserPage {
               public dataService: DataServiceProvider,
               public navCtrl: NavController, 
               public navParams: NavParams) {          
+          
   }
   
   ionViewDidLoad() {
@@ -197,14 +198,15 @@ export class UserPage {
     }
   }
   
-  @ViewChild('pageSlider') pageSlider: Slides;
+  /* @ViewChild('pageSlider') pageSlider: Slides;
   tabs: any = '0';
   selectTab(index) {
     this.pageSlider.slideTo(index);
   }
   changeWillSlide($event) {
     this.tabs = $event._snapIndex.toString();
-  }
+  } */
+  tabs: any = "0";
 
   toggleGroup(group: any) {
     group.show = !group.show;

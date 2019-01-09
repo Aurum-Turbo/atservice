@@ -8,7 +8,7 @@ import firebase from 'firebase/app';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
-
+import { WheelSelector } from '@ionic-native/wheel-selector';
 /**
  * Generated class for the ServiceCreatorPage page.
  *
@@ -30,9 +30,10 @@ export class ServiceCreatorPage {
   itemsCollection: AngularFirestoreCollection<ServiceData>; //Firestore collection
   itemDocument: AngularFirestoreDocument<ServiceData>; // read collection
   types: string[] = ['Escort', 'Transport', 'House Clean'];
-  units: string[] = ['Minutes','Hours','Days','Weeks','Months'];
+  units: string[] = ['Minutes','Hours', 'Weeks'];
   currencys: string[] = ['AUD','RMB','USD'];
   constructor(
+    private selector: WheelSelector,
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     public dataService: DataServiceProvider,

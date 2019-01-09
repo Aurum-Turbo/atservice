@@ -47,7 +47,7 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
-
+import { WheelSelector } from '@ionic-native/wheel-selector';
 @NgModule({
   declarations: [
     MyApp,
@@ -117,7 +117,8 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
     AlertServiceProvider,
     Geolocation,
     NativeGeocoder,
-    GeoServiceProvider
+    GeoServiceProvider,
+    WheelSelector
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
