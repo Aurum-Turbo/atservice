@@ -8,6 +8,7 @@ page-home {
           ion-card{
               width: 100% !important;
               margin: 0 auto !important;
+              border-radius: 2%;
             ion-card-content{
             //    height: auto !important; 
                
@@ -21,16 +22,14 @@ page-home {
                 ion-item{
                     height: 2em !important;
                     line-height: 1em !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    // background-color: #eee !important;
                     ion-avatar{
                         margin-right: 0.5rem !important;
                         min-width: 2rem !important;
+                        padding-bottom: 1rem !important;
                         img{
                             margin-top: 1rem !important;
-                            width: 2rem !important;
-                            height: 2rem !important;
+                            width: 1.5rem !important;
+                            height: 1.5rem !important;
                         }
                     }
                 }

@@ -225,6 +225,10 @@ ion-segment{
                 max-height: 60% !important;
                 max-width: 96% ;
                 display: block;
+                p{
+                    font-size: 12px !important;
+                    line-height: 12px !important;
+                }
             }
         #date{
                 color: color($colors,'secondary') !important;

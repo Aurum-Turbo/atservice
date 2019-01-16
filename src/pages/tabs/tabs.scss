@@ -31,6 +31,9 @@ page-tabs {
           font-size: 30px !important;
         }
       }
+          .badge-ios, .badge-md {
+            background-color: theme-colors('mainColors', 'socialRed') !important;
+        }
     
       [background-size] {
         @include darkening-blend-mode;

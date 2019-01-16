@@ -107,7 +107,8 @@ $palettes: (
         primary:   #424242, // Used for list color, list activated button, list border item color, header-title, header-subtitle, button-clear-outline, swipe, checkbox, tabs, search-bar, map-header, maps-title, maps-subtitle, toolbar, action-sheet, Loading, alert
         secondary:  #FCD736, // Used for icon, item-divider, span, header-bcg, header-divider, button, fab button, checkbox, toggle, radio button, wizard-bcg, input field, range, search-bar, map-header, map-content, toolbar-background, alert, spiner
         accent:   #202020, //Used for background your app, list border item color, button, fab button, checkbox, action-sheet, alert
-        accentLight: #FEFEFE //Used for toggle
+        accentLight: #FEFEFE, //Used for toggle
+        socialRed: red //used for new message notification badge
     ),
 
     textColors: ( // Used for text colors in all screens

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Content, FabButton } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 
 
@@ -99,7 +99,10 @@ export class UserPage {
   //userDataObj = new UserData();
 
   //postDate: Date;
-
+  @ViewChild(Content)
+    content: Content;
+  @ViewChild(FabButton)
+  fabButton: FabButton;
   constructor(
     private afs: AngularFirestore,
     private geoService: GeoServiceProvider,
@@ -317,7 +320,20 @@ export class UserPage {
     console.log("selected option: ", this.selectedUserLocation);
 
   }
-
+  ngOnChanges(changes: { [propKey: string]: any }) {
+    this.subscribeToIonScroll();
+  }
+ 
+  ngAfterViewInit() {
+    this.subscribeToIonScroll();
+  }
+  subscribeToIonScroll() {
+    if (this.content != null && this.content.ionScroll != null) {
+        this.content.ionScroll.subscribe((d) => {
+            this.fabButton.setElementClass("fab-button-out", d.directionY == "down");
+        });
+    }
+}
   /* getDaysOfMonth() {
     this.daysInThisMonth = new Array();
     this.daysInLastMonth = new Array();

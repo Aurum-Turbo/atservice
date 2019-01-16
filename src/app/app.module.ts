@@ -76,7 +76,7 @@ import { ChatServiceProvider } from '../providers/chat-service/chat-service';
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
-    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true' }),
+    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true', mode:'ios', }),
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     })

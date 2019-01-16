@@ -1,9 +1,26 @@
 page-chat {
-    ion-avatar{
-        img{
-            border-radius: 5px !important;
-            min-width: 50px !important;
-            min-height: 50px !important;
+    ion-item{
+        ion-row{
+            ion-col{
+                overflow: visible !important;
+                ion-thumbnail{
+                    position: relative;
+                    /*  min-width: 100px;
+                    min-height: 100px;
+                    position: relative;
+                    overflow: visible!important; */
+                    img{
+                        border-radius: 5px !important;
+                        min-width: 50px !important;
+                        min-height: 50px !important;
+                    }
+                }
+                ion-badge{
+                    position: absolute !important;
+                    top: 0px !important;
+                    left: 45px !important;
+                }
+            }
         }
     }
     ion-row{

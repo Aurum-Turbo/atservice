@@ -14,35 +14,57 @@
 
 
 <ion-content>
-  <ion-list no-lines clear>
-    <div *ngIf="mesgs">
-    <ion-item *ngFor="let item of mesgs | async">
-      <ion-avatar item-end *ngIf="item.sender.uid === chatData.chatWith.uid">
-        <img src="{{item.sender.avatar}}">
-      </ion-avatar>
-      <ion-avatar item-start *ngIf="item.sender.uid === chatData.chatOwner.uid">
-        <img src="{{item.sender.avatar}}">
-      </ion-avatar>
-      <!-- <p>{{item.snickname}}<p> -->
-      <!-- <span>{{item.time}}</span> -->
-      <div [class]="item.sender.uid === chatData.chatWith.uid?  'msg-ctn msg-right' : 'msg-ctn msg-left'">     
-        <h2>{{item.message}}</h2>
-        <h2>{{(item.updateAt)?.toDate() | date: "short"}}</h2> 
-      </div>
+  <ion-list no-lines clear class="chatList" >
+    <!-- <div *ngIf="mesgs" > -->
+      <ion-item *ngFor="let item of mesgs | async" no-lines no-padding>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col col-12>
+            <!-- <div *ngIf="(item.updateAt)?.toDate() | date == Date.now() "> -->
+              <span text-center color="light">{{(item.updateAt)?.toDate() | date: "short"}}</span> 
+            <!-- </div>  -->
+          </ion-col>
+        </ion-row>
+        <ion-row align-items-start >
+            <!-- <ion-item no-lines> -->
+              <ion-col *ngIf="item.sender.uid === chatData.chatOwner.uid" col-2 >
+                <ion-avatar  item-start leftPic>
+                  <img src="{{item.sender.avatar}}" float-right>
+                </ion-avatar>
+              </ion-col>
+              <ion-col col-10>
+                <div [class]="item.sender.uid === chatData.chatWith.uid?  'msg-ctn msg-right' : 'msg-ctn msg-left'" >     
+                  <p color="dark">{{item.message}}</p>
+                </div>
+              </ion-col>
+              <ion-col *ngIf="item.sender.uid === chatData.chatWith.uid" col-2>
+                <ion-avatar  item-end >
+                  <img src="{{item.sender.avatar}}" >
+                </ion-avatar>
+              </ion-col>
+              <!-- <p>{{item.snickname}}<p> -->
+                <!-- <span>{{item.time}}</span> -->
+            <!-- </ion-item> -->
+        </ion-row>
+      </ion-grid>
     </ion-item>
-    </div>
+    <!-- </div> -->
   </ion-list>
 </ion-content>
 
 <ion-footer>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-10>
-        <ion-input type="text" placeholder="Type a message" [(ngModel)]="mesgTyping" name="message"></ion-input>
-      </ion-col>
-      <ion-col col-2 (click)="sendMessage()">
-        <ion-icon name="paper-plane"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid>
+      <ion-row align-items-end>
+        <ion-col col-9 >
+          <ion-item no-lines textarea>
+            <ion-textarea justify-content-center (keyup.enter)="sendMessage()" maxLength="200" placeholder="Type a message" cols="30" rows="1" (input)="updateEditor()" [(ngModel)]="mesgTyping" name="message" ></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col col-3 >
+          <button ion-button bottom (click)="sendMessage()" color="secondary" block >
+            Send
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-footer>
