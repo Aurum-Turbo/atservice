@@ -15,7 +15,7 @@ import { ChatPage } from '../chat/chat';
 import { TabsPage } from '../tabs/tabs';
 
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
-import { networkInterfaces } from 'os';
+// import { networkInterfaces } from 'os';
 import { convertUrlToDehydratedSegments } from 'ionic-angular/umd/navigation/url-serializer';
 
 /**

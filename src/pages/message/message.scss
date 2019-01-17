@@ -11,6 +11,9 @@ page-message {
         [leftPic]{
             margin-right: 8px !important;
         }
+        [time] {
+            color: color($colors, 'light');
+        }
         .msg-right{
             float: right;
             background:color($colors,'secondary'); 
