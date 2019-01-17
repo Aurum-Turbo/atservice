@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrderData } from '../../providers/order-data/order-data';
 import { ServiceData } from '../../providers/service-data/service-data';
+import { UserData } from '../../providers/user-data/user-data';
+import { AlertData } from '../../providers/alert-data/alert-data';
 
 import firebase from 'firebase/app';
 
@@ -9,6 +11,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
+import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 
 /**
  * Generated class for the OrderCreatorPage page.
@@ -34,12 +37,21 @@ export class OrderCreatorPage {
 
   oItemsCollection: AngularFirestoreCollection<OrderData>; //Firestore collection
   oItemDocument: AngularFirestoreDocument<OrderData>; // read collection
+
+  usersCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+  alertsCollection: AngularFirestoreCollection<AlertData>; //Firestore collection
+
   types: string[] = ['Escort','Transport', 'House clean'];
   servYear: Date = new Date();
   sYearrange: any[] = [this.servYear.getFullYear(), this.servYear.getFullYear()+1];
+  servSchedule: Date;
+
+
+
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
+    public chatService: ChatServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
     this.oItemsCollection = this.afs.collection("orders");
     if(navParams.data != null)
@@ -50,12 +62,21 @@ export class OrderCreatorPage {
       {
         this.calltype = "editing";
       }
+
+      this.usersCollection = this.afs.collection("users");
+      this.usersCollection.doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(profile => {
+        this.orderItem.servelocation = profile.location;
+        this.orderItem.email = firebase.auth().currentUser.email;
+      });
+
+      this.alertsCollection = this.afs.collection("alerts");
+
     }  
-    this.orderItem.type = "Escort"
+    this.orderItem.type = "Escort";
   }
 
   ionViewDidLoad() {
-    console.log(this.servYear)
+    console.log(this.servYear);
     console.log('ionViewDidLoad OrderCreatorPage');
   }
 
@@ -71,9 +92,11 @@ export class OrderCreatorPage {
       {
         if(this.orderItem.oid == "")
         {
+          this.servSchedule = new Date(this.orderItem.servedate + 'T' + this.orderItem.servetime);
+          console.log("schedule: ", this.orderItem.servedate + 'T' + this.orderItem.servetime);
           this.oItemsCollection.add({
             "oid": "",
-            "timestamp": new Date(),
+            "timestamp": this.servSchedule,
             "status": "created",
             "type": this.orderItem.type,
             "service": this.orderItem.service,

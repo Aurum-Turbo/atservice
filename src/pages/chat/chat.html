@@ -7,16 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>chat</ion-title>
+    <ion-title uppercase>chat</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of chats | async">
+    <ion-item-sliding *ngFor="let item of items | async">
       <ion-item  (click)="onClick(item)">
         <ion-row>
           <ion-col col-2>    

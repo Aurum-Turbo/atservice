@@ -18,7 +18,7 @@
     <div background-size [ngStyle]="{'background-image': 'url('+ (currentUser | async)?.avatar +')'}">
       <div class="title">
         <button ion-button parallax-title clear (click)="goProfile()"><h1>{{(currentUser | async)?.nickname}}</h1></button>
-        <h2 parallax-subtitle class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{(currentUser | async)?.star[i]}}"></i></ion-icon>
+        <h2 parallax-subtitle class="starrank"><ion-icon icon-small *ngFor="let i of [1,2,3,4,5]"><i class="{{userStars[i]}}" *ngIf="userStars != null"></i></ion-icon>
           <span span-small>{{(currentUser | async)?.rate}}</span></h2>     
         </div>
         <div location>
@@ -40,18 +40,24 @@
     <div [ngSwitch]="tabs">
       <!-- created service -->
       <div  *ngSwitchCase="'0'">
-          <ion-card *ngFor="let item of sItems | async" (click)="onClick('service', item)">
+        <ion-item-sliding *ngFor="let item of sItems | async">
+          <button ion-item  (click)="onClick('service', item)">
          
               <!-- <ion-item> -->
-                <h1 item-title>{{item.description}}</h1>
+                <h1 item-title item-start>{{item.description}}</h1>
               <!-- </ion-item>
               <ion-item> -->
-                   <h2 item-  title item-end>
+                   <h2 item-title item-end>
                   {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
                   </h2>
               <!-- </ion-item>  -->
 
-          </ion-card>    
+          </button>
+          <ion-item-options side="right">
+            <button ion-button (click)="toggleAvail(item)">{{serviceEnabled}}</button>    
+            <button ion-button color="danger" (click)="delService(item)">Delete</button>
+          </ion-item-options>
+        </ion-item-sliding>
       </div>
       <!-- created order -->
       <div *ngSwitchCase="'1'">
@@ -191,7 +197,7 @@
           </item-content>
         </ion-item>   
         <ion-item-options no-lines>
-        <button ion-button (click)="delete(item)">
+        <button ion-button (click)="delPost(item)">
             <ion-icon icon-medium>
               <i class="icon-delete"></i>
             </ion-icon>

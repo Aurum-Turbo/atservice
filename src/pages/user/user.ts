@@ -13,15 +13,18 @@ import { PostData } from '../../providers/post-data/post-data';
 import { OrderData } from '../../providers/order-data/order-data';
 import { JobData } from '../../providers/job-data/job-data';
 import { ServiceData } from '../../providers/service-data/service-data';
+import { AlertData } from '../../providers/alert-data/alert-data';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
-import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
+//import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
 import { OrderCreatorPage } from '../order-creator/order-creator';
 import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
+import { createElementCssSelector } from '@angular/compiler';
 
 
 /**
@@ -90,11 +93,16 @@ export class UserPage {
   jItemsCollection: AngularFirestoreCollection<JobData>; //Firestore collection
   jItems: Observable<JobData[]>;
 
+  alertCollection: AngularFirestoreCollection<AlertData>;
+  alertItems: Observable<AlertData[]>;
+
 
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
+  userStars: string[] = null;
   userAddressArray: string[];
   selectedUserLocation: string = "";
+  serviceEnabled: string = "Enabled";
 
   //userDataObj = new UserData();
 
@@ -106,7 +114,7 @@ export class UserPage {
   constructor(
     private afs: AngularFirestore,
     private geoService: GeoServiceProvider,
-    //public dataService: DataServiceProvider,
+    public loginService: LoginServiceProvider,
     public navCtrl: NavController,
     public navParams: NavParams) {
     //this.currentUser = new UserData();        
@@ -117,23 +125,28 @@ export class UserPage {
     //this.userDataObj = this.dataService.userDataObj;
   }
 
-  ngOnInit() {
-    firebase.auth().onAuthStateChanged((user: firebase.User) => {
-      if (user) {
-        this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges()
+  ionViewWillEnter() {
 
+    this.loginService.isUserLogined().then(result => {
+      if(result)
+      {
+        //load user
+        this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
+        this.currentUser.subscribe(result => {
+          this.userStars = this.getStars(result.rate);
+        });
 
+        //load geo info
         if (this.geoService.curLocation) {
           this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
             this.userAddressArray = addresses;
-            this.selectedUserLocation = addresses[0];
-            //console.log("addresses: ", this.userAddressArray);
+            this.selectedUserLocation = addresses[(addresses.length-1)];
+            console.log("addresses: ", this.selectedUserLocation);
           })
-            .catch(err => { console.log(err); });
+          .catch(err => { console.log(err); });
         }
 
-
-
+        //load service, order, job and posts.
         this.itemsCollection = this.afs.collection("posts", ref => {
           return ref.where("author", "==", firebase.auth().currentUser.uid)
             .orderBy("updateAt", 'desc');
@@ -150,23 +163,31 @@ export class UserPage {
 
         this.oItemsCollection = this.afs.collection("orders", ref => {
           return ref.where("service.provider", "==", firebase.auth().currentUser.uid)
-            .orderBy("updateAt", 'desc');
+            .orderBy("timestamp", 'asc');
         })
 
         this.oItems = this.oItemsCollection.valueChanges();
 
         this.jItemsCollection = this.afs.collection("jobs", ref => {
           return ref.where("acceptedby", "==", firebase.auth().currentUser.uid)
-            .orderBy("updateAt", 'desc');
+            .orderBy("timestamp", 'asc');
         })
 
         this.jItems = this.jItemsCollection.valueChanges();
 
+
+        this.alertCollection = this.afs.collection("alerts");
+
       }
-      else {
-        this.navCtrl.setRoot(LoginPage, { "from": UserPage });
+      else
+      {
+        console.log("user logout!");
+        this.navCtrl.setRoot(LoginPage, {"from": UserPage});
       }
-    });
+      
+    })
+    .catch(err => {console.log(err);});
+
   }
 
 
@@ -200,7 +221,10 @@ export class UserPage {
     }
 
     if (event == "signout") {
-      firebase.auth().signOut();
+      firebase.auth().signOut().then(reuslt => {
+        this.navCtrl.setRoot(LoginPage, {"from": UserPage});
+      })
+      .catch(err => {console.log(err);});
       //this.navCtrl.parent.parent.setRoot(LoginPage);
       //this.navCtrl.popToRoot();
     }
@@ -231,7 +255,7 @@ export class UserPage {
           "jid": "",
           "order": item,
           "status": "created",
-          "timestamp": new Date(),
+          "timestamp": item.timestamp,
           "acceptedby": firebase.auth().currentUser.uid,
           "createAt": firebase.firestore.FieldValue.serverTimestamp(),
           "updateAt": firebase.firestore.FieldValue.serverTimestamp()
@@ -240,6 +264,7 @@ export class UserPage {
             this.jItemsCollection.doc(docRef.id).update({
               "jid": docRef.id,
               "status": "updated",
+              "acceptAt": firebase.firestore.FieldValue.serverTimestamp(),
               "updateAt": firebase.firestore.FieldValue.serverTimestamp()
             });
 
@@ -268,9 +293,9 @@ export class UserPage {
     if (event == "ready") {
       this.jItemsCollection.doc(item.jid).update({
         "status": "ready",
-        "timestamp": new Date(),
+        //"timestamp": new Date(),
         "acceptedby": firebase.auth().currentUser.uid,
-        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "readyAt": firebase.firestore.FieldValue.serverTimestamp(),
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
         .catch(err => { console.log(err) });
@@ -279,9 +304,9 @@ export class UserPage {
     if (event == "proceed") {
       this.jItemsCollection.doc(item.jid).update({
         "status": "proceed",
-        "timestamp": new Date(),
+        //"timestamp": new Date(),
         "acceptedby": firebase.auth().currentUser.uid,
-        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "proceedAt": firebase.firestore.FieldValue.serverTimestamp(),
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
         .catch(err => { console.log(err) });
@@ -290,12 +315,33 @@ export class UserPage {
     if (event == "complete") {
       this.jItemsCollection.doc(item.jid).update({
         "status": "complete",
-        "timestamp": new Date(),
+        //"timestamp": new Date(),
         "acceptedby": firebase.auth().currentUser.uid,
-        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "completeAt": firebase.firestore.FieldValue.serverTimestamp(),
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
+      .then(result => {
+        console.log("send alert: ", item);
+        this.alertCollection.add({
+          "aid": "",
+          "keys": item.order.orderby + "_unread", 
+          "fromuid": firebase.auth().currentUser.uid,
+          "fromWho": null,
+          "type": "RATE",
+          "message": "Please help me to improve my service, and rate me 5!",
+          "response": ""
+        })
+        .then(docRef => {
+          this.alertCollection.doc(docRef.id).update({
+            "aid": docRef.id,
+            "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+          });
+        })
         .catch(err => { console.log(err) });
+      })
+      .catch(err => { console.log(err) });
+
     }
 
     if (event == "discard") {
@@ -303,7 +349,7 @@ export class UserPage {
         "status": "discard",
         "timestamp": new Date(),
         "acceptedby": firebase.auth().currentUser.uid,
-        "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+        "discardAt": firebase.firestore.FieldValue.serverTimestamp(),
         "updateAt": firebase.firestore.FieldValue.serverTimestamp()
       })
         .catch(err => { console.log(err) });
@@ -313,13 +359,9 @@ export class UserPage {
   }
 
   goProfile() {
-    this.navCtrl.push(ProfilePage)
+    this.navCtrl.push(ProfilePage, {"address": this.userAddressArray});
   }
 
-  onChange() {
-    console.log("selected option: ", this.selectedUserLocation);
-
-  }
   ngOnChanges(changes: { [propKey: string]: any }) {
     this.subscribeToIonScroll();
   }
@@ -327,136 +369,80 @@ export class UserPage {
   ngAfterViewInit() {
     this.subscribeToIonScroll();
   }
+
   subscribeToIonScroll() {
     if (this.content != null && this.content.ionScroll != null) {
         this.content.ionScroll.subscribe((d) => {
             this.fabButton.setElementClass("fab-button-out", d.directionY == "down");
         });
     }
-}
-  /* getDaysOfMonth() {
-    this.daysInThisMonth = new Array();
-    this.daysInLastMonth = new Array();
-    this.daysInNextMonth = new Array();
-    this.currentMonth = this.monthNames[this.date.getMonth()];
-    this.currentYear = this.date.getFullYear();
-    if(this.date.getMonth() === new Date().getMonth() && this.date.getFullYear() === new Date().getFullYear()) {
-      this.currentDate = new Date().getDate();
-    } else {
-      this.currentDate = 999;
-    }
-
-    var firstDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
-    var prevNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
-    for(var i = prevNumOfDays-(firstDayThisMonth-1); i <= prevNumOfDays; i++) {
-      this.daysInLastMonth.push(i);
-    }
-
-    var thisNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0).getDate();
-    for (var j = 0; j < thisNumOfDays; j++) {
-      this.daysInThisMonth.push(j+1);
-    }
-
-    var lastDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0).getDay();
-    // var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0).getDate();
-    for (var k = 0; k < (6-lastDayThisMonth); k++) {
-      this.daysInNextMonth.push(k+1);
-    }
-    var totalDays = this.daysInLastMonth.length+this.daysInThisMonth.length+this.daysInNextMonth.length;
-    if(totalDays<36) {
-      for(var l = (7-lastDayThisMonth); l < ((7-lastDayThisMonth)+7); l++) {
-        this.daysInNextMonth.push(l);
-      }
-    }
-  } */
-
-  /*   goToLastMonth() {
-      this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
-      this.getDaysOfMonth();
-    }
-  
-    goToNextMonth() {
-      this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
-      this.getDaysOfMonth();
-    } */
-
-  /* addEvent() {
-    this.navCtrl.push(AddEventPage);
-  } */
-
-  /* loadEventThisMonth() {
-    this.eventList = new Array();
-    var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
-    var endDate = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0);
-    this.calendar.listEventsInRange(startDate, endDate).then(
-      (msg) => {
-        msg.forEach(item => {
-          this.eventList.push(item);
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 
-  checkEvent(day) {
-    var hasEvent = false;
-    var thisDate1 = this.date.getFullYear()+"-"+(this.date.getMonth()+1)+"-"+day+" 00:00:00";
-    var thisDate2 = this.date.getFullYear()+"-"+(this.date.getMonth()+1)+"-"+day+" 23:59:59";
-    this.eventList.forEach(event => {
-      if(((event.startDate >= thisDate1) && (event.startDate <= thisDate2)) || ((event.endDate >= thisDate1) && (event.endDate <= thisDate2))) {
-        hasEvent = true;
-      }
-    });
-    return hasEvent;
+  delService(item: ServiceData) {
+    if(item)
+    {
+      this.sItemsCollection.doc(item.sid).delete().then(result => {
+        console.log("delete Service successfully!");
+      })
+      .catch(err => {console.log("delete Service failed by: ", err);});
+    }
   }
 
-  selectDate(day) {
-    this.isSelected = false;
-    this.selectedEvent = new Array();
-    var thisDate1 = this.date.getFullYear()+"-"+(this.date.getMonth()+1)+"-"+day+" 00:00:00";
-    var thisDate2 = this.date.getFullYear()+"-"+(this.date.getMonth()+1)+"-"+day+" 23:59:59";
-    this.eventList.forEach(event => {
-      if(((event.startDate >= thisDate1) && (event.startDate <= thisDate2)) || ((event.endDate >= thisDate1) && (event.endDate <= thisDate2))) {
-        this.isSelected = true;
-        this.selectedEvent.push(event);
-      }
-    });
+  delPost(item: PostData) {
+    if(item)
+    {
+      this.itemsCollection.doc(item.pid).delete().then(result => {
+        console.log("delete Post successfully!");
+      })
+      .catch(err => {console.log("delete Post failed by: ", err);});
+    }
+    
   }
 
-  deleteEvent(evt) {
-    // console.log(new Date(evt.startDate.replace(/\s/, 'T')));
-    // console.log(new Date(evt.endDate.replace(/\s/, 'T')));
-    let alert = this.alertCtrl.create({
-      title: 'Confirm Delete',
-      message: 'Are you sure want to delete this event?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            this.calendar.deleteEvent(evt.title, evt.location, evt.notes, new Date(evt.startDate.replace(/\s/, 'T')), new Date(evt.endDate.replace(/\s/, 'T'))).then(
-              (msg) => {
-                console.log(msg);
-                this.loadEventThisMonth();
-                this.selectDate(new Date(evt.startDate.replace(/\s/, 'T')).getDate());
-              },
-              (err) => {
-                console.log(err);
-              }
-            )
-          }
-        }
-      ]
-    });
-    alert.present();
-  } */
+  toggleAvail(item: ServiceData) {
+    if(item.availability)
+    {
+      this.serviceEnabled = "Enable";
+      this.sItemsCollection.doc(item.sid).update({"availability": false}).then(result => {
+        console.log("disable Service successfully!");
+      })
+      .catch(err => {console.log("disable Service failed by: ", err);});
+    }
+    else
+    {
+      this.serviceEnabled = "Disable";
+      this.sItemsCollection.doc(item.sid).update({"availability": true}).then(result => {
+        console.log("Enable Service successfully!");
+      })
+      .catch(err => {console.log("disable Service failed by: ", err);});
 
+    }
+  }
+
+  onChange() {
+    console.log("selected option: ", this.selectedUserLocation);
+  }
+
+  getStars(rate: number): string[] {
+    //let rating: number = 3.4; /* rating的值预设固定，拿到数据后可以自动显示 */
+    console.log("rank: ",rate);
+    let stars: string[] = [];
+    for (var i = 1; i <= 5; i++)
+    {
+      if(i <= Math.floor(rate))
+      {
+        stars[i] = "icon-star";
+      }
+      else
+      {
+        if(i == Math.round(rate))
+          stars[i] = "icon-star-half";
+        else
+          stars[i] =  "icon-star-outline";
+      }
+    //this.onEvent("onRates", index, e);
+    };
+    console.log("star: ", stars);
+    return stars;
+  }
 }

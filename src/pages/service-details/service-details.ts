@@ -10,10 +10,13 @@ import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { OrderCreatorPage } from '../order-creator/order-creator';
+import { HomePage } from '../home/home';
 import { LoginPage } from '../../pages/login/login';
 import { ChatPage } from '../../pages/chat/chat';
+import { MessagePage } from '../../pages/message/message';
 import { OrderData } from '../../providers/order-data/order-data';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
 
 /**
  * Generated class for the ServiceDetailsPage page.
@@ -42,6 +45,7 @@ export class ServiceDetailsPage {
 
   constructor(
     private afs: AngularFirestore,
+    public loginService: LoginServiceProvider,
     public chatService: ChatServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
     if(navParams.data != null)
@@ -76,16 +80,40 @@ export class ServiceDetailsPage {
     //console.log("message: ", this.message.message);
     if(event == "chat")
     {     
-      firebase.auth().onAuthStateChanged((user: firebase.User) => {
-        if (user) {
+      this.loginService.isUserLogined().then(result => {
+        if(result == true)
+        {
           if(firebase.auth().currentUser.uid != this.postObj.author)
           {
             var memberList = new Array<string>();
             memberList.push(this.postObj.author);
             memberList.push(firebase.auth().currentUser.uid);
-            this.navCtrl.parent.select(1);
-            this.navCtrl.setRoot(ChatPage, {"from": ServiceDetailsPage, "chatMemberList": memberList});
 
+            this.chatService.isExistedChat(memberList).then(result => {
+              if (result) {
+                this.chatService.getChat(result).then(chatData => {
+                  //console.log("chat page: Chat already existed!");
+                  //this.navCtrl.setRoot(HomePage);
+                  this.navCtrl.push(MessagePage, {"ChatData": chatData});
+                })
+                .catch(err => { console.log(err); });
+              }
+              else 
+              {
+                //console.log("enter new Chat!");
+                this.chatService.newChat(memberList).then(result => {
+                  this.chatService.getChat(result).then(chatData => {
+                    //console.log("no Chat created one new chat page getChat(): ", chatData);
+                    this.navCtrl.push(MessagePage, {"ChatData": chatData});
+                  })
+                  .catch(err => { console.log(err); });
+                })
+                .catch(error => { console.log(error); });
+              }
+            })
+            .catch(error => { console.log(error); });
+            
+            //this.navCtrl.setRoot(TabsPage, {"from": ServiceDetailsPage, "chatMemberList": memberList, "TabIndex": 1});
           }
           else
           {
@@ -95,18 +123,57 @@ export class ServiceDetailsPage {
         else
         {
           console.log("user is not logged in!");
-          this.navCtrl.setRoot(LoginPage, { "from": ServiceDetailsPage });
+          this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
         }
-      });
-      
+      })
+      .catch(err => {console.log(err);});
     }
 
     if(event == "service" && item)
     {
-      var newOrder = new OrderData();
-      newOrder.service = item as ServiceData;
-      newOrder.orderby = firebase.auth().currentUser.uid;
-      this.navCtrl.push(OrderCreatorPage,{"order": newOrder});
+      //if want to order a service has to be login.
+      this.loginService.isUserLogined().then(result => {
+        if(result == true)
+        {
+          if(item.provider != firebase.auth().currentUser.uid)
+          {
+            var newOrder = new OrderData();
+            newOrder.service = item as ServiceData;
+            newOrder.orderby = firebase.auth().currentUser.uid;
+            this.navCtrl.push(OrderCreatorPage,{"order": newOrder});
+          }
+          else
+          {
+            console.log("you are the same as the provider!");
+          }
+        }
+        else
+        {
+          this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
+        }
+      })
+      .catch(err => {console.log(err);});
+
+
+      /* firebase.auth().onAuthStateChanged((user: firebase.User) => {
+        if (user) {
+          if(item.provider != firebase.auth().currentUser.uid)
+          {
+            var newOrder = new OrderData();
+            newOrder.service = item as ServiceData;
+            newOrder.orderby = firebase.auth().currentUser.uid;
+            this.navCtrl.push(OrderCreatorPage,{"order": newOrder});
+          }
+          else
+          {
+            console.log("you are the same as the provider!");
+          }
+        }
+        else
+        {
+          
+        }
+      }); */
     }
   }
 
