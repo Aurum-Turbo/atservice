@@ -64,7 +64,7 @@ export class ProfilePage {
      else
      {
        console.log("no profile in the database");
-       this.userDataObj.setRate();
+       //this.userDataObj.setRate();
         this.usersCollection.doc(firebase.auth().currentUser.uid).set({
         uid: firebase.auth().currentUser.uid,
         type: this.userDataObj.type,
