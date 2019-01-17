@@ -16,7 +16,6 @@ import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
 import { ServiceDetailsPage } from '../service-details/service-details';
-import { AlternativeServiceOptions } from 'http2';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 

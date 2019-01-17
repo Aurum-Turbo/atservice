@@ -102,7 +102,7 @@ export class UserPage {
   userStars: string[] = null;
   userAddressArray: string[];
   selectedUserLocation: string = "";
-  serviceEnabled: string = "Enabled";
+
 
   //userDataObj = new UserData();
 
@@ -402,7 +402,6 @@ export class UserPage {
   toggleAvail(item: ServiceData) {
     if(item.availability)
     {
-      this.serviceEnabled = "Enable";
       this.sItemsCollection.doc(item.sid).update({"availability": false}).then(result => {
         console.log("disable Service successfully!");
       })
@@ -410,7 +409,6 @@ export class UserPage {
     }
     else
     {
-      this.serviceEnabled = "Disable";
       this.sItemsCollection.doc(item.sid).update({"availability": true}).then(result => {
         console.log("Enable Service successfully!");
       })

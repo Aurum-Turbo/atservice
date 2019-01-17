@@ -76,7 +76,7 @@ export class ProfilePage {
         location: "",
         brief: "",
         rate: 5,
-        star: ["","icon-star","icon-star","icon-star","icon-star","icon-star"]
+        //star: ["","icon-star","icon-star","icon-star","icon-star","icon-star"]
       })
       .catch(error => {
         // handle error by showing alert
