@@ -47,6 +47,8 @@ import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { LoginServiceProvider } from '../providers/login-service/login-service';
+import { AlertData } from '../providers/alert-data/alert-data';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,8 @@ import { ChatServiceProvider } from '../providers/chat-service/chat-service';
     Geolocation,
     NativeGeocoder,
     GeoServiceProvider,
-    ChatServiceProvider
+    ChatServiceProvider,
+    LoginServiceProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

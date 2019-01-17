@@ -11,6 +11,9 @@ import { MessagePage } from '../message/message';
 import { ChatData } from '../../providers/chat-data/chat-data';
 import { ServiceDetailsPage } from '../service-details/service-details';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
+
+import { FormControl } from '@angular/forms';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
 /**
  * Generated class for the ChatPage page.
  *
@@ -29,103 +32,52 @@ export class ChatPage {
   chatsCollection: AngularFirestoreCollection<ChatData>; //Firestore collection
   userCollection: AngularFirestoreCollection<UserData>;
   chats: Observable<ChatData[]>;
+
+  items: ChatData[];
   memberList: string[];
+  previousPage: any;
+
+  //for search
+  searchTerm: string = "";
+  searchControl: FormControl;
 
   constructor(
     private afs: AngularFirestore,
     public chatService: ChatServiceProvider,
+    public loginService: LoginServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
     this.userCollection = this.afs.collection('users');
 
     this.memberList = this.navParams.get('chatMemberList');
-    this.chats = this.chatService.loadChats();
+    //this.chats = this.chatService.loadChats();
+    this.previousPage = this.navParams.get('from');
+    this.searchControl = new FormControl();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
+    
   }
-
-  ngOnInit() {
-    firebase.auth().onAuthStateChanged((user: firebase.User) => {
-
-      if (user) 
+  
+  ionViewWillEnter() {
+    this.setFilteredItems();
+    this.loginService.isUserLogined().then(result => {
+      if(result)
       {
-        //configure the chats query
-
-        //console.log("page from: ", this.navParams.get('from'), "memberList: ", this.memberList);
-
-        switch (this.navParams.get('from')) {
-          case ServiceDetailsPage: {
-            //need to create a new chat and open message page
-            this.chatService.isExistedChat(this.memberList).then(result => {
-              if (result) {
-                this.chatService.getChat(result).then(chatData => {
-                  //console.log("chat page: Chat already existed!");
-                  this.navCtrl.push(MessagePage, { "from": ChatPage, "ChatData": chatData });
-                })
-                .catch(err => { console.log(err); });
-              }
-              else 
-              {
-                //console.log("enter new Chat!");
-                this.chatService.newChat(this.memberList).then(result => {
-                  this.chatService.getChat(result).then(chatData => {
-                    //console.log("no Chat created one new chat page getChat(): ", chatData);
-                    this.navCtrl.push(MessagePage, { "from": ChatPage, "ChatData": chatData });
-                  })
-                  .catch(err => { console.log(err); });
-                })
-                .catch(error => { console.log(error); });
-              }
-            })
-            .catch(error => { console.log(error); });
-
-            /*
-            this.chatService.newChat(this.navParams.get('chatMemberList')).then(result => {
-              this.chatService.getChat(result).then(chatData => {
-                console.log("chat page getChat(): ", chatData);
-                this.navCtrl.push(MessagePage, {"from": ChatPage, "ChatData": chatData});
-              })
-              .catch(err => {console.log(err);});
-            })
-            .catch(error => {console.log(error);});
-            */
-            break;
-          }
-          case LoginPage: {
-            //get current user profile
-            //this.curUserProfile = this.navParams.get('user');
-            //search all the chats
-            this.chats = this.chatService.loadChats();
-            break;
-          }
-          default: {
-            console.log("called the default! ");
-            //this.chatWithSingle = this.chatService.getChatWithProfile(chatData.members);
-            //this.chats = this.chatsCollection.valueChanges();
-
-
-            this.chats = this.chatService.loadChats();
-
-            /*this.chats.subscribe(chatData => {
-              //this.chatWithSingle = this.chatService.getChatWithProfile(chatData);
-            })*/
-            /*this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(
-              userInfo => {
-                //this.curUserProfile = userInfo;
-                this.chats = this.chatsCollection.valueChanges();
-              }
-            );*/
-            break;
-          }
+        this.chats = this.chatService.loadChats();
+        if(!this.items)
+        {
+          this.chats.subscribe(results => {
+            this.items = results;
+          });
         }
-
       }
-      else 
+      else
       {
-        this.navCtrl.setRoot(LoginPage, { "from": ChatPage });
+        this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
       }
-    });
+    })
+    .catch(err => {console.log(err);});
   }
 
   onClick(item: ChatData) {
@@ -136,6 +88,20 @@ export class ChatPage {
     console.log("delChat Chat: ", item);
     this.chatService.deleteChat(item);
     this.chats = this.chatService.loadChats();
+  }
+
+  setFilteredItems() {
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+      this.chats.subscribe(results => {
+        this.items = results.filter(item => {
+          if(item.chatWith)
+          {
+            console.log("search: ", item.chatWith.nickname);
+            return (item.chatWith.nickname).toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+          }
+        });
+      });
+    });
   }
 
 }

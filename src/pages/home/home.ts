@@ -73,11 +73,11 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-     this.presentConfirm();
-     this.setFilteredItems();
+    console.log('ionViewDidLoad HomePage');
+  }
 
-     console.log('ionViewDidLoad HomePage');
-    //  console.log(this.isClicked);
+  ionViewWillEnter() {
+    this.setFilteredItems();
   }
 
   setFilteredItems() {
@@ -90,9 +90,9 @@ export class HomePage {
     });
   }
 
-  ionViewWillEnter(){
+  ngOnInit() {
+    this.presentConfirm();
     //get location 
-
     if(!this.geoService.curLocation)
     {
       this.geoService.geoCurLocation().then(pos => {

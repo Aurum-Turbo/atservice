@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
 import { UserPage } from '../user/user';
+import { HomePage } from '../home/home';
 
 
 import { UserData } from '../../providers/user-data/user-data';
@@ -13,6 +14,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase/app';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
+import { ServiceDetailsPage } from '../service-details/service-details';
+import { AlternativeServiceOptions } from 'http2';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 
 /**
@@ -36,6 +41,8 @@ export class LoginPage {
   
   userType: string = "user";
 
+  previousPage: any;
+
   //itemsCollection: AngularFirestoreCollection<UserData>; //Firestore collection
 
   //form group
@@ -56,6 +63,8 @@ export class LoginPage {
   constructor(
     private afs: AngularFirestore,
     private fb: FormBuilder,
+    public loginService: LoginServiceProvider,
+    private alertService: AlertServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
     //this.itemsCollection = this.afs.collection("users");
@@ -91,6 +100,8 @@ export class LoginPage {
 
     });
 
+    this.previousPage = this.navParams.get("from");
+
   }
 
   ionViewDidLoad() {
@@ -98,26 +109,15 @@ export class LoginPage {
   }
 
   ionViewWillEnter() {
-    console.log("page name: ", this.navCtrl.getActive().name);
-
-    if(this.navCtrl.getActive().name == "LoginPage")
-    {
-      firebase.auth().onAuthStateChanged(user => {
-        if(user)
-        {
-          this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(userInfo => {
-            console.log("login Page NavParam: ", this.navParams.get("from"));
-            this.navCtrl.setRoot(this.navParams.get("from"), {"user": userInfo});
-          });
-          console.log("user is logged in");
-        }
-        else
-        {
-          //this.navCtrl.setRoot(LoginPage, {"from": MessagePage});
-          console.log("user is not logged in");
-        }
-      });
-    }
+    //console.log("page name: ", this.navCtrl.getActive().name);
+    this.loginService.isUserLogined().then(result => {
+      if(result)
+      {
+        //console.log("enter LoginPage: ", this.previousPage);
+        this.navCtrl.setRoot(this.previousPage);
+      }
+    })
+    .catch(err => {console.log(err);});
   }
 
   ionViewWillLeave() {
@@ -136,16 +136,38 @@ export class LoginPage {
   login() {
       firebase.auth().signInWithEmailAndPassword(this.loginForm.value.email,this.loginForm.value.password)
       .then(response => {
+        //console.log("previousPage: ", this.previousPage);
+        if(response)
+        {
+          if(this.previousPage)
+          {
+            if(this.previousPage == ServiceDetailsPage)
+            {
+              this.navCtrl.pop();
+            }
+            else
+            {
+              this.navCtrl.setRoot(this.previousPage, this.navParams);
+            }
+            
+          }
+          else
+          {
+            //this.navCtrl.setRoot(HomePage);
+          }
+          
+        }
         //this.navCtrl.setRoot(UserPage);
         //this.dataService.loadCurUserData();
-        this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(
-          userInfo => {this.navCtrl.setRoot(this.navParams.get("from"), {"user": userInfo});}
+        /* this.afs.collection('users').doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(
+          userInfo => {this.navCtrl.setRoot(this.navParams.get("from"));}
         );
-        
+         */
       })
       .catch(error => {
         // handle error by showing alert
-        console.log("login failed");
+        this.alertService.presentToast(error);
+        //console.log("login failed");
       });
   }
 

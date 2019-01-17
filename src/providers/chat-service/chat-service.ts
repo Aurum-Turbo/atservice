@@ -30,7 +30,7 @@ export class ChatServiceProvider {
   //activeChatMemberList: string[];
 
   constructor(
-    private afs: AngularFirestore,
+    private afs: AngularFirestore
   ) {
     console.log('Hello ChatServiceProvider Provider');
     //this.activeChatMemberList = new Array<string>(); 
@@ -214,7 +214,84 @@ export class ChatServiceProvider {
     });
     
     return this.mesgQueryCollection.valueChanges();
+  }
 
+  sendsysMessage(mesg: string): Promise<any> {
+    return new Promise(resolve => {
+      if(mesg.length > 0)
+      {
+        var memberList: string[];
+        memberList.push("IUF5wE5a1xTkp1LozWl88GqMfs23");
+        memberList.push(firebase.auth().currentUser.uid);
+        this.isExistedChat(memberList).then(result => {
+          if (result) {
+            this.getChat(result).then(chatData => {
+              //message added
+              this.mesgCollection.add({
+                "mid": "",
+                "cid": chatData.cid,
+                "sender": chatData.chatOwner,
+                //"senderid": this.chatData.chatOwner.uid,
+                "message": mesg,
+                "status": "new"
+              })
+              .then(docRef => {
+                this.mesgCollection.doc(docRef.id).update({
+                  "mid": docRef.id,
+                  "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+                  "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                });
+      
+                this.chatsCollection.doc(chatData.cid).update({
+                  "latestMesg": mesg,
+                  "latestMesgSender": chatData.chatOwner.nickname,
+                  "status": "new",
+                  "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                });
+              })
+              .catch(error => {console.log(error);});
+
+            })
+            .catch(err => { console.log(err); });
+          }
+          else 
+          {
+            //console.log("enter new Chat!");
+            this.newChat(memberList).then(result => {
+              this.getChat(result).then(chatData => {
+                //console.log("no Chat created one new chat page getChat(): ", chatData);
+                this.mesgCollection.add({
+                  "mid": "",
+                  "cid": chatData.cid,
+                  "sender": chatData.chatOwner,
+                  //"senderid": this.chatData.chatOwner.uid,
+                  "message": mesg,
+                  "status": "new"
+                })
+                .then(docRef => {
+                  this.mesgCollection.doc(docRef.id).update({
+                    "mid": docRef.id,
+                    "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+                    "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                  });
+        
+                  this.chatsCollection.doc(chatData.cid).update({
+                    "latestMesg": mesg,
+                    "latestMesgSender": chatData.chatOwner.nickname,
+                    "status": "new",
+                    "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                  });
+                })
+                .catch(error => {console.log(error);});
+              })
+              .catch(err => { console.log(err); });
+            })
+            .catch(error => { console.log(error); });
+          }
+        })
+        .catch(error => { console.log(error); });
+      }
+    })
   }
 
   newMessage(chatData: ChatData, mesg: string): Promise<any> {

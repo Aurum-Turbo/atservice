@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
+import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
 
 /**
  * Generated class for the ProfilePage page.
@@ -25,15 +26,27 @@ export class ProfilePage {
   userDataObj: UserData = new UserData();
   dateofBirth: Date = new Date();
   isGender: Boolean = true;
+  address: string[];
+  selectedAddr: string = "";
 
-  userDocument: AngularFirestoreDocument<UserData>;
-  currentUser: Observable<UserData>; 
+  usersCollection: AngularFirestoreCollection<UserData>; //Firestore collection
+  users: Observable<UserData[]>;
+
   genders: string[] = ['Male','Female','Dont wanna share'];
   constructor(
     private afs: AngularFirestore,
     public navCtrl: NavController, public navParams: NavParams) {
     //this.userDataObj.avatar = "assets/imgs/avatar.png";
     this.userDataObj.gender = "Female";
+
+    this.usersCollection = this.afs.collection('users');
+
+    this.address = this.navParams.get('address');
+    if(this.address)
+    {
+      this.selectedAddr = this.address[0];
+    }
+    
   }
 
   ionViewDidLoad() {
@@ -41,41 +54,43 @@ export class ProfilePage {
   }
 
   ionViewWillEnter() {
-    /*
-    firebase.firestore().collection("users").where("uid","==",firebase.auth().currentUser.uid).get()
-    .then(snapshot => {snapshot.forEach(change => {
-      this.userDataObj = change.data() as UserData;
-      });
-      console.log("data: ", this.userDataObj);
-    })
-    .catch(error => {
-      console.log(error);
-    });
     
-    if(this.userDataObj.avatar == null)
-    {
-      this.userDataObj.avatar = "assets/imgs/avatar.png";
-    }
-    */
-   this.userDocument = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid);
-   this.userDocument.valueChanges().subscribe(value => {
+   this.usersCollection.doc<UserData>(firebase.auth().currentUser.uid).valueChanges().subscribe(value => {
      if(value)
      {
        this.userDataObj = value;
+       console.log("user profile loaded: ", this.userDataObj);
      }
+     else
+     {
+       console.log("no profile in the database");
+       this.userDataObj.setRate();
+        this.usersCollection.doc(firebase.auth().currentUser.uid).set({
+        uid: firebase.auth().currentUser.uid,
+        type: this.userDataObj.type,
+        status: "created",
+        avatar: "assets/imgs/avatar.png",
+        nickname: "nickname",
+        gender: "Female",
+        birthday: "",
+        location: "",
+        brief: "",
+        rate: 5,
+        star: ["","icon-star","icon-star","icon-star","icon-star","icon-star"]
+      })
+      .catch(error => {
+        // handle error by showing alert
+        console.log(error);
+      });
+      //this.navCtrl.setRoot(UserPage);
+    }
    });
   }
+
   ionViewWillLeave() {
     //create service
-    this.userDocument.update({
-      status: "updated",
-      avatar: this.userDataObj.avatar,
-      nickname: this.userDataObj.nickname,
-      gender: this.userDataObj.gender,
-      birthday: this.userDataObj.birthday,
-      location: this.userDataObj.location,
-      brief: this.userDataObj.brief,
-    });
+    console.log("profile: ", this.userDataObj);
+    this.usersCollection.doc(firebase.auth().currentUser.uid).update(this.userDataObj);
 
     //console.log(this.userDataObj);
     //this.dataService.updateServiceList("new",this.serviceObj);

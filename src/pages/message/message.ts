@@ -15,6 +15,7 @@ import { ChatPage } from '../chat/chat';
 import { TabsPage } from '../tabs/tabs';
 
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
 
 /**
  * Generated class for the MessagePage page.
@@ -44,52 +45,27 @@ export class MessagePage {
   constructor(
     private afs: AngularFirestore,
     public chatService: ChatServiceProvider,
+    public loginService: LoginServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
       this.chatData = new ChatData();
       this.chatData = this.navParams.get('ChatData');
       this.UserCollection = this.afs.collection('users');
-      this.chatsCollection = this.afs.collection('chats');
-
-      
-      
+      this.chatsCollection = this.afs.collection('chats'); 
   }
 
-  ngOnInit() {
-    firebase.auth().onAuthStateChanged((user: firebase.User) => {
-      if (user) {
-
-        switch (this.navParams.get('from')) {
-          /*case ServiceDetailsPage: {
-            this.chatData = this.navParams.get('ChatData');
-            break;
-          }*/
-
-          case ChatPage: {
-            
-            //this.userProfile = this.navParams.get('user');
-            console.log("Message chatData: ", this.navParams.get('ChatData'));
-            //this.chatWith = this.chatService.getChatWithProfile(this.chatData.members);
-            //this.chatSender = this.chatService.getSenderProfile(this.chatData.members);
-            this.chatData = this.navParams.get('ChatData');
-            this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
-            break;
-          }
-
-          default: {
-            //this.mesgs = this.mesgCollection.valueChanges();
-            //this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
-            console.log("return! wrong way!");
-            //this.navCtrl.popToRoot();
-            break;
-          }
-        }
+  ionViewWillEnter() {
+    this.loginService.isUserLogined().then(result => {
+      if(result)
+      {
+        this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
       }
       else
       {
         this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
       }
-    });
+    })
+    .catch(err => {console.log(err);});
   }
 
   ionViewDidLoad() {

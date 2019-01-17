@@ -671,6 +671,25 @@ $loading-md-background: theme-colors('mainColors', 'primary');
 $loading-md-text-color: theme-colors('textColors', 'primary');
 $loading-md-spinner-color: theme-colors('textColors', 'primary');
 
+//setting for toast
+$toast-ios-background: theme-colors('mainColors', 'primary', 'opacity60');
+$toast-ios-title-font-size: 16px;
+//$toast-ios-title-color: theme-colors('textColors', 'primary');
+$toast-md-background: theme-colors('mainColors', 'secondary');
+$toast-md-title-color: theme-colors('textColors', 'secondary');
+$toast-wp-background: theme-colors('mainColors', 'secondary');
+$toast-wp-title-color: theme-colors('textColors', 'secondary');
+.customToast {
+  margin-top: 48px;
+  .toast-container{
+    text-align: center;
+    font-weight: 500;
+    padding: 0px;
+    //height: 60px;
+    border-radius: 5px;
+  }
+}
+
   // Alert message
   .alert-md {
     .alert-title {
