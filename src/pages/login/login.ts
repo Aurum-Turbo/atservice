@@ -195,7 +195,7 @@ export class LoginPage {
         console.log(err);
       });*/
       var userObj = new UserData();
-      userObj.setRate();
+      //userObj.setRate();
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).set({
         uid: firebase.auth().currentUser.uid,
         type: this.userType,

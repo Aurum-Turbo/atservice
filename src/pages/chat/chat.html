@@ -16,7 +16,7 @@
 <ion-content>
   <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of items | async">
+    <ion-item-sliding *ngFor="let item of items">
       <ion-item  (click)="onClick(item)">
         <ion-row>
           <ion-col col-2>    
