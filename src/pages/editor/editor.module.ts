@@ -4,7 +4,7 @@ import { EditorPage } from './editor';
 
 @NgModule({
   declarations: [
-    EditorPage,
+    //EditorPage,
   ],
   imports: [
     IonicPageModule.forChild(EditorPage),

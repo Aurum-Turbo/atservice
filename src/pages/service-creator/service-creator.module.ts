@@ -4,7 +4,7 @@ import { ServiceCreatorPage } from './service-creator';
 
 @NgModule({
   declarations: [
-    ServiceCreatorPage,
+    //ServiceCreatorPage,
   ],
   imports: [
     IonicPageModule.forChild(ServiceCreatorPage),
