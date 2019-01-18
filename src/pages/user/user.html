@@ -54,7 +54,8 @@
 
           </button>
           <ion-item-options side="right">
-            <button ion-button (click)="toggleAvail(item)">{{serviceEnabled}}</button>    
+            <button ion-button [hidden]="!item.availability" (click)="toggleAvail(item)">Disable</button>
+            <button ion-button [hidden]="item.availability" (click)="toggleAvail(item)">Enable</button>             
             <button ion-button color="danger" (click)="delService(item)">Delete</button>
           </ion-item-options>
         </ion-item-sliding>
