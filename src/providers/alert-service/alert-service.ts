@@ -7,7 +7,7 @@ import { AlertController, ToastController } from 'ionic-angular';
 import { AlertData } from '../alert-data/alert-data';
 import { UserData } from '../user-data/user-data';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 /*
   Generated class for the AlertServiceProvider provider.

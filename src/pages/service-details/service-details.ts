@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import firebase from 'firebase/app';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { OrderCreatorPage } from '../order-creator/order-creator';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../../pages/login/login';

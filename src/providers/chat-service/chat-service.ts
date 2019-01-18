@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserData } from '../../providers/user-data/user-data';
 import { ChatData } from '../../providers/chat-data/chat-data';
 import { MessageData } from '../../providers/message-data/message-data';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { resolve } from 'url';
 

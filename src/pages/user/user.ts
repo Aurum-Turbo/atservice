@@ -15,7 +15,7 @@ import { JobData } from '../../providers/job-data/job-data';
 import { ServiceData } from '../../providers/service-data/service-data';
 import { AlertData } from '../../providers/alert-data/alert-data';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 

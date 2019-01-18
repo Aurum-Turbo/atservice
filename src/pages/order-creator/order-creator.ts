@@ -7,8 +7,8 @@ import { AlertData } from '../../providers/alert-data/alert-data';
 
 import firebase from 'firebase/app';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';

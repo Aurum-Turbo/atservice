@@ -13,7 +13,7 @@ import { AlertController, ToastController } from 'ionic-angular';
 import { AlertData } from '../../providers/alert-data/alert-data';
 import { UserData } from '../../providers/user-data/user-data';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';

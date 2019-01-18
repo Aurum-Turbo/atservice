@@ -6,10 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 
 import { NgxMasonryModule } from 'ngx-masonry';
@@ -77,8 +77,15 @@ import { AlertData } from '../providers/alert-data/alert-data';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
-    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
-    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: 'true', mode:'ios', }),
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyCUkQ_UrN0g4cUFKaN427ltPvaLMJi78ck",
+      authDomain: "atservice-c4918.firebaseapp.com",
+      databaseURL: "https://atservice-c4918.firebaseio.com",
+      projectId: "atservice-c4918",
+      storageBucket: "atservice-c4918.appspot.com",
+      messagingSenderId: "149340274232"
+  }, "A.T. Service"),
+    IonicModule.forRoot(MyApp),
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     })

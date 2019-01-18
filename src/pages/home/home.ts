@@ -5,7 +5,7 @@ import { PostData } from '../../providers/post-data/post-data';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 // import { LoadingServiceProvider } from '../../providers/loading-service/loading-service';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/Observable';
 import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
