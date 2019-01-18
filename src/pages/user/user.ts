@@ -100,6 +100,7 @@ export class UserPage {
   //userDocument: AngularFirestoreDocument<UserData>;
   currentUser: Observable<UserData>; // read collection
   userStars: string[] = null;
+  userData: UserData;
   userAddressArray: string[];
   selectedUserLocation: string = "";
 
@@ -134,6 +135,7 @@ export class UserPage {
         this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
         this.currentUser.subscribe(result => {
           this.userStars = this.getStars(result.rate);
+          this.userData = result;
         });
 
         //load geo info
@@ -213,7 +215,7 @@ export class UserPage {
   onClick(event: string, item: any) {
     if (event == "new") {
       //console.log("set author: ", this.userObj.nickname);
-      this.navCtrl.push(EditorPage, { "post": new PostData() });
+      this.navCtrl.push(EditorPage, { "post": new PostData(), "user": this.userData });
     }
 
     if (event == "edit") {

@@ -17,6 +17,7 @@ import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
 
 //import { QuillModule } from 'ngx-quill';
 import geofirex from 'geofirex';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 /**
  * Generated class for the EditorPage page.
@@ -34,8 +35,10 @@ import geofirex from 'geofirex';
 
 
 export class EditorPage {
-  
+
   postObj: PostData;
+  currentUser: UserData;
+
   uploadImageList: ImageData[];
 
   calltype = "creating";
@@ -50,24 +53,26 @@ export class EditorPage {
   uploadProgress: Observable<number>;
   downloadURL: string;
 
-  disableBtns: boolean = false;
-  
+  disableBtns: boolean = true;
+
   constructor(
     private afs: AngularFirestore,
     private afStorage: AngularFireStorage,
     private geoService: GeoServiceProvider,
+    private alertService: AlertServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
 
-      this.itemsCollection = this.afs.collection("posts");
-      if(navParams.data != null)
-      {
-        this.postObj = navParams.get("post"); 
+    this.itemsCollection = this.afs.collection("posts");
+    if (this.navParams.data != null) {
+      this.postObj = this.navParams.get("post");
 
-        if(this.postObj.pid)
-        {
-          this.calltype = "editing";
-        }
+      if (this.postObj.pid) {
+        this.calltype = "editing";
+        this.disableBtns = false;
       }
+
+      this.currentUser = this.navParams.get("user");
+    }
   }
 
   ionViewDidLoad() {
@@ -75,10 +80,129 @@ export class EditorPage {
     //this.dataService.loadCurUserData();
   }
 
+  ionViewWillLeave() {
+
+    //build up the post
+    //update the database
+    //this.disableBtns = true;
+    if (this.postObj.images.length < 0) {
+      this.alertService.presentToast("[Info]: Post will not be saved because there's no image");
+    }
+    else {
+      if (this.postObj.description == "") {
+        this.alertService.presentToast("[Info]: Post will not be saved because there's no description");
+      }
+      else {
+        if (this.calltype == "creating") {
+          var currentDate = new Date();
+          this.itemsCollection.add({
+            "pid": "",
+            "status": "created",
+            "images": this.postObj.images,
+            "imgHeights": this.postObj.imgHeights,
+            "description": this.postObj.description,
+            "author": this.currentUser.uid,
+            "nickname": this.currentUser.nickname,
+            "avatar": this.currentUser.avatar,
+            "tags": "",
+            "rank": 0,
+            "likeList": [],
+            "like": 0,
+            "follow": [],
+            "comments": [],
+            "postLocation": this.geoService.curLocation.data,
+            "postDate": currentDate.getDate().toString(),
+            "postMonth": (currentDate.getMonth() + 1).toString(),
+            "createAt": firebase.firestore.FieldValue.serverTimestamp(),
+            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+          })
+            .then(docRef => {
+              this.postObj.pid = docRef.id;
+              this.itemsCollection.doc(docRef.id).update({
+                "pid": docRef.id,
+                "status": "updated",
+                "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+              });
+              //upload all images
+              if (this.postObj.pid != "" && this.postObj.images.length > 0) {
+                //console.log("upload Image number: ", this.postObj.images.length);
+
+                this.postObj.images.forEach(image => {
+                  if (!image.includes("https")) {
+                    var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
+                    this.afStorage.ref(remotePath).putString(image, 'data_url')
+                      .then(snapshot => {
+                        if (snapshot.state == "success") {
+                          snapshot.ref.getDownloadURL().then(
+                            remoteURL => {
+                              var imgIndex = this.postObj.images.indexOf(image);
+                              this.postObj.images[imgIndex] = remoteURL;
+                              //console.log("imgIndex: ", imgIndex, " URL: ", remoteURL);
+
+                              //update database once complete the upload
+                              this.itemsCollection.doc(this.postObj.pid).update({
+                                "pid": docRef.id,
+                                "status": "updated",
+                                "images": this.postObj.images,
+                                "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                              })
+                                .then(result => {
+                                  this.alertService.presentToast("[Info]: Post Upload Successfully!");
+                                })
+                                .catch(err => { console.log(err) });
+                            })
+                            .catch(err => { console.log(err) });
+                        }
+                      })
+                      .catch(err => { console.log(err); });
+                  }
+                });
+                // this.navCtrl.pop();
+              }
+            })
+            .catch(error => console.log(error));
+        }
+
+        if (this.calltype == "editing") {
+          //upload all images
+          if (this.postObj.pid != "" && this.postObj.images.length > 0) {
+            //console.log("upload Image number: ", this.postObj.images.length);
+            this.postObj.images.forEach(image => {
+              if (!image.includes("https")) {
+                var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
+                this.afStorage.ref(remotePath).putString(image, 'data_url')  //.upload(item.remotePath, item.localFile);
+                  .then(snapshot => {
+                    if (snapshot.state == "success") {
+                      snapshot.ref.getDownloadURL().then(
+                        remoteURL => {
+                          var imgIndex = this.postObj.images.indexOf(image);
+                          this.postObj.images[imgIndex] = remoteURL;
+                          //update database once complete the upload
+                          this.itemsCollection.doc(this.postObj.pid).update({
+                            "status": "updated",
+                            "images": this.postObj.images,
+                            "imgHeights": this.postObj.imgHeights,
+                            "description": this.postObj.description,
+                            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+                          });
+                        });
+                    }
+                  })
+                  .catch(err => { console.log(err); });
+              }
+            });
+          }
+        }
+      }
+    }
+
+
+
+  }
+
 
   onSelect(event) {
-    if(this.postObj.images.length < 6)
-    {
+    if (this.postObj.images.length < 6) {
       const curFile = event.target.files[0];
       console.log("load image: ", curFile.name);
       //get image data
@@ -90,193 +214,71 @@ export class EditorPage {
 
       reader.onloadend = () => {
         img.src = reader.result.toString();
-        
+
         img.onload = function () {
           console.log(img.height + " / " + img.width);
           that.postObj.images.push(img.src);
-          that.postObj.imgHeights.push(Math.round(190/img.width*img.height));
+          that.postObj.imgHeights.push(Math.round(190 / img.width * img.height));
           //that.uploadImageList.push(curImage);
         }
       };
     }
-    else
-    {
+    else {
       console.log("image number is exceeded the limitation (6)");
     }
-  } 
+  }
 
-  onClick(event:string, item: any) {
-    if(event == "discardImage" && item)
-    {
+  onClick(event: string, item: any) {
+    if (event == "discardImage" && item) {
       var index = this.postObj.images.indexOf(item);
       //delete the URL in the images
-      if(index > -1)
-      {
-        if(index == 0 && this.postObj.images.length == 1)
-        {
+      if (index > -1) {
+        if (index == 0 && this.postObj.images.length == 1) {
           console.log("at least one photo in the list");
         }
-        else
-        {
-          this.postObj.images.splice(index,1);
-          this.postObj.imgHeights.splice(index,1);
+        else {
+          this.postObj.images.splice(index, 1);
+          this.postObj.imgHeights.splice(index, 1);
 
           //console.log("discard item: ", item);
 
-          if(item.includes("https"))
-          {
+          if (item.includes("https")) {
             this.afStorage.storage.refFromURL(item).delete().then(result => { //delete the image in fire storage
               this.itemsCollection.doc(this.postObj.pid).update({
                 "status": "updated",
                 "images": this.postObj.images,
                 "imgHeights": this.postObj.imgHeights,
-                "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
+                "updateAt": firebase.firestore.FieldValue.serverTimestamp()
               })
-              .catch(err => {console.log(err);});
+                .catch(err => { console.log(err); });
             })
-            .catch(err => {console.log(err);});
+              .catch(err => { console.log(err); });
           }
         }
       }
     }
 
-    if(event == "discard")
-    {
+    if (event == "discard") {
       this.disableBtns = true;
       //delete all images first
-      if(this.postObj.images.length > 0 && this.postObj.description != null)
-      {
+      if (this.postObj.images.length > 0 && this.postObj.description != null) {
         this.postObj.images.forEach(image => {
-          if(image.includes("https"))
-          {
+          if (image.includes("https")) {
             this.afStorage.storage.refFromURL(image).delete().then(result => {
             })
-            .catch(err => {console.log(err);});
+              .catch(err => { console.log(err); });
           }
         });
-        
+
         this.itemsCollection.doc(this.postObj.pid).delete().then(result => {
           console.log("delete success");
-          this.calltype ="deleting";
+          this.calltype = "deleting";
           this.navCtrl.pop();
         })
-        .catch(err => {console.log(err);});
+          .catch(err => { console.log(err); });
       }
-      else
-      {
+      else {
         this.navCtrl.pop();
-      }
-    }
-
-    if(event == "save")
-    {
-      //build up the post
-      //update the database
-      this.disableBtns = true;
-      if(this.calltype == "creating" && this.postObj.images.length > 0 && this.postObj.description != "")
-      {
-        var currentDate = new Date();
-        /*this.itemsCollection.add({
-          "pid": "",
-          "status": "created",
-          "images": this.postObj.images,
-          "imgHeights": this.postObj.imgHeights,
-          "description": this.postObj.description,
-          "author":this.dataService.userDataObj.uid,
-          "nickname": this.dataService.userDataObj.nickname,
-          "avatar": this.dataService.userDataObj.avatar,
-          "tags": "",
-          "rank": 0,
-          "likeList": [],
-          "like": 0,
-          "follow": [],
-          "comments": [],
-          "postLocation": this.geoService.curLocation.data,
-          "postDate": currentDate.getDate().toString(),
-          "postMonth": (currentDate.getMonth()+1).toString(),
-          "createAt": firebase.firestore.FieldValue.serverTimestamp(),
-          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(docRef => {
-          this.postObj.pid = docRef.id;
-          this.itemsCollection.doc(docRef.id).update({
-            "pid": docRef.id,
-            "status": "updated",
-            "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-          });
-          //upload all images
-          if(this.postObj.pid != "" && this.postObj.images.length > 0)
-          {
-            console.log("upload Image number: ", this.postObj.images.length);
-            
-            this.postObj.images.forEach(image => {
-              if(!image.includes("https"))
-              {
-                var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
-                this.afStorage.ref(remotePath).putString(image,'data_url')
-                .then(snapshot => {
-                  if(snapshot.state == "success")
-                  {
-                    snapshot.ref.getDownloadURL().then(
-                      remoteURL => { 
-                        var imgIndex  = this.postObj.images.indexOf(image);
-                        this.postObj.images[imgIndex] = remoteURL;
-                        //console.log("imgIndex: ", imgIndex, " URL: ", remoteURL);
-
-                        //update database once complete the upload
-                        this.itemsCollection.doc(this.postObj.pid).update({
-                          "pid": docRef.id,
-                          "status": "updated",
-                          "images": this.postObj.images,
-                          "updateAt": firebase.firestore.FieldValue.serverTimestamp()
-                        })
-                        .catch(err=>{console.log(err)});
-                      })
-                      .catch(err=>{console.log(err)});
-                  }
-                })
-                .catch(err => {console.log(err);});
-              }
-            });
-            // this.navCtrl.pop();
-          }
-        })
-        .catch(error => console.log(error)); */
-      }
-
-      if(this.calltype == "editing" && this.postObj.images.length > 0 && this.postObj.description != null)
-      {
-        //upload all images
-        if(this.postObj.pid != "" && this.postObj.images.length > 0)
-        {
-          console.log("upload Image number: ", this.postObj.images.length);
-          this.postObj.images.forEach(image => {
-            if(!image.includes("https"))
-            {
-              var remotePath = firebase.auth().currentUser.uid + "/images/" + (new Date()).getTime();
-              this.afStorage.ref(remotePath).putString(image,'data_url')  //.upload(item.remotePath, item.localFile);
-              .then(snapshot => {
-                if(snapshot.state == "success")
-                {
-                  snapshot.ref.getDownloadURL().then(
-                    remoteURL => {
-                      var imgIndex = this.postObj.images.indexOf(image);
-                      this.postObj.images[imgIndex] = remoteURL;
-                      //update database once complete the upload
-                      this.itemsCollection.doc(this.postObj.pid).update({
-                        "status": "updated",
-                        "images": this.postObj.images,
-                        "imgHeights": this.postObj.imgHeights,
-                        "description": this.postObj.description,
-                        "updateAt": firebase.firestore.FieldValue.serverTimestamp()  
-                      });
-                    });
-                }
-              })
-              .catch(err => {console.log(err);});
-            }
-          });
-        }
       }
     }
   }

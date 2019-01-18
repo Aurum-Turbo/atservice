@@ -74,9 +74,6 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-  }
-
-  ionViewWillEnter() {
     this.setFilteredItems();
   }
 
