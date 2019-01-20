@@ -23,8 +23,6 @@ import { GeoFirePoint, GeoFireCollectionRef, GeoQueryDocument } from 'geofirex';
 import { AppSettings } from '../../providers/app-setting';
 import { FormControl } from '@angular/forms';
 
-
-
 /**
  * Generated class for the HomePage page.
  *

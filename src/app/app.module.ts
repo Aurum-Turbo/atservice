@@ -77,15 +77,11 @@ import { AlertData } from '../providers/alert-data/alert-data';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyCUkQ_UrN0g4cUFKaN427ltPvaLMJi78ck",
-      authDomain: "atservice-c4918.firebaseapp.com",
-      databaseURL: "https://atservice-c4918.firebaseio.com",
-      projectId: "atservice-c4918",
-      storageBucket: "atservice-c4918.appspot.com",
-      messagingSenderId: "149340274232"
-  }, "A.T. Service"),
-    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: 'true',
+      iconMode: 'ios',
+    }),
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     })

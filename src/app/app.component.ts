@@ -9,8 +9,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { GeoServiceProvider } from '../providers/geo-service/geo-service';
 
-import { AppSettings } from '../providers/app-setting';
 import firebase from 'firebase/app';
+import { AppSettings } from '../providers/app-setting';
+
+require('intersection-observer');
+
 @Component({  
   templateUrl: 'app.html'
 })
@@ -27,15 +30,16 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      /* firebase.initializeApp({
-        apiKey: "AIzaSyCUkQ_UrN0g4cUFKaN427ltPvaLMJi78ck",
-        authDomain: "atservice-c4918.firebaseapp.com",
-        databaseURL: "https://atservice-c4918.firebaseio.com",
-        projectId: "atservice-c4918",
-        storageBucket: "atservice-c4918.appspot.com",
-        messagingSenderId: "149340274232"
-    }); */
     });
+
+    if(firebase.apps.length <= 0)
+    {
+      firebase.initializeApp(AppSettings.FIREBASE_CONFIG); 
+    }
+    else
+    {
+      firebase.app();
+    }
 
     localStorage.ready().then(() => {
       this.rootPage = TabsPage;
