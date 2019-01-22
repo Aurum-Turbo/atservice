@@ -57,7 +57,9 @@ export class ServiceDetailsPage {
     this.itemsCollection = this.afs.collection("messages");
 
     console.log("get post: ", this.postObj);
+    // console.log("get service: ", this.serviceObj);
     console.log("Date: ", this.date);
+  
   }
 
   ionViewDidLoad() {
@@ -71,8 +73,9 @@ export class ServiceDetailsPage {
     this.sItemsCollection = this.afs.collection("services", ref => {
       return ref.where("provider", "==", this.postObj.author);
     });
-
+      
     this.sItems = this.sItemsCollection.valueChanges();
+    
   }
 
   onClick(event: string, item: any) {

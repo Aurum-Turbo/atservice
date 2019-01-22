@@ -40,19 +40,35 @@
     <div [ngSwitch]="tabs">
       <!-- created service -->
       <div  *ngSwitchCase="'0'">
-        <ion-item-sliding *ngFor="let item of sItems | async">
-          <button ion-item  (click)="onClick('service', item)">
-         
-              <!-- <ion-item> -->
+
+
+
+        <ion-item-sliding *ngFor="let item of sItems | async" margin-top no-lines>
+          <ion-item no-lines>
+            <ion-row>
+              <ion-col col-6>
+                <ion-row>
+                      <h2 item-title>{{item.description}}</h2>
+                </ion-row>
+                <ion-row margin-top>
+                        <h3 float-left ion-text item-subtitle>
+                          {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
+                        </h3>
+                </ion-row>
+              </ion-col> 
+              <ion-col>
+                <Button ion-button float-right default-button (click)="onClick('service', item)">Edit</Button>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+  <!--         <button ion-item  (click)="onClick('service', item)"  no-lines>
                 <h1 item-title item-start>{{item.description}}</h1>
-              <!-- </ion-item>
-              <ion-item> -->
+  
                    <h2 item-title item-end>
                   {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
                   </h2>
-              <!-- </ion-item>  -->
-
-          </button>
+          </button> -->
           <ion-item-options side="right">
             <button ion-button [hidden]="!item.availability" (click)="toggleAvail(item)">Disable</button>
             <button ion-button [hidden]="item.availability" (click)="toggleAvail(item)">Enable</button>             
@@ -194,7 +210,7 @@
           </ion-thumbnail>
           <item-content  item-end >
             <div id="description" innerHTML = {{item.description}} text-justify></div>
-            <div id="date">{{item.updateAt.toDate() | date:"short"}}</div>
+            <div id="date">{{item.updateAt?.toDate() | date:"short"}}</div>
           </item-content>
         </ion-item>   
         <ion-item-options no-lines>
