@@ -40,12 +40,9 @@
     <div [ngSwitch]="tabs">
       <!-- created service -->
       <div  *ngSwitchCase="'0'">
-
-
-
-        <ion-item-sliding *ngFor="let item of sItems | async" margin-top no-lines>
-          <ion-item no-lines>
-            <ion-row>
+        <ion-item-sliding *ngFor="let item of sItems | async" >
+          <ion-item no-padding>
+            <ion-row margin-left>
               <ion-col col-6>
                 <ion-row>
                       <h2 item-title>{{item.description}}</h2>
@@ -57,7 +54,7 @@
                 </ion-row>
               </ion-col> 
               <ion-col>
-                <Button ion-button float-right default-button (click)="onClick('service', item)">Edit</Button>
+                <Button ion-button small float-right default-button (click)="onClick('service', item)">Edit</Button>
               </ion-col>
             </ion-row>
           </ion-item>
