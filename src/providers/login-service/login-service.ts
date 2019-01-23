@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../../pages/login/login';
-
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the LoginServiceProvider provider.
@@ -15,25 +12,25 @@ import firebase from 'firebase/app';
 @Injectable()
 export class LoginServiceProvider {
 
-  constructor(
-  ) {
+  isUserLoggedIn: boolean = false;
+
+  constructor() {
     console.log('Hello LoginServiceProvider Provider');
+    this.isUserLogined();
   }
 
-  isUserLogined(): Promise<boolean> {
-    return new Promise(resolve => {
+  isUserLogined() {
       firebase.auth().onAuthStateChanged(user => {
         //console.log("firebase auth status change: ", user);
         if(user)
         {
-          resolve(true);
+          this.isUserLoggedIn = true;
         }
         else
         {
-          resolve(false);
+          this.isUserLoggedIn = false;
         }
       });
-    });
   }
 
 }

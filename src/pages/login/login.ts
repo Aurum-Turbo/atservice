@@ -108,15 +108,11 @@ export class LoginPage {
   }
 
   ionViewWillEnter() {
-    //console.log("page name: ", this.navCtrl.getActive().name);
-    this.loginService.isUserLogined().then(result => {
-      if(result)
-      {
-        //console.log("enter LoginPage: ", this.previousPage);
-        this.navCtrl.setRoot(this.previousPage);
-      }
-    })
-    .catch(err => {console.log(err);});
+
+    if(this.loginService.isUserLoggedIn)
+    {
+      this.navCtrl.setRoot(this.previousPage);
+    }
   }
 
   ionViewWillLeave() {

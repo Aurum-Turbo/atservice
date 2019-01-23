@@ -1,13 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavController, NavParams, LoadingController, Loading, AlertController, ItemSliding, Item } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, Content, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 
 import { PostData } from '../../providers/post-data/post-data';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
-// import { LoadingServiceProvider } from '../../providers/loading-service/loading-service';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/Observable';
-import { NgxMasonryModule } from 'ngx-masonry';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 
@@ -15,12 +13,8 @@ import firebase from 'firebase/app';
 import * as geofirex from 'geofirex';
 
 import { ServiceDetailsPage } from '../service-details/service-details';
-// import { observable } from 'rxjs';
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
-import { containerEnd } from '@angular/core/src/render3/instructions';
 import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
-import { GeoFirePoint, GeoFireCollectionRef, GeoQueryDocument } from 'geofirex';
-import { AppSettings } from '../../providers/app-setting';
+import { GeoQueryDocument } from 'geofirex';
 import { FormControl } from '@angular/forms';
 
 /**
@@ -38,7 +32,7 @@ export class HomePage {
   @ViewChild(Content) content: Content;
   //@Input() data: any;
   //@Input() events: any;
-  exb= true;
+  exb=true;
   //for posts
 
   //for search

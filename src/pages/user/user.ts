@@ -25,6 +25,7 @@ import { OrderCreatorPage } from '../order-creator/order-creator';
 import { GeoServiceProvider } from '../../providers/geo-service/geo-service';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
 import { createElementCssSelector } from '@angular/compiler';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 
 /**
@@ -69,18 +70,7 @@ export class UserPage {
   phone: string;
   /* for quote and search */
   tags: string[];
-  /* date: any;
-  daysInThisMonth: any;
-  daysInLastMonth: any;
-  daysInNextMonth: any;
-  monthNames: string[];
-  currentMonth: any;
-  currentYear: any;
-  currentDate: any;
-  eventList: any;
-  selectedEvent: any;
-  isSelected: any; */
-
+  
   itemsCollection: AngularFirestoreCollection<PostData>; //Firestore collection
   items: Observable<PostData[]>;
 
@@ -116,6 +106,7 @@ export class UserPage {
     private afs: AngularFirestore,
     private geoService: GeoServiceProvider,
     public loginService: LoginServiceProvider,
+    public alertService: AlertServiceProvider,
     public navCtrl: NavController,
     public navParams: NavParams) {
     //this.currentUser = new UserData();        
@@ -126,69 +117,80 @@ export class UserPage {
     //this.userDataObj = this.dataService.userDataObj;
   }
 
+
   ionViewWillEnter() {
 
-    this.loginService.isUserLogined().then(result => {
-      if(result)
-      {
-        //load user
-        this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
-        this.currentUser.subscribe(result => {
-          this.userStars = this.getStars(result.rate);
-          this.userData = result;
-        });
+    if(this.loginService.isUserLoggedIn)
+    {
+      console.log("user is logged in");
+      //load user
+      this.currentUser = this.afs.doc<UserData>('users/' + firebase.auth().currentUser.uid).valueChanges();
+      this.currentUser.subscribe(result => {
+        this.userStars = this.getStars(result.rate);
+        this.userData = result;
+      });
 
-        //load geo info
-        if (this.geoService.curLocation) {
-          this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
-            this.userAddressArray = addresses;
-            this.selectedUserLocation = addresses[(addresses.length-1)];
-            console.log("addresses: ", this.selectedUserLocation);
-          })
-          .catch(err => { console.log(err); });
-        }
-
-        //load service, order, job and posts.
-        this.itemsCollection = this.afs.collection("posts", ref => {
-          return ref.where("author", "==", firebase.auth().currentUser.uid)
-            .orderBy("updateAt", 'desc');
-        });
-
-        this.items = this.itemsCollection.valueChanges();
-
-        this.sItemsCollection = this.afs.collection("services", ref => {
-          return ref.where("provider", "==", firebase.auth().currentUser.uid)
-            .orderBy("updateAt", 'desc');
+      //load geo info
+      if (this.geoService.curLocation) {
+        this.geoService.posToAddr(this.geoService.curLocation).then(addresses => {
+          this.userAddressArray = addresses;
+          this.selectedUserLocation = addresses[(addresses.length-1)];
+          console.log("addresses: ", this.selectedUserLocation);
         })
-
-        this.sItems = this.sItemsCollection.valueChanges();
-
-        this.oItemsCollection = this.afs.collection("orders", ref => {
-          return ref.where("service.provider", "==", firebase.auth().currentUser.uid)
-            .orderBy("timestamp", 'asc');
-        })
-
-        this.oItems = this.oItemsCollection.valueChanges();
-
-        this.jItemsCollection = this.afs.collection("jobs", ref => {
-          return ref.where("acceptedby", "==", firebase.auth().currentUser.uid)
-            .orderBy("timestamp", 'asc');
-        })
-
-        this.jItems = this.jItemsCollection.valueChanges();
-
-
-        this.alertCollection = this.afs.collection("alerts");
-
+        .catch(err => { console.log(err); });
       }
-      else
-      {
-        console.log("user logout!");
-        this.navCtrl.setRoot(LoginPage, {"from": UserPage});
-      }
-      
-    })
-    .catch(err => {console.log(err);});
+
+      //load service, order, job and posts.
+      this.itemsCollection = this.afs.collection("posts", ref => {
+        return ref.where("author", "==", firebase.auth().currentUser.uid)
+          .orderBy("updateAt", 'desc');
+      });
+
+      this.items = this.itemsCollection.valueChanges();
+
+      this.sItemsCollection = this.afs.collection("services", ref => {
+        return ref.where("provider", "==", firebase.auth().currentUser.uid)
+          .orderBy("updateAt", 'desc');
+      })
+
+      this.sItems = this.sItemsCollection.valueChanges();
+
+      this.oItemsCollection = this.afs.collection("orders", ref => {
+        return ref.where("service.provider", "==", firebase.auth().currentUser.uid)
+          .orderBy("timestamp", 'asc');
+      })
+
+      this.oItems = this.oItemsCollection.valueChanges();
+
+      this.jItemsCollection = this.afs.collection("jobs", ref => {
+        return ref.where("acceptedby", "==", firebase.auth().currentUser.uid)
+          .orderBy("timestamp", 'asc');
+      })
+
+      this.jItems = this.jItemsCollection.valueChanges();
+
+
+      //load system message
+      //this.alertCollection = this.afs.collection("alerts");
+      this.alertCollection = this.afs.collection('alerts', ref => {
+        return ref.where("keys", "==", firebase.auth().currentUser.uid + "_unread");
+      });
+
+      this.alertCollection.valueChanges().subscribe(alerts => {
+        alerts.forEach(alert => {
+          if(alert.type == "RATE")
+          {
+            this.alertService.presentPrompt(alert);
+          }
+        });
+      });
+
+    }
+    else
+    {
+      console.log("user is not logged in");
+      this.navCtrl.setRoot(LoginPage, {"from": UserPage});
+    }
 
   }
 

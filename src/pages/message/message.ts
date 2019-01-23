@@ -58,29 +58,29 @@ export class MessagePage {
   }
 
   ionViewWillEnter() {
-    this.loginService.isUserLogined().then(result => {
-      if(result)
-      {
-        this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
-      }
-      else
-      {
-        this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
-      }
-    })
-    .catch(err => {console.log(err);});
+
+    if(this.loginService.isUserLoggedIn)
+    {
+      this.mesgs = this.chatService.loadMesgs(this.chatData.cid);
+      this.mesgs.subscribe(result => {
+        this.contentArea.scrollToBottom(0);
+      });
+    }
+    else
+    {
+      this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
+    }
   }
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagePage');
     
     //消息发送后自动滚动
-    
+    setTimeout(() => {
+      this.contentArea.scrollToBottom(0);
+   }, 300);
   }
-  ionViewDidEnter(){
-    this.contentArea.scrollToBottom();
-    console.log('ionViewDidEnter MessagePage');
-  }
+  
   
 
   sendMessage() {
@@ -91,11 +91,11 @@ export class MessagePage {
         this.chatService.newMessage(this.chatData, this.mesgTyping);
         let el = this.element.nativeElement.querySelector("textarea");
         el.style.height = "25px";
-        this.contentArea.scrollToBottom();
+        
         this.mesgTyping = ''
       }
       this.mutationObserver = new MutationObserver((mutations) => {
-        this.contentArea.scrollToBottom();
+        //this.contentArea.scrollToBottom();
     });
   
     this.mutationObserver.observe(this.chatList.nativeElement, {

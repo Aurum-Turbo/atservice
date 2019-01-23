@@ -80,7 +80,7 @@ export class ServiceDetailsPage {
     //console.log("message: ", this.message.message);
     if(event == "chat")
     {     
-      this.loginService.isUserLogined().then(result => {
+      /* this.loginService.isUserLogined().then(result => {
         if(result == true)
         {
           if(firebase.auth().currentUser.uid != this.postObj.author)
@@ -126,13 +126,13 @@ export class ServiceDetailsPage {
           this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
         }
       })
-      .catch(err => {console.log(err);});
+      .catch(err => {console.log(err);}); */
     }
 
     if(event == "service" && item)
     {
       //if want to order a service has to be login.
-      this.loginService.isUserLogined().then(result => {
+      /* this.loginService.isUserLogined().then(result => {
         if(result == true)
         {
           if(item.provider != firebase.auth().currentUser.uid)
@@ -152,7 +152,7 @@ export class ServiceDetailsPage {
           this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
         }
       })
-      .catch(err => {console.log(err);});
+      .catch(err => {console.log(err);}); */
 
 
       /* firebase.auth().onAuthStateChanged((user: firebase.User) => {

@@ -88,9 +88,10 @@ export class EditorPage {
     if (this.postObj.images.length < 0) {
       this.alertService.presentToast("[Info]: Post will not be saved because there's no image");
     }
-    else {
-      if (this.postObj.description == "") {
-        this.alertService.presentToast("[Info]: Post will not be saved because there's no description");
+    else 
+    {
+      if (this.postObj.description.length <= 0 || this.postObj.description.length > 2000) {
+        this.alertService.presentToast("[Info]: Post will not be saved because the description extend the limitation (20 - 2000 Characters)");
       }
       else {
         if (this.calltype == "creating") {
@@ -195,36 +196,40 @@ export class EditorPage {
         }
       }
     }
-
-
-
   }
 
-
   onSelect(event) {
-    if (this.postObj.images.length < 6) {
+    if (this.postObj.images.length < 5) {
       const curFile = event.target.files[0];
-      console.log("load image: ", curFile.name);
-      //get image data
-      var reader = new FileReader();
-      var img = new Image();
-      var that = this;
+      if (curFile.size > 2000000) {
+        this.alertService.presentToast("[WARN] The image size extend the limitation (2MB)");
+      }
+      else 
+      {
+        console.log("load image: ", curFile.name);
+        //get image data
+        var reader = new FileReader();
+        var img = new Image();
+        var that = this;
 
-      reader.readAsDataURL(curFile);
+        reader.readAsDataURL(curFile);
 
-      reader.onloadend = () => {
-        img.src = reader.result.toString();
+        reader.onloadend = () => {
+          img.src = reader.result.toString();
 
-        img.onload = function () {
-          console.log(img.height + " / " + img.width);
-          that.postObj.images.push(img.src);
-          that.postObj.imgHeights.push(Math.round(190 / img.width * img.height));
-          //that.uploadImageList.push(curImage);
-        }
-      };
+          img.onload = function () {
+            //console.log("size: ", curFile.size, "rate: ", img.height + " / " + img.width);
+            that.postObj.images.push(img.src);
+            that.postObj.imgHeights.push(Math.round(190 / img.width * img.height));
+            //that.uploadImageList.push(curImage);
+          }
+        };
+      }
+
     }
     else {
-      console.log("image number is exceeded the limitation (6)");
+      //console.log("image number is exceeded the limitation (6)");
+      this.alertService.presentToast("[WARN] The number of images extend the limitation (5)");
     }
   }
 
@@ -234,9 +239,11 @@ export class EditorPage {
       //delete the URL in the images
       if (index > -1) {
         if (index == 0 && this.postObj.images.length == 1) {
-          console.log("at least one photo in the list");
+          //console.log("at least one photo in the list");
+          this.alertService.presentToast("[WARN] Post need at least one image attached!");
         }
-        else {
+        else 
+        {
           this.postObj.images.splice(index, 1);
           this.postObj.imgHeights.splice(index, 1);
 
@@ -249,6 +256,9 @@ export class EditorPage {
                 "images": this.postObj.images,
                 "imgHeights": this.postObj.imgHeights,
                 "updateAt": firebase.firestore.FieldValue.serverTimestamp()
+              })
+              .then(result => {
+                this.alertService.presentToast("[INFO] Discard one image for the list");
               })
                 .catch(err => { console.log(err); });
             })

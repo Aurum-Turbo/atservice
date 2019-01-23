@@ -60,24 +60,26 @@ export class ChatPage {
   }
   
   ionViewWillEnter() {
-    this.setFilteredItems();
-    this.loginService.isUserLogined().then(result => {
-      if(result)
-      {
-        this.chats = this.chatService.loadChats();
+
+    if(this.loginService.isUserLoggedIn)
+    {
+      console.log("chat page: User is logged In!")
+      this.setFilteredItems();
+
+      //load Chats
+      this.chats = this.chatService.loadChats();
         if(!this.items)
         {
           this.chats.subscribe(results => {
             this.items = results;
           });
         }
-      }
-      else
-      {
-        this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
-      }
-    })
-    .catch(err => {console.log(err);});
+
+    }
+    else
+    {
+      this.navCtrl.setRoot(LoginPage, {"from": ChatPage});
+    }
   }
 
   onClick(item: ChatData) {

@@ -57,7 +57,7 @@ export class TabsPage {
 
   ionViewWillEnter() {
 
-    this.loginService.isUserLogined().then(result => {
+    /* this.loginService.isUserLogined().then(result => {
       if(result)
       {
         this.alertCollection = this.afs.collection('alerts', ref => {
@@ -74,7 +74,7 @@ export class TabsPage {
         });
 
       }
-    });
+    }); */
   }
 
 }
