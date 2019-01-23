@@ -18,27 +18,27 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of items">
       <ion-item  (click)="onClick(item)">
-        <ion-row>
-          <ion-col col-2>    
-              <ion-thumbnail item-start>
-                <img src="{{(item.chatWith)?.avatar}}"  no-padding no-margin/>
-              </ion-thumbnail>
-              <ion-badge>13</ion-badge> 
-          </ion-col>
-          <ion-col col-10>
-            <ion-row>
-              <ion-col >
-                <div class="msg-nm" margin-left>{{(item.chatWith)?.nickname}}</div>
-              </ion-col>
-              <ion-col >
-                <div class="msg-tm">{{(item.updateAt)?.toDate() | date: "short"}}</div>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <div class="msg-ctn" margin-left>{{item.latestMesgSender}} : {{item.latestMesg}}</div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2>    
+                <ion-thumbnail item-start>
+                  <img src="{{(item.chatWith)?.avatar}}"  no-padding no-margin/>
+                </ion-thumbnail>
+                <ion-badge>13</ion-badge> 
+            </ion-col>
+            <ion-col col-6 padding-left>
+              <ion-row>
+                  <div class="msg-nm">{{(item.chatWith)?.nickname}}</div>
+              </ion-row>
+              <ion-row margin-top>
+                <div class="msg-ctn">{{item.latestMesgSender}} : {{item.latestMesg}}</div>
+              </ion-row>
+            </ion-col>
+            <ion-col col-4>
+                <div class="msg-tm">{{(item.updateAt)?.toDate() | date: "short"}}</div>        
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     <ion-item-options side="right">
       <!--button ion-button (click)="favorite(item)">Favorite</button-->

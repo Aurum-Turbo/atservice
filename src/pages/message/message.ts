@@ -74,7 +74,6 @@ export class MessagePage {
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagePage');
-    
     //消息发送后自动滚动
     setTimeout(() => {
       this.contentArea.scrollToBottom(0);

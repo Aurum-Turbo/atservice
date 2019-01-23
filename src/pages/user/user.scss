@@ -285,3 +285,10 @@ ion-segment{
         ion-item-group{
             border-radius: $border-radius !important;
         }
+
+        ion-item-sliding {
+            border-radius: $border-radius !important;
+        }
+        .icon-plus{
+            font-size: 20px !important; 
+        }
