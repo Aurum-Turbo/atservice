@@ -30,8 +30,8 @@
       <ion-item text-wrap>
           <p [innerHtml]="postObj.description"  margin></p>
           <div>
-            <h5 float-left item-subtitle margin-top>{{postObj.updateAt?.toDate() | date:"MMM-dd-yyyy"}}</h5>
-            <button ion-button icon-only clear float-right (click)="onClick('chat')" color="secondary"> 
+            <h5 float-left item-subtitle margin-top margin-left>{{postObj.updateAt?.toDate() | date:"MMM-dd-yyyy"}}</h5>
+            <button ion-button icon-only clear float-right (click)="onClick('chat')" color="secondary" margin-right> 
               <ion-icon ion-icon name="chatbubbles" color="secondary" small></ion-icon>
               Chat with me
             </button>
