@@ -15,46 +15,78 @@
 
 <ion-content>
     <ion-grid padding-top>
-        <ion-row justify-content-center>
-          <ion-col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
-            <ion-item no-lines>
-                <ion-label>Service Date:</ion-label>
-              <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="Please Choose.." yearValues="{{sYearrange}} "></ion-datetime>
-          </ion-item>
-          <ion-item no-lines>
-            <ion-label>Service Time:</ion-label>
-              <ion-datetime placeholder="Please Choose.." [(ngModel)]="orderItem.servetime" displayFormat="HH:mm" ></ion-datetime>
-          </ion-item>
-          <ion-item no-lines>
-                <ion-label>Location:</ion-label>
-              <ion-input clearInput type="text" placeholder="Please enter location" [(ngModel)]="orderItem.servelocation"></ion-input>
-          </ion-item>
-          <ion-item no-lines>
-              <ion-label >Order Type:</ion-label>
-              <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type" >
-                <ion-option *ngFor="let t of types" value="{{t}}">{{t}}</ion-option>
-              </ion-select>
-            </ion-item>
-          <ion-item no-lines>
-                <ion-label>Quantity:</ion-label>
-            <ion-input clearInput type="number" placeholder="Please enter quantity" [(ngModel)]="orderItem.quantity"></ion-input>
-        </ion-item>
-        <ion-item no-lines class="txt-ara">
-                <ion-label>Note:</ion-label>
-            <ion-textarea rows="3" clearInput  placeholder="Please enter special note" [(ngModel)]="orderItem.note"></ion-textarea>
-        </ion-item>
-          <ion-item no-lines>
-                <ion-label>Email:</ion-label>
-              <ion-input clearInput type="email" placeholder="Please enter email" [(ngModel)]="orderItem.email"></ion-input>
-          </ion-item>
-          <ion-item no-lines>
-                <ion-label>Phone:</ion-label>
-              <ion-input clearInput type="phone" placeholder="Please enter phone" [(ngModel)]="orderItem.phone"></ion-input>
-          </ion-item>
+        <ion-row>
+          <ion-col col-12 align-self-start>
+              <ion-item no-lines>
+               <h2 item-title item-start>
+                 {{orderItem.service.description}}
+              </h2> 
+              <h2 item-title  item-end>
+                {{orderItem.service.price}} {{orderItem.service.currency}}/{{orderItem.service.unit}}
+              </h2>             
+              </ion-item>
+              <ion-list-header text-center no-margin color="secondary"  no-lines>
+                <h2>
+                  Order Info
+                </h2>
+              </ion-list-header>
+              <ion-item no-lines box-shadow small-col>
+                <ion-label color="secondary">Date:</ion-label>
+              </ion-item>
+              <ion-item no-lines box-shadow half-col>
+                <ion-datetime [(ngModel)]="orderItem.servedate" displayFormat="MM/DD/YYYY" placeholder="{{today | date: 'MM/dd/yyyy'}}" yearValues="{{sYearrange}} " ></ion-datetime>
+              </ion-item>
+              <ion-item no-lines box-shadow small-col>
+                <ion-datetime placeholder="{{today | date: 'HH:mm'}}" [(ngModel)]="orderItem.servetime" displayFormat="HH:mm" ></ion-datetime>
+              </ion-item>
 
+              <ion-item no-lines>
+                <ion-label color="secondary" onethird>Location:</ion-label>
+                <ion-input  type="text"  [(ngModel)]="orderItem.servelocation" text-start></ion-input>
+              </ion-item>
+              <!-- <ion-item no-lines>
+                <ion-label >Order Type:</ion-label>
+                <ion-select  interface="action-sheet" [(ngModel)]="orderItem.type" >
+                  <ion-option *ngFor="let t of types" value="{{t}}">{{t}}</ion-option>
+                </ion-select>
+              </ion-item> -->
+              <ion-item no-lines>
+                <ion-label color="secondary" onethird>Email:</ion-label>
+                <ion-input  type="email"  [(ngModel)]="orderItem.email" text-start></ion-input>
+              </ion-item>
+              <ion-item no-lines >
+                <ion-label color="secondary" onethird >Phone:</ion-label>
+                <ion-input  type="phone" [(ngModel)]="orderItem.phone" text-start></ion-input>
+              </ion-item>
+              <ion-item no-lines>
+                <ion-label color="secondary" onethird >Note:</ion-label>
+                <ion-textarea rows="4"   [(ngModel)]="orderItem.note" text-start></ion-textarea>
+              </ion-item>
+              <ion-list-header text-center no-margin color="secondary"  no-lines>
+                  <h2>
+                    Total Price
+                  </h2>
+                </ion-list-header>
+                <ion-item no-lines>
+                    <ion-label color="secondary" onethird >
+                      {{orderItem.service.description}}:
+                    </ion-label>
+                    <span item-end span>
+                   {{orderItem.service.price}} {{orderItem.service.currency}}/{{orderItem.service.unit}}
+                    </span>   
+                </ion-item>
+              <ion-item no-lines>
+                <ion-label color="secondary" onethird >Quantity:</ion-label>
+                <ion-input  type="number" placeholder="1" [(ngModel)]="orderItem.quantity" text-start (keyup)= "getTotal()" text-end></ion-input>
+              </ion-item>
+              <ion-item no-lines box-shadow margin-bottom>
+                <h2 color="secondary" item-title item-start>Total:</h2>
+                <h1 item-title item-end font-bold>{{total}}{{orderItem.service.currency}}</h1>
+              </ion-item>
+          
           <button ion-button default-button [disabled]="disableBtns" (click)="onClick('discard')" class="btn" float-right>Discard</button>
-        <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn" float-right>Send</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          <button ion-button default-button [disabled]="disableBtns" (click)="onClick('send')" class="btn" float-right>Send</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-content>

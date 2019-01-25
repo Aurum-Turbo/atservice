@@ -26,17 +26,17 @@
       <ion-slide *ngFor="let item of postObj.images" >
         <img [lazyLoad]="item"/>
       </ion-slide>
-    </ion-slides> 
-      <ion-item text-wrap>
+      </ion-slides> 
+      <ion-item text-wrap no-lines>
           <p [innerHtml]="postObj.description"  margin></p>
-          <div>
-            <h5 float-left item-subtitle margin-top margin-left>{{postObj.updateAt?.toDate() | date:"MMM-dd-yyyy"}}</h5>
-            <button ion-button icon-only clear float-right (click)="onClick('chat')" color="secondary" margin-right> 
-              <ion-icon ion-icon name="chatbubbles" color="secondary" small></ion-icon>
-              Chat with me
-            </button>
-          </div>
       </ion-item>   
+      <ion-item no-lines >
+        <h5 float-left item-subtitle  margin-left ptdt>{{postObj.updateAt?.toDate() | date:"MMM-dd-yyyy"}}</h5>
+        <button ion-button icon-only clear float-right (click)="onClick('chat')" color="secondary" margin-right> 
+          <ion-icon ion-icon name="chatbubbles" color="secondary" small></ion-icon>
+          Chat with me
+        </button>
+      </ion-item>
       <ion-list *ngFor="let item of sItems | async index as i; first as isFirst; last as isLast ">
         <ion-list-header text-center no-margin color="secondary"  no-lines  *ngIf="i === 0 && item.availability">
           <h2>Service</h2>

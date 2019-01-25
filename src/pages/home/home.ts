@@ -51,7 +51,7 @@ export class HomePage {
   geoPostsArray: Observable<GeoQueryDocument[]>;
 
   iconlike: string = "icon-heart-outline";
-
+  ngxItemWidth: any 
   geo = geofirex.init(firebase);
   // isClicked = false;
   // Masonry: any;
@@ -74,6 +74,15 @@ export class HomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
     this.setFilteredItems();
+    console.log(this.ngxItemWidth);
+  }
+  
+  ionViewDidEnter(){
+    if(this.ngxItemWidth<190){
+      this.ngxItemWidth = (window.screen.width-15)/2;
+    }else{
+      this.ngxItemWidth = 190
+    }
   }
 
   setFilteredItems() {
@@ -151,7 +160,7 @@ export class HomePage {
   extBlur(){
      this.exb = false;
   }       
-
+ 
   geoQuery(pos: geofirex.GeoFirePoint) {
 
       const posts = this.geo.collection('posts');
@@ -166,6 +175,7 @@ export class HomePage {
         this.geoPostsArray.subscribe(results => {
           this.items = results;
         });
+        
       }
   }
  /*  beenRead(){

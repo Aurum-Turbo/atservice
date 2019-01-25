@@ -1,21 +1,41 @@
 page-order-creator {
-    ion-label{
-        width: 30%;
-        color: theme-colors('textColors', 'primary','opacity100') !important;
-        font-size: 1.6rem;
-        font-weight: bold;
-        -webkit-flex: none!important; 
-        flex: none!important; 
-    }
-    ion-input, ion-textarea,ion-select, ion-datetime{
-        color: theme-colors('textColors', 'accent','opacity100') !important;
-    }
-  
-    ion-select{
-        max-width: 100% !important;
-    }
-    .txt-ara{
-        border-top: solid 2px color($colors,'dark') !important;
-        border-bottom: solid 2px color($colors,'dark') !important;
+    .scroll-content {
+        padding-bottom: 0 !important;
+        ion-grid {
+            height: 100%;
+            padding: 0 !important;
+      
+            ion-row {
+              height: 100%;
+              [large-col]{
+                width: calc(70% - 3px);
+                display: inline-flex;
+              }
+              [half-col] {
+                width: calc(40% - 4px);
+                display: inline-flex;
+            }
+            
+            [small-col]{
+                width: calc(30% - 2px);
+                display: inline-flex;
+            }
+            [onethird]{
+                width: 30%;
+                display: inline-flex;
+            }
+            }
+        }
+        .item.item-input.input-has-focus .item-inner,
+        .item.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+                                                                                                                -webkit-box-shadow: none !important;
+                                                                                                                box-shadow: none !important;
+        }
+        .datetime-text{
+            text-align: left !important;
+        }
+        [span]{
+            color: theme-colors('mainColors', 'secondary', 'opacity60') !important;
+        }
     }
 }

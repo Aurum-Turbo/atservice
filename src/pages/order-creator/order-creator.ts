@@ -46,7 +46,8 @@ export class OrderCreatorPage {
   sYearrange: any[] = [this.servYear.getFullYear(), this.servYear.getFullYear()+1];
   servSchedule: Date;
 
-
+  today: number = Date.now();
+  total: any;
 
   constructor(
     private afs: AngularFirestore,
@@ -78,11 +79,24 @@ export class OrderCreatorPage {
   ionViewDidLoad() {
     console.log(this.servYear);
     console.log('ionViewDidLoad OrderCreatorPage');
+    console.log(this.orderItem.service.description)
   }
 
-  ionViewWillLeave() {
-  }
+/*   ionViewWillEnter() {
+
+    //this.dataService.loadCurUserData();
+    this.sItemsCollection = this.afs.collection("services", ref => {
+      return ref.where("provider", "==", this.orderItem.provideby);
+    });
+      
+    this.sItems = this.sItemsCollection.valueChanges();
     
+  } */
+  getTotal(){
+    this.total = this.orderItem.quantity * this.orderItem.service.price;
+    return this.total
+    console.log(this.total)
+  }
 
   onClick(event: string)
   {

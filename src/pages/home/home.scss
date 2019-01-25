@@ -1,81 +1,39 @@
 page-home {
+   
     ngx-masonry {
-        margin: 0 auto !important;
-        // max-width: 960px;
+        margin-left: auto !important;
+        margin-right: auto !important;
         .masonry-item {
-          width: 190px;
-          margin: 5px 8px;
-          ion-card{
-              width: 100% !important;
-              margin: 0 auto !important;
-              border-radius: 2%;
-            ion-card-content{
-            //    height: auto !important; 
-               
-
-                p{
-                    overflow:hidden;
-                    display: -webkit-box !important;
-                    height: 40px !important;
-                    // max-width: 200px !important;
-                }
-                ion-item{
-                    height: 2em !important;
-                    line-height: 1em !important;
-                    ion-avatar{
-                        margin-right: 0.5rem !important;
-                        min-width: 2rem !important;
-                        padding-bottom: 1rem !important;
-                        img{
-                            margin-top: 1rem !important;
-                            width: 1.5rem !important;
-                            height: 1.5rem !important;
-                        }
+            max-width: 190px;
+            min-width: 152px;
+            width: 48vw;
+            ion-card{
+                width: 100%;
+                margin:5px 0 !important;           
+                border-radius: 2%;
+                ion-card-content{
+                    p{
+                        overflow:hidden;
+                        display: -webkit-box !important;
+                        height: 40px !important;
                     }
-                }
+                    ion-item{
+                        height: 2em !important;
+                        line-height: 1em !important;
+                        ion-avatar{
+                            margin-right: 0.5rem !important;
+                            min-width: 2rem !important;
+                            padding-bottom: 1rem !important;
+                            img{
+                                margin-top: 1rem !important;
+                                width: 1.5rem !important;
+                                height: 1.5rem !important;
+                            }
+                        }
+                    }            
+                }   
             }
-      }
+        }
     }
-    }
+} 
 
-      
-      /* .masonry-item img {
-        width: 100%;
-        height: 100%;
-        min-height: 340px;
-      } */
-        /* .grid {
-            max-width: 960px;
-            height: auto !important;
-            margin: 0 auto;
-            ngx-masonry-item { width: 170px;
-                         margin:5px; 
-                         ion-card-content{
-                             padding: 5px 10px !important;
-                             div{
-                                 overflow: hidden !important;
-                                 display: -webkit-box !important;
-                                 max-height: 60px !important;
-                                 max-width: 200px !important;
-                             }
-                             ion-item{
-                                 height: 2em !important;
-                                 line-height: 1em !important;
-                                 padding: 0 !important;
-                                 margin: 0 !important;
-                                 // background-color: #eee !important;
-                                 ion-avatar{
-                                     margin-right: 0 !important;
-                                     min-width: 2rem !important;
-                                     img{
-                                         margin-top: .5rem !important;
-                                         width: 2rem !important;
-                                         height: 2rem !important;
-                                     }
-                                 }
-                             }
-                         }
-            }
-            } */
-
-}

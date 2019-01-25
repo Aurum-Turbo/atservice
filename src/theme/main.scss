@@ -515,9 +515,11 @@ $checkbox-md-icon-checkmark-color: theme-colors('mainColors', 'accent');
   
   //Settings text-input
   .text-input {
-    color: theme-colors('textColors', 'primary') !important;
+    color: theme-colors('textColors', 'secondary') !important;
   }
-
+  .datetime-text{
+    color: theme-colors('textColors', 'secondary') !important;
+  }
 
 /* 35# Tabs Section Settings
 ================================================*/
@@ -552,8 +554,25 @@ $searchbar-md-input-search-icon-color: theme-colors('mainColors', 'secondary');
 $searchbar-md-input-clear-icon-color: theme-colors('mainColors', 'secondary');
 $searchbar-md-input-text-color: theme-colors('textColors', 'primary') !important;
 
-//  Google Maps
+[search-bar-title]{
+  color: theme-colors('textColors', 'primary');
+  font-size: $h1-font-size !important;
+}
 
+
+/* Settings Seggments Section
+================================================
+================================================*/
+$segment-button-md-border-bottom-color: theme-colors('mainColors', 'secondary') !important;
+$segment-button-md-border-color-activated: theme-colors('mainColors', 'accent') !important;
+$segment-button-md-text-color-activated: theme-colors('mainColors', 'primary') !important;
+$segment-button-md-height: 56px;
+$segment-button-md-padding-top: 7px;
+$segment-button-md-font-size: $h2-font-size;
+
+
+/* 37# Google Maps Setting
+================================================*/
 [map-header]{
   background-color: theme-colors('mainColors', 'secondary');
   ion-icon {
@@ -569,7 +588,6 @@ $searchbar-md-input-text-color: theme-colors('textColors', 'primary') !important
     font-size: $text-font-size;
   }
 }
-
 
 [map-content] {
   [title] {
@@ -598,25 +616,167 @@ $searchbar-md-input-text-color: theme-colors('textColors', 'primary') !important
   }
 }
 
+/* 38# Settings Loading Setting
+================================================*/
+$toolbar-md-height: 56px !important;
+$toolbar-background: theme-colors('mainColors', 'secondary');
+  // Settings for Android
+$toolbar-md-title-text-color: theme-colors('mainColors', 'primary');
+$toolbar-md-inactive-color: theme-colors('mainColors', 'primary');
+// Settings for Android
+$toolbar-ios-button-color: theme-colors('mainColors', 'primary');
+$toolbar-ios-inactive-color: theme-colors('mainColors', 'primary');
 
-//Animations
-@mixin animation {
-  -webkit-animation: fadeInRight 500ms;
-  -moz-animation: fadeInRight 500ms;
-  -o-animation: fadeInRight 500ms;
-  animation: fadeInRight 500ms;
+/* 39# Settings Loading Setting
+================================================*/
+  // Settings for Android
+$loading-md-background: theme-colors('mainColors', 'primary');
+$loading-md-text-color: theme-colors('textColors', 'primary');
+$loading-md-spinner-color: theme-colors('textColors', 'primary');
+  // Settings for Ios
+$loading-md-background: theme-colors('mainColors', 'primary');
+$loading-md-text-color: theme-colors('textColors', 'primary');
+$loading-md-spinner-color: theme-colors('textColors', 'primary');
+
+/* 40# Action Sheet Settings
+================================================*/
+  // Settings for Android
+$action-sheet-md-title-color: theme-colors('textColors', 'primary');
+$action-sheet-md-title-font-size: 25px;
+$action-sheet-md-background: theme-colors('mainColors', 'primary');
+$action-sheet-md-button-text-color: theme-colors('textColors', 'primary');
+$action-sheet-md-button-background-activated: theme-colors('mainColors', 'primary', 'opacity60');
+  // Settings for Ios
+$action-sheet-ios-title-color: theme-colors('textColors', 'primary');
+$action-sheet-ios-title-font-size: 25px;
+$action-sheet-ios-background: theme-colors('mainColors', 'primary');
+$action-sheet-ios-border-color: theme-colors('mainColors', 'accent');
+$action-sheet-ios-button-cancel-background: theme-colors('mainColors', 'primary');
+$action-sheet-ios-button-text-color: theme-colors('textColors', 'primary');
+$action-sheet-ios-button-background-activated: theme-colors('mainColors', 'primary', 'opacity60');
+$action-sheet-ios-button-destructive-text-color: theme-colors('textColors', 'primary', 'opacity50');
+.action-sheet-ios .action-sheet-selected {
+    font-weight: bold;
+    background: theme-colors('mainColors', 'secondary', 'opacity10') !important;
 }
 
-//Background Size
+/* 41# Alert message Setting
+================================================*/
+// Alert with checkbox button settings for ANDROID
+$alert-md-checkbox-label-text-color: theme-colors('textColors', 'secondary', 'opacity40');
+$alert-md-checkbox-label-text-color-checked: theme-colors('mainColors', 'secondary');
+$alert-md-checkbox-border-color-off: theme-colors('mainColors', 'secondary');
+$alert-md-message-text-color: theme-colors('mainColors', 'secondary');
+  // Settings for Ios
+$alert-ios-checkbox-label-text-color: theme-colors('textColors', 'secondary', 'opacity40');
+$alert-ios-checkbox-label-text-color-checked: theme-colors('textColors', 'primary');
+$alert-ios-checkbox-background-color-on: theme-colors('textColors', 'primary');
+
+/* 42# Alert with input settings
+================================================*/
+  // Settings for Android
+$alert-md-input-border-color: theme-colors('mainColors', 'secondary');
+$alert-md-input-text-color: theme-colors('mainColors', 'secondary') !important;
+$alert-md-input-border-color: theme-colors('mainColors', 'secondary');
+$alert-md-input-border-color-focused: theme-colors('mainColors', 'secondary');
+$alert-md-title-font-size: 20px;
+  // Settings for Ios
+$alert-ios-message-text-color: theme-colors('mainColors', 'secondary') !important;
+$alert-ios-input-background-color: transparent;
+$alert-ios-button-background-color-activated: theme-colors('mainColors', 'secondary', 'opacity40') !important;
+$alert-ios-input-border: transparent;
+.alert-title {
+  color: theme-colors('textColors', 'primary') !important;
+  font-weight: normal;
+}
+.alert-radio-label {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.select-text {
+  color: theme-colors('textColors', 'secondary', 'opacity60');
+  font-weight: 300;
+}
+
+.item-radio ion-label {
+  color: theme-colors('textColors', 'secondary', 'opacity60');
+  font-weight: 300;
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  // color: theme-colors('textColors', 'primary') !important;
+  color: #999 !important;
+}
+
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    // color: theme-colors('textColors', 'primary') !important;
+    color: #999 !important;
+  }
+
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    // color: theme-colors('textColors', 'primary') !important;
+    color: #999 !important;
+  }
+
+  :-moz-placeholder {
+    /* Firefox 18- */
+    // color: theme-colors('textColors', 'primary') !important;
+    color: #999 !important;
+  }
+  .datetime-md .datetime-placeholder{
+    color: #999 !important;
+  }
+
+/* 43# Alert with radio button settings
+================================================*/
+  // Settings for Android
+$alert-md-radio-label-text-color: theme-colors('textColors', 'secondary', 'opacity60');
+$alert-md-radio-border-color-on:  theme-colors('mainColors', 'secondary');
+$alert-md-radio-label-text-color-checked: theme-colors('mainColors', 'secondary');
+$alert-md-background-color: theme-colors('mainColors', 'accent');
+$alert-md-list-border-bottom: 1px solid theme-colors('mainColors', 'primary');
+$alert-md-list-border-top: 1px solid theme-colors('mainColors', 'primary');
+$alert-md-button-text-color: theme-colors('mainColors', 'secondary');
+$alert-md-radio-border-color-off: theme-colors('mainColors', 'secondary');
+  // Settings for Ios
+$alert-ios-background: theme-colors('mainColors', 'accent');
+$alert-ios-radio-label-text-color: theme-colors('textColors', 'secondary', 'opacity60');
+$alert-ios-radio-label-text-color-checked: theme-colors('textColors', 'primary');
+$alert-ios-radio-label-text-color: theme-colors('textColors', 'secondary', 'opacity60');
+$alert-ios-radio-icon-border-color: theme-colors('textColors', 'primary');
+$alert-ios-button-text-color: theme-colors('textColors', 'primary');
+
+/* 44# Default Overview Ionic
+================================================*/
+
+// Spiner View
+.spinner-view {
+  img {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 0 auto;
+  }
+
+  .swiper-pagination-bullet {
+    background: theme-colors('mainColors', 'secondary') !important;
+  }
+}
+
+[transparent] {
+  background-color: transparent !important;
+}
+
+//Settings Background Size
 [background-size] {
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
 }
-[background]{
-  background-color: theme-colors('mainColors', 'primary') !important;
-}
-//Default Overview Ionic
+// Default Overview Ionic
   ion-list > .item:last-child, ion-list > .item-wrapper:last-child .item {
       border-bottom: 1px solid theme-colors('mainColors', 'accent') !important;
   }
@@ -643,7 +803,7 @@ $searchbar-md-input-text-color: theme-colors('textColors', 'primary') !important
       margin-bottom: 0 !important;
     }
     [has-header] .scroll-content {
-      top: 60px;
+      top: 64px;
     }
 
     [header-bcg] {
@@ -651,107 +811,82 @@ $searchbar-md-input-text-color: theme-colors('textColors', 'primary') !important
     }
   }
 
-  $toolbar-md-height: 56px !important;
-  $toolbar-ios-height: 56px !important;
-  $toolbar-background: theme-colors('mainColors', 'secondary');
-  ion-header {
-    .toolbar-title {
-         color: theme-colors('mainColors', 'accent') !important;
-         text-transform: uppercase;
-     }
-  }
-
-
-//Settings Loading For Android
-$loading-md-background: theme-colors('mainColors', 'primary');
-$loading-md-text-color: theme-colors('textColors', 'primary');
-$loading-md-spinner-color: theme-colors('textColors', 'primary');
-
-//Settings Loading For Ios
-$loading-md-background: theme-colors('mainColors', 'primary');
-$loading-md-text-color: theme-colors('textColors', 'primary');
-$loading-md-spinner-color: theme-colors('textColors', 'primary');
-
-//setting for toast
-$toast-ios-background: theme-colors('mainColors', 'primary', 'opacity60');
-$toast-ios-title-font-size: 16px;
-//$toast-ios-title-color: theme-colors('textColors', 'primary');
-$toast-md-background: theme-colors('mainColors', 'secondary');
-$toast-md-title-color: theme-colors('textColors', 'secondary');
-$toast-wp-background: theme-colors('mainColors', 'secondary');
-$toast-wp-title-color: theme-colors('textColors', 'secondary');
-.customToast {
-  margin-top: 48px;
-  .toast-container{
-    text-align: center;
-    font-weight: 500;
-    padding: 0px;
-    //height: 60px;
-    border-radius: 5px;
-  }
-}
-
-  // Alert message
-  .alert-md {
-    .alert-title {
-      font-size: 15px !important;
-      font-weight: 300;
-    }
-
+  /* Settings Alert Info
+  ================================================
+  ================================================*/
+  .info-dialog {
     .alert-head,
-    .alert-input,
-    .alert-message,
-    .button-inner {
-      color: theme-colors('textColors', 'primary') !important;
-    }
-    .alert-head {
-      padding: 20px 24px 15px 24px !important;
-    }
-
-    .alert-input-group {
-          padding: 0 24px 10px 24px !important;
+    .alert-message {
+      text-align: center !important;
     }
 
     .alert-message {
-      overflow-y: hidden;
-      max-height: 40px !important;
-      padding: 0 24px 0px 24px !important;
-    }
-
-    .alert-input {
-      border-bottom: 1px solid theme-colors('mainColors', 'secondary') !important;
-    }
-
-    .alert-wrapper {
-      background-color: theme-colors('mainColors', 'accent') !important;
-    }
-
-    ::-webkit-input-placeholder {
-      /* Chrome/Opera/Safari */
       color: theme-colors('textColors', 'primary') !important;
     }
 
-    ::-moz-placeholder {
-      /* Firefox 19+ */
-      color: theme-colors('textColors', 'primary') !important;
-    }
-
-    :-ms-input-placeholder {
-      /* IE 10+ */
-      color: theme-colors('textColors', 'primary') !important;
-    }
-
-    :-moz-placeholder {
-      /* Firefox 18- */
-      color: theme-colors('textColors', 'primary') !important;
+    .alert-sub-title {
+      color: theme-colors('textColors', 'accent');
     }
   }
-    /* Data Picker
+
+  /* Settings Alert Warning
   ================================================
   ================================================*/
-  /* .picker-toolbar{
-    background-color: theme-colors('mainColors','accent') !important;
-  } */
+  .alert-warning {
+    .alert-head,
+    .alert-message {
+      text-align: center !important;
+    }
+
+    .alert-message {
+      color: theme-colors('textColors', 'primary') !important;
+    }
+
+    .alert-sub-title {
+      color: theme-colors('textColors', 'accent');
+    }
+
+    .alert-button-group {
+      padding: 8px 0 8px 8px !important;
+    }
+
+
+    .alert-button{
+      width: 100%;
+      margin-bottom: 20px;
+      background: theme-colors('mainColors', 'accent') !important;
+      text-align: center;
+      color: theme-colors('textColors', 'primary') !important;
+      display: block;
+
+      .button-inner {
+          justify-content: center !important;
+        }
+      }
+  }
+
+  /* Settings Alert Subscribe
+  ================================================
+  ================================================*/
+  .alert-subscribe {
+    .alert-head,
+
+    .alert-message {
+      text-align: center !important;
+    }
+
+    .alert-message {
+      color: theme-colors('textColors', 'primary') !important;
+    }
+
+    .alert-sub-title {
+      color: theme-colors('textColors', 'accent');
+    }
+  }
+
+  /* Data Picker
+  ================================================
+  ================================================*/
   .picker-opt {
     color: theme-colors('textColors', 'secondary') !important;
   
