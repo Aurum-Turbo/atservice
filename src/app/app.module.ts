@@ -80,7 +80,7 @@ import { AlertData } from '../providers/alert-data/alert-data';
     AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: 'true',
-      iconMode: 'ios',
+      mode: 'ios',
     }),
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset

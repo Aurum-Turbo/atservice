@@ -16,7 +16,7 @@
 <ion-content [ngClass]="{'blurefct':exb}"  #container>
   <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', fitWidth: true,  resize: true, gutter: 10, itemSelector: '.masonry-item'}" >
+    <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', fitWidth: true, horizontalOrder: true,  resize: true, gutter: 10, itemSelector: '.masonry-item'}" >
       <ngxMasonryItem *ngFor="let item of items" class="masonry-item" >
       <ion-card>
         <img (click)="onClick('detail',item )" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" [height]="item.imgHeights[0]*ngxItemWidth/190"/>

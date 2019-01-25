@@ -45,6 +45,7 @@ page-user {
 ion-segment{
     margin:0 auto;
     width: 98%;
+    font-size: 1.4rem !important;
 }
 
 
@@ -278,8 +279,8 @@ ion-segment{
         }
         ion-list > [card]:last-child {
             &:after {
-              display: none;
-
+            //   display: none;
+                color: red !important;
             }
           }
         ion-item-group{
@@ -288,6 +289,12 @@ ion-segment{
 
         ion-item-sliding {
             border-radius: $border-radius !important;
+            [disbt]{
+                background-color: #efa35c;
+            }
+            [enbt]{
+                background-color: #4ab8b8;
+            }
         }
         .icon-plus{
             font-size: 20px !important; 
