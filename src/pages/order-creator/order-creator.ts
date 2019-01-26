@@ -94,8 +94,8 @@ export class OrderCreatorPage {
   } */
   getTotal(){
     this.total = this.orderItem.quantity * this.orderItem.service.price;
-    return this.total
-    console.log(this.total)
+    return this.total;
+    //console.log(this.total)
   }
 
   onClick(event: string)

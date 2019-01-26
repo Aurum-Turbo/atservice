@@ -17,6 +17,7 @@ import { MessagePage } from '../../pages/message/message';
 import { OrderData } from '../../providers/order-data/order-data';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 /**
  * Generated class for the ServiceDetailsPage page.
@@ -45,8 +46,9 @@ export class ServiceDetailsPage {
 
   constructor(
     private afs: AngularFirestore,
-    public loginService: LoginServiceProvider,
-    public chatService: ChatServiceProvider,
+    private loginService: LoginServiceProvider,
+    private chatService: ChatServiceProvider,
+    private alertService: AlertServiceProvider,
     public navCtrl: NavController, public navParams: NavParams) {
     if(navParams.data != null)
     {
@@ -83,6 +85,53 @@ export class ServiceDetailsPage {
     //console.log("message: ", this.message.message);
     if(event == "chat")
     {     
+      if(this.loginService.isUserLoggedIn)
+      {
+        if(firebase.auth().currentUser.uid != this.postObj.author)
+          {
+            var memberList = new Array<string>();
+            memberList.push(this.postObj.author);
+            memberList.push(firebase.auth().currentUser.uid);
+
+            this.chatService.isExistedChat(memberList).then(result => {
+              if (result) {
+                this.chatService.getChat(result).then(chatData => {
+                  this.navCtrl.push(MessagePage, {"ChatData": chatData});
+                })
+                .catch(err => { console.log(err); });
+              }
+              else 
+              {
+                //console.log("enter new Chat!");
+                this.chatService.newChat(memberList).then(result => {
+                  this.chatService.getChat(result).then(chatData => {
+                    //console.log("no Chat created one new chat page getChat(): ", chatData);
+                    this.navCtrl.push(MessagePage, {"ChatData": chatData});
+                  })
+                  .catch(err => { console.log(err); });
+                })
+                .catch(error => { console.log(error); });
+              }
+            })
+            .catch(error => { console.log(error); });
+            
+            //this.navCtrl.setRoot(TabsPage, {"from": ServiceDetailsPage, "chatMemberList": memberList, "TabIndex": 1});
+          }
+          else
+          {
+            //console.log("Post is posted by user himself");
+            this.alertService.presentToast("[WARN] It's your own Post! You cannot talk to yourself through Post.");
+          }
+
+      }
+      else
+      {
+        console.log("user is not logged in!");
+        this.alertService.presentToast("[WARN] You need login to use this function!");
+        this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
+
+      }
+      
       /* this.loginService.isUserLogined().then(result => {
         if(result == true)
         {
@@ -135,6 +184,25 @@ export class ServiceDetailsPage {
     if(event == "service" && item)
     {
       //if want to order a service has to be login.
+      if(this.loginService.isUserLoggedIn)
+      {
+        if(item.provider != firebase.auth().currentUser.uid)
+          {
+            var newOrder = new OrderData();
+            newOrder.service = item as ServiceData;
+            newOrder.orderby = firebase.auth().currentUser.uid;
+            this.navCtrl.push(OrderCreatorPage,{"order": newOrder});
+          }
+          else
+          {
+            this.alertService.presentToast("[WARN] It's your own services! You cannot book your own service through Post.");
+          }
+
+      }
+      else
+      {
+        this.navCtrl.push(LoginPage, {"from": ServiceDetailsPage});
+      }
       /* this.loginService.isUserLogined().then(result => {
         if(result == true)
         {
