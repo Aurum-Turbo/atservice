@@ -1,4 +1,13 @@
 page-service-creator {
+    ion-grid{
+        ion-row{
+            [onethird]{
+                width: 30%;
+                display: inline-flex;
+            }
+        }
+    }
+
     ion-label{
         width: 30%;
         color: theme-colors('textColors', 'primary','opacity100') !important;

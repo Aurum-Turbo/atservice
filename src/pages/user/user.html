@@ -58,17 +58,9 @@
               </ion-col>
             </ion-row>
           </ion-item>
-
-  <!--         <button ion-item  (click)="onClick('service', item)"  no-lines>
-                <h1 item-title item-start>{{item.description}}</h1>
-  
-                   <h2 item-title item-end>
-                  {{item.currency+ ' ' + item.price + ' / '+ item.duration + ' ' + item.unit}}
-                  </h2>
-          </button> -->
           <ion-item-options side="right">
-            <button ion-button [hidden]="!item.availability" (click)="toggleAvail(item)">Disable</button>
-            <button ion-button [hidden]="item.availability" (click)="toggleAvail(item)">Enable</button>             
+            <button ion-button [hidden]="!item.availability" (click)="toggleAvail(item)" disbt>Disable</button>
+            <button ion-button [hidden]="item.availability" (click)="toggleAvail(item)" enbt>Enable</button>             
             <button ion-button color="danger" (click)="delService(item)">Delete</button>
           </ion-item-options>
         </ion-item-sliding>

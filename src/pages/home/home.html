@@ -16,19 +16,11 @@
 <ion-content [ngClass]="{'blurefct':exb}"  #container>
   <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', horizontalOrder: true, itemSelector: '.masonry-item'}" >
+    <ngx-masonry [useImagesLoaded]="true" [options]="{transitionDuration: '0.8s', fitWidth: true, horizontalOrder: true,  resize: true, gutter: 10, itemSelector: '.masonry-item'}" >
       <ngxMasonryItem *ngFor="let item of items" class="masonry-item" >
       <ion-card>
-       <!--  <ion-card-header>
-          <ion-item no-padding>
-            <ion-avatar item-start (click)="onClick('detail', item)">
-                <img [lazyLoad]="item.avatar"/>
-            </ion-avatar>
-            <h1 card-title>{{item.nickname}}</h1>
-            <h2 card-subtitle>{{item.createAt.toDate() | date:"MMMM dd, yyyy"}}</h2>
-          </ion-item>
-        </ion-card-header> -->
-        <img (click)="onClick('detail',item )" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" height="{{item.imgHeights[0]}}" />
+        <img (click)="onClick('detail',item )" [lazyLoad]="item.images[0]" [useSrcset]="true"  width="100%" [height]="item.imgHeights[0]*ngxItemWidth/190"/>
+        <!-- *window.screen.width/380 -->
           <ion-card-content no-padding>
             <p border margin card-body-text text-wrap [innerHtml]="item.description" (click)="onClick('detail',item)"></p>
             <ion-label color="secondary" margin-left>

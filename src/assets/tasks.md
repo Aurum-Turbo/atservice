@@ -13,3 +13,10 @@
 * [x] Posts remove the Undo Icon
 * [x] User Rate System implementation
 * [ ] need to change imgHeights to ratio of Height and Width
+
+## 25-01-2019
+* [ ] 进入service-detail页面后 可以查看作者所有post
+* [ ] who make order can  browse the order as well
+* [x] masonry in different device works well
+* [x] ordercreater page change
+
